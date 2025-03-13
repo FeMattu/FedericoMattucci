@@ -38,7 +38,7 @@ export default async function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body>
+      <body className="font-sans text-gray-900">
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
     </html>

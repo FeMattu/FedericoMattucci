@@ -3,6 +3,8 @@
     "description": "This is an example page",
     "welcome": "Welcome",
     "home": "Home",
-    "about": "About",
-    "contact": "Contact"
+    "experience": "Experiences",
+    "portfolio": "Portfolio",
+    "contact": "Contacts",
+    "hero-description": "Hi. I am Federico Mattucci, a student of Computer Science at the University of Pisa. With this site I want to tell you a little bit about myself."
 }
