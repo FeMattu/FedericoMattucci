@@ -1,7 +1,8 @@
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
-const Hero = () => {
+export default function Hero() {
   const t = useTranslations();
   return (
     <section className="flex flex-col md:flex-row items-center justify-between w-full max-w-5xl mx-auto py-16 px-6">
@@ -11,23 +12,23 @@ const Hero = () => {
           {t('hero-description')}
         </p>
         <div className="mt-6 flex gap-4 justify-center md:justify-start">
-          <a href="/cv.pdf" className="bg-black text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-800">
+          <Link href="/cv.pdf" className="bg-black text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-800">
             CV
-          </a>
-          <a href="/portfolio" className="bg-black text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-800">
+          </Link>
+          <Link href="/portfolio" className="bg-black text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-800">
             Portfolio
-          </a>
+          </Link>
         </div>
         <div className="mt-6 flex gap-4 justify-center md:justify-start">
-          <a href="#" className="text-gray-700 hover:text-black">
+          <Link href="#" className="text-gray-700 hover:text-black">
             <i className="fab fa-linkedin text-2xl"></i>
-          </a>
-          <a href="#" className="text-gray-700 hover:text-black">
+          </Link>
+          <Link href="#" className="text-gray-700 hover:text-black">
             <i className="fab fa-instagram text-2xl"></i>
-          </a>
-          <a href="#" className="text-gray-700 hover:text-black">
+          </Link>
+          <Link href="#" className="text-gray-700 hover:text-black">
             <i className="fab fa-facebook text-2xl"></i>
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -42,5 +43,3 @@ const Hero = () => {
     </section>
   );
 };
-
-export default Hero;
