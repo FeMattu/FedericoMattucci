@@ -53,7 +53,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="text-center md:text-left">
+        <div className="text-center md:text-left max-w-2xl">
           <h1 className="text-5xl md:text-7xl font-bold">Federico Mattucci</h1>
           <p className="mt-4 text-2xl text-gray-600 dark:text-gray-400">
             {t("job-title")}
@@ -76,7 +76,7 @@ export default function HomePage() {
               <p>Email</p>
             </SocialButton>
           </div>
-          <p className="mt-15 max-w-xl text-wrap text-lg">
+          <p className="mt-15 text-wrap text-lg">
             {t("self-description")}
           </p>
           <div className="mt-10">
@@ -108,16 +108,16 @@ export default function HomePage() {
               <h2 className="mt-4 text-2xl font-semibold">
                 {t("skills-programming-languages")}
               </h2>
-              <SkillsTag JSONfile="public/data/programming-languages.json" className="mt-3 flex-wrap max-w-xl"/>
+              <SkillsTag JSONfile="public/data/programming-languages.json" className="mt-3 flex-wrap"/>
             </div>
             <div className="flex-col">
               <h2 className="mt-4 text-2xl font-semibold">
                 {t("skills-technologies")}
               </h2>
-              <SkillsTag JSONfile="public/data/computer-skills.json" className="mt-3 flex-wrap max-w-xl"/>
+              <SkillsTag JSONfile="public/data/computer-skills.json" className="mt-3 flex-wrap"/>
             </div>
           </div>
-          <div className="mt-10 max-w-xl">
+          <div className="mt-10">
             <h1 className="text-4xl font-bold">
               {t("hobbies-title")}
             </h1>
