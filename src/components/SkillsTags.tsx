@@ -15,14 +15,22 @@ export async function getSkillsFromFile(filePath: string) {
         },
     };
 }
-export default async function SkillsTag ({ JSONfile, className }:{ JSONfile:string, className?:string}) {
+
+function CategoryTitle({category}:{category:string}) {
   const t = useTranslations();
+  return (
+    <h3 className="text-lg font-semibold capitalize">{t(category)}</h3>
+  )
+}
+
+export default async function SkillsTag ({ JSONfile, className }:{ JSONfile:string, className?:string}) {
+
   const skills: SkillTagsProps = (await getSkillsFromFile(JSONfile)).props.skills;
   return (
     <div className={`space-y-2 overflow-y-auto ${className}`}>
       {Object.entries(skills).map(([category, technologies]: [string, Record<string, string>]) => (
         <div key={category}>
-          <h3 className="text-lg font-semibold capitalize">{t(category)}</h3>
+          <CategoryTitle category={category} />
           <div className="flex flex-wrap gap-2 mt-1">
             {Object.values(technologies).map((tech) => (
               <span

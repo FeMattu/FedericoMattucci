@@ -18,7 +18,7 @@ export default function HobbieCard({ hobbie }: { hobbie: Hobbie }) {
                     {t(hobbie.name)}
                 </h1>
             </div>
-            <p className="text-lg">{t(hobbie.description)}</p>
+            <p className="">{t(hobbie.description)}</p>
         </div>
     );
 }

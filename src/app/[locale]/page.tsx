@@ -118,7 +118,7 @@ export default function HomePage() {
               <SkillsTag JSONfile="public/data/computer-skills.json" className="mt-3 flex-wrap max-w-xl"/>
             </div>
           </div>
-          <div className="mt-10">
+          <div className="mt-10 max-w-xl">
             <h1 className="text-4xl font-bold">
               {t("hobbies-title")}
             </h1>
