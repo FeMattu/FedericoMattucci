@@ -3,6 +3,8 @@ import { Link } from "@/i18n/navigation";
 import { Earth, Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import HobbieCard from "@/components/HobbieCard";
+import Hobbies from "@/components/Hobbies";
 
 function LanguageTag({ language }: { language: string }) {
   const t = useTranslations();
@@ -115,6 +117,15 @@ export default function HomePage() {
               </h2>
               <SkillsTag JSONfile="public/data/computer-skills.json" className="mt-3 flex-wrap max-w-xl"/>
             </div>
+          </div>
+          <div className="mt-10">
+            <h1 className="text-4xl font-bold">
+              {t("hobbies-title")}
+            </h1>
+            <p className="mt-4 text-lg">
+              {t("hobbies-description")}
+            </p>
+            <Hobbies JSONfile="public/data/hobbies.json" className="mt-4"/>
           </div>
         </div>
       </div>

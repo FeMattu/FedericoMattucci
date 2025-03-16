@@ -1,8 +1,5 @@
 import React from "react";
-import { GetStaticProps } from "next";
 import fs from "fs";
-import path from "path";
-import { get } from "http";
 import { useTranslations } from "next-intl";
 
 interface SkillTagsProps {

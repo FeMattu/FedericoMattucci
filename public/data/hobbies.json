@@ -1,0 +1,27 @@
+{
+    "technologies":{
+        "image": null,
+        "title":"hobby-technologies",
+        "description":"hobby-description-technologies"
+    },
+    "photography":{
+        "image": null,
+        "title":"hobby-photography",
+        "description":"hobby-description-photography"
+    },
+    "travel":{
+        "image":null,
+        "title":"hobby-travel",
+        "description":"hobby-description-travel"
+    },
+    "cooking":{
+        "image": null,
+        "title":"hobby-cooking",
+        "description":"hobby-description-cooking"
+    },
+    "sports":{
+        "image": null,
+        "title":"hobby-sports",
+        "description":"hobby-description-sports"
+    }
+}
