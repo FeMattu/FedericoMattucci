@@ -3,7 +3,6 @@ import { Link } from "@/i18n/navigation";
 import { Earth, Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import HobbieCard from "@/components/HobbieCard";
 import Hobbies from "@/components/Hobbies";
 
 function LanguageTag({ language }: { language: string }) {
