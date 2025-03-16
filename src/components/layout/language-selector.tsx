@@ -9,15 +9,15 @@ export default function LanguageSelector({className}: {className?: string}) {
         <Link 
             href={pathname} 
             locale="it" 
-            className={`cursor-pointer ${locale === "it" ? "text-blue-600 font-bold" : "text-gray-700"}`}
+            className={`cursor-pointer ${locale === "it" ? "text-blue-600 font-bold" : "hover:text-gray-950 hover:font-medium dark:hover:text-white dark:hover:font-medium"}`}
         >
             IT
         </Link>
-        <span>|</span>
+        <span className="text-gray-300 dark:text-white-400">|</span>
         <Link 
             href={pathname} 
             locale="en" 
-            className={`cursor-pointer ${locale === "en" ? "text-blue-600 font-bold" : "text-gray-700"}`}
+            className={`cursor-pointer ${locale === "en" ? "text-blue-600 font-bold" : "hover:text-gray-950 hover:font-medium dark:hover:text-white dark:hover:font-medium"}`}
         >
             EN
         </Link>
