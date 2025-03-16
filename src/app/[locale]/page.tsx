@@ -1,3 +1,4 @@
+import SkillsTag from "@/components/SkillsTags";
 import { Link } from "@/i18n/navigation";
 import { Earth, Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -29,9 +30,9 @@ export default function HomePage() {
 
   return (
     <div className="max-w-7xl mx-auto min-h-screen flex items-center justify-center px-6">
-      <div className="flex flex-col md:flex-row items-center justify-center w-full gap-x-40">
+      <div className="flex flex-col mt-10 md:flex-row items-start justify-center w-full gap-x-40">
         
-        <div className="sticky top-0 flex flex-col items-center gap-6 text-center">
+        <div className="sticky top-10 flex flex-col items-center gap-6 text-center">
           <Image
             src="/images/homepage/entire.jpg"
             alt="Federico Mattucci"
@@ -56,7 +57,7 @@ export default function HomePage() {
           <p className="mt-4 text-2xl text-gray-600 dark:text-gray-400">
             {t("job-title")}
           </p>
-          <div className="flex flex-row gap-6 mt-10">
+          <div className="flex flex-row gap-6 mt-6">
             <SocialButton href="https://www.instagram.com/fede_mattu_?igsh=eTBndmF1bGswNTVi">
               <Instagram size={24} />
               <p>Instagram</p>
@@ -65,20 +66,57 @@ export default function HomePage() {
               <Linkedin size={24} />
               <p>LinkedIn</p>
             </SocialButton>
-            <SocialButton href="https://github.com/federico-mattucci">
+            <SocialButton href="https://github.com/FeMattu">
               <Github size={24} />
               <p>GitHub</p>
             </SocialButton>
-            <SocialButton href="mailto:federico.mattucci@example.com">
+            <SocialButton href="mailto:mattucci.federico@gmail.com">
               <Mail size={24} />
               <p>Email</p>
             </SocialButton>
           </div>
-          <p className="mt-20 max-w-xl text-wrap text-lg">
+          <p className="mt-15 max-w-xl text-wrap text-lg">
             {t("self-description")}
           </p>
+          <div className="mt-10">
+            <h1 className="text-4xl font-bold">
+              {t("studies-title")}
+            </h1>
+            <div className="flex-col">
+              <h2 className="mt-4 text-2xl font-semibold">
+                {t("studies-high-school-name")}
+              </h2>
+              <p className="text-lg">
+                {t("studies-high-school-description")}
+              </p>
+            </div>
+            <div className="flex-col">
+              <h2 className="mt-4 text-2xl font-semibold">
+                {t("studies-university-name")}
+              </h2>
+              <p className="text-lg">
+                {t("studies-university-description")}
+              </p>
+            </div>
+          </div>
+          <div className="mt-10">
+            <h1 className="text-4xl font-bold">
+              {t("skills-title")}
+            </h1>
+            <div className="flex-col">
+              <h2 className="mt-4 text-2xl font-semibold">
+                {t("skills-programming-languages")}
+              </h2>
+              <SkillsTag JSONfile="public/data/programming-languages.json" className="mt-3 flex-wrap max-w-xl"/>
+            </div>
+            <div className="flex-col">
+              <h2 className="mt-4 text-2xl font-semibold">
+                {t("skills-technologies")}
+              </h2>
+              <SkillsTag JSONfile="public/data/computer-skills.json" className="mt-3 flex-wrap max-w-xl"/>
+            </div>
+          </div>
         </div>
-
       </div>
     </div>
   );
