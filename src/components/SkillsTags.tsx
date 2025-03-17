@@ -1,19 +1,27 @@
 import React from "react";
 import fs from "fs";
 import { useTranslations } from "next-intl";
+import path from "path";
 
 interface SkillTagsProps {
   [category: string]: Record<string, string>;
 }
 
 export async function getSkillsFromFile(filePath: string) {
-    const jsonData = fs.readFileSync(filePath, "utf-8");
-    const skills: SkillTagsProps = JSON.parse(jsonData);
-    return {
-        props: {
-            skills,
-        },
-    };
+    try{
+      const file = path.join(process.cwd(), filePath);
+      const jsonData = fs.readFileSync(file, "utf-8");
+      const skills: SkillTagsProps = JSON.parse(jsonData);
+      return {
+          props: {
+              skills,
+          },
+      };
+    }catch(error){
+      console.error("File loading error: ", error);
+      return {}
+    }
+    
 }
 
 function CategoryTitle({category}:{category:string}) {
@@ -24,8 +32,8 @@ function CategoryTitle({category}:{category:string}) {
 }
 
 export default async function SkillsTag ({ JSONfile, className }:{ JSONfile:string, className?:string}) {
-
-  const skills: SkillTagsProps = (await getSkillsFromFile(JSONfile)).props.skills;
+  const result = await getSkillsFromFile(JSONfile);
+  const skills: SkillTagsProps = result?.props?.skills || {};
   return (
     <div className={`space-y-2 overflow-y-auto ${className}`}>
       {Object.entries(skills).map(([category, technologies]: [string, Record<string, string>]) => (
