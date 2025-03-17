@@ -1,42 +1,30 @@
-import React from "react";
-import fs from "fs";
+"use client";
+
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import path from "path";
 
 interface SkillTagsProps {
   [category: string]: Record<string, string>;
 }
 
-export async function getSkillsFromFile(filePath: string) {
-    try{
-      const file = path.join(process.cwd(), filePath);
-      const jsonData = fs.readFileSync(file, "utf-8");
-      const skills: SkillTagsProps = JSON.parse(jsonData);
-      return {
-          props: {
-              skills,
-          },
-      };
-    }catch(error){
-      console.error("File loading error: ", error);
-      return {}
-    }
-    
-}
-
-function CategoryTitle({category}:{category:string}) {
+function CategoryTitle({ category }: { category: string }) {
   const t = useTranslations();
-  return (
-    <h3 className="text-lg font-semibold capitalize">{t(category)}</h3>
-  )
+  return <h3 className="text-lg font-semibold capitalize">{t(category)}</h3>;
 }
 
-export default async function SkillsTag ({ JSONfile, className }:{ JSONfile:string, className?:string}) {
-  const result = await getSkillsFromFile(JSONfile);
-  const skills: SkillTagsProps = result?.props?.skills || {};
+export default function SkillsTag({ JSONfile, className }: { JSONfile: string; className?: string }) {
+  const [skills, setSkills] = useState<SkillTagsProps>({});
+  
+  useEffect(() => {
+    fetch(JSONfile)
+      .then((res) => res.json())
+      .then((data) => setSkills(data))
+      .catch((error) => console.error("Errore nel caricamento delle competenze:", error));
+  }, [JSONfile]);
+
   return (
     <div className={`space-y-2 overflow-y-auto ${className}`}>
-      {Object.entries(skills).map(([category, technologies]: [string, Record<string, string>]) => (
+      {Object.entries(skills).map(([category, technologies]) => (
         <div key={category}>
           <CategoryTitle category={category} />
           <div className="flex flex-wrap gap-2 mt-1">
@@ -53,4 +41,4 @@ export default async function SkillsTag ({ JSONfile, className }:{ JSONfile:stri
       ))}
     </div>
   );
-};
+}
