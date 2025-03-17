@@ -1,0 +1,46 @@
+{
+    "office":{
+        "word": "Word",
+        "excel": "Excel",
+        "powerpoint": "Powerpoint",
+        "outlook": "Outlook",
+        "OneDrive": "OneDrive",
+        "teams": "Teams",
+        "visio": "Visio"
+    },
+    "google-tools":{
+        "drive": "Drive",
+        "docs": "Docs",
+        "sheets": "Sheets",
+        "slides": "Slides",
+        "gmail": "Gmail",
+        "meet": "Meet"
+    },
+    "adobe":{
+        "photoshop": "Photoshop",
+        "lightroom": "Lightroom"
+    },
+    "operative-systems":{
+        "linux": "Linux",
+        "windows": "Windows",
+        "mac": "Mac"
+    },
+    "website-developing":{
+        "wordpress": "Wordpress",
+        "elementor": "Elementor"
+    },
+    "social-media": {
+        "facebook": "Facebook",
+        "instagram": "Instagram",
+        "linkedin": "LinkedIn",
+        "twitter": "X-Twitter",
+        "youtube": "YouTube",
+        "tiktok": "TikTok",
+        "whatsapp": "WhatsApp",
+        "telegram": "Telegram",
+        "discord": "Discord",
+        "threads": "Threads",
+        "snapchat": "Snapchat",
+        "pinterest": "Pinterest"
+    }
+}
