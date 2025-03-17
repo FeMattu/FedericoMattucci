@@ -28,25 +28,16 @@ function SocialButton({ href, children }: { href: string; children: React.ReactN
 function HobbieCard({ hobby , description}: { hobby: string, description:string }) {
   const t = useTranslations();
   return (
-      <div className="flex flex-row items-start gap-4 bg-gray-100 dark:bg-black/40 p-4 rounded-lg shadow-md dark:shadow-0">
-        <Image
-          src="/images/portfolio/street-photography/ferrari.jpg" // Rimosso "public/"
-          alt={hobby} // Sempre utile per l'accessibilità
-          width={100} // Imposta una larghezza
-          height={100} // Imposta un'altezza
-          className="rounded-lg object-cover"
-        />
-        <div className="flex flex-col">
-          <div className='flex items-start gap-4'>
-                <h1 className='text-2xl font-bold text-left'>
-                    {t(hobby)}
-                </h1>
-            </div>
-            <p className="text-left">
-                {t(description)}
-            </p>
-        </div>  
+    <div className="flex flex-col">
+      <div className='flex items-start gap-4'>
+          <h1 className='text-2xl font-bold text-left'>
+              {t(hobby)}
+          </h1>
       </div>
+      <p className="text-left">
+          {t(description)}
+      </p>
+    </div> 
   );
 }
 
@@ -154,14 +145,7 @@ export default function HomePage() {
               <HobbieCard hobby="hobby-cooking" description="hobby-description-cooking" />
               <HobbieCard hobby="hobby-sports" description="hobby-description-sports" />
               <HobbieCard hobby="hobby-travel" description="hobby-description-travel" />
-              <Link href="/portfolio" className="group relative flex flex-row items-start gap-4 bg-gray-100 dark:bg-black/40 hover:bg-gray-200 hover:dark:bg-black/20 p-6 rounded-lg shadow-md dark:shadow-0 transition cursor-pointer">
-                <Image
-                  src="/images/portfolio/street-photography/ferrari.jpg"
-                  alt="Photography"
-                  width={100}
-                  height={100}
-                  className="rounded-lg object-cover"
-                />
+              <Link href="/portfolio" className="group relative flex flex-row items-start gap-4 hover:bg-gray-200 hover:dark:bg-black/20 rounded-lg transition cursor-pointer">
                 <ArrowUpRight className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="flex flex-col">
                   <div className="flex items-start gap-4">
