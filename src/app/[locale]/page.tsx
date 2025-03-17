@@ -1,14 +1,13 @@
 import SkillsTag from "@/components/SkillsTags";
 import { Link } from "@/i18n/navigation";
-import { Earth, Github, Instagram, Linkedin, Mail } from "lucide-react";
+import { ArrowUpRight, Earth, Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Hobbies from "@/components/Hobbies";
 
 function LanguageTag({ language }: { language: string }) {
   const t = useTranslations();
   return (
-    <div className="flex items-center gap-2 bg-gray-200 dark:bg-black border border-gray-400 dark:border-gray-600 rounded-full px-4 py-1 text-lg font-semibold">
+    <div className="flex items-center gap-2 bg-gray-200 dark:bg-black/40 border border-gray-400 dark:border-gray-700 rounded-full px-4 py-1 text-lg font-semibold">
       <p>{t(language)}</p>
     </div>
   );
@@ -25,6 +24,32 @@ function SocialButton({ href, children }: { href: string; children: React.ReactN
     </Link>
   );
 }
+
+function HobbieCard({ hobby , description}: { hobby: string, description:string }) {
+  const t = useTranslations();
+  return (
+      <div className="flex flex-row items-start gap-4 bg-gray-100 dark:bg-black/40 p-4 rounded-lg shadow-md dark:shadow-0">
+        <Image
+          src="/images/portfolio/street-photography/ferrari.jpg" // Rimosso "public/"
+          alt={hobby} // Sempre utile per l'accessibilità
+          width={100} // Imposta una larghezza
+          height={100} // Imposta un'altezza
+          className="rounded-lg object-cover"
+        />
+        <div className="flex flex-col">
+          <div className='flex items-start gap-4'>
+                <h1 className='text-2xl font-bold text-left'>
+                    {t(hobby)}
+                </h1>
+            </div>
+            <p className="text-left">
+                {t(description)}
+            </p>
+        </div>  
+      </div>
+  );
+}
+
 
 export default function HomePage() {
   const t = useTranslations();
@@ -124,7 +149,32 @@ export default function HomePage() {
             <p className="mt-4 text-lg">
               {t("hobbies-description")}
             </p>
-            <Hobbies JSONfile="public/data/hobbies.json" className="mt-4"/>
+            <div className="group flex flex-col gap-4 mt-4 mt-4">
+              <HobbieCard hobby="hobby-technologies" description="hobby-description-technologies" />
+              <HobbieCard hobby="hobby-cooking" description="hobby-description-cooking" />
+              <HobbieCard hobby="hobby-sports" description="hobby-description-sports" />
+              <HobbieCard hobby="hobby-travel" description="hobby-description-travel" />
+              <Link href="/portfolio" className="group relative flex flex-row items-start gap-4 bg-gray-100 dark:bg-black/40 hover:bg-gray-200 hover:dark:bg-black/20 p-6 rounded-lg shadow-md dark:shadow-0 transition cursor-pointer">
+                <Image
+                  src="/images/portfolio/street-photography/ferrari.jpg"
+                  alt="Photography"
+                  width={100}
+                  height={100}
+                  className="rounded-lg object-cover"
+                />
+                <ArrowUpRight className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="flex flex-col">
+                  <div className="flex items-start gap-4">
+                    <h1 className="text-2xl font-bold text-left">
+                      {t("hobby-photography")}
+                    </h1>
+                  </div>
+                  <p className="text-left">
+                    {t("hobby-description-photography")}
+                  </p>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

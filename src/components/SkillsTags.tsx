@@ -35,7 +35,7 @@ export default async function SkillsTag ({ JSONfile, className }:{ JSONfile:stri
             {Object.values(technologies).map((tech) => (
               <span
                 key={tech}
-                className="px-3 py-1 text-sm font-medium bg-gray-200 dark:bg-black text-gray-700 dark:text-white rounded-lg"
+                className="px-3 py-1 text-sm font-medium bg-gray-200 dark:bg-black/40 text-gray-700 dark:text-white rounded-lg"
               >
                 {tech}
               </span>
