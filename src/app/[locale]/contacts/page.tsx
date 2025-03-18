@@ -4,7 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { ReactNode, useEffect, useState } from "react";
 import SocialButton from "@/components/SocialButton";
-import iconsMap from "@/utils/IconMap"
+import getIcon from "@/utils/IconMap";
 
 function Contact({ href, type, icon, contact }: { href: string; type: string; icon: ReactNode; contact: string }) {
     const t = useTranslations();
@@ -37,7 +37,7 @@ function ContactList() {
                     key={emailType}
                     href={`mailto:${emailValue}`}
                     type={emailType}
-                    icon={iconsMap["email"]}
+                    icon={getIcon("email", 24)} // Usa la funzione getIcon con la dimensione
                     contact={emailValue}
                 />
             ))}
@@ -47,7 +47,7 @@ function ContactList() {
                 <Contact
                     href={`tel:${contacts.phone}`}
                     type="phone"
-                    icon={iconsMap["phone"]}
+                    icon={getIcon("phone", 24)} // Usa la funzione getIcon con la dimensione
                     contact={contacts.phone}
                 />
             )}
@@ -57,7 +57,7 @@ function ContactList() {
 
 function SocialLinks() {
     const [socials, setSocials] = useState<{ [key: string]: string }>({});
-    const t = useTranslations()
+    const t = useTranslations();
 
     useEffect(() => {
         fetch("/data/contacts.json")
@@ -67,11 +67,11 @@ function SocialLinks() {
     }, []);
 
     return (
-        <div className="flex flex-wrap gap-4 max-w-xl justify-center">
+        <div className="flex flex-wrap gap-4 justify-center">
             {Object.entries(socials).map(([platform, link]) =>
                 link ? (
-                    <SocialButton key={platform} href={link} >
-                        {iconsMap[platform] || iconsMap["default"]}
+                    <SocialButton key={platform} href={link}>
+                        {getIcon(platform, 24) || getIcon("default", 24)} 
                         <p>{t(platform)}</p>
                     </SocialButton>
                 ) : null
@@ -79,16 +79,15 @@ function SocialLinks() {
         </div>
     );
 }
-
 export default function Contacts() {
     const t = useTranslations();
     return (
         <div className="h-screen flex flex-row gap-20 max-h-screen items-center justify-center px-6">
-            <div className="flex flex-col items-center gap-6">
+            <div className="flex flex-col items-center gap-6 max-w-lg">
                 <h1 className="text-4xl font-bold">{t("contact")}</h1>
                 <ContactList />
             </div>
-            <div className="flex flex-col items-center gap-6">
+            <div className="flex flex-col items-center gap-6 max-w-lg">
                 <h1 className="text-4xl font-bold">{t("social-media")}</h1>
                 <SocialLinks />
             </div>
