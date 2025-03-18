@@ -1,9 +1,12 @@
+"use client"
+
 import SkillsTag from "@/components/SkillsTags";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import SocialButton from "@/components/SocialButton";
 import getIcon from "@/utils/IconMap";
+import { useEffect, useState } from "react";
 
 function LanguageTag({ language }: { language: string }) {
   const t = useTranslations();
@@ -33,6 +36,25 @@ function HobbieCard({ hobby , description}: { hobby: string, description:string 
 
 export default function HomePage() {
   const t = useTranslations();
+
+  const [socials, setSocials] = useState<{ [key: string]: string }>({});
+  useEffect(() => {
+      fetch("/data/contacts.json")
+          .then((res) => res.json())
+          .then((data) => setSocials(data.social))
+          .catch((err) => console.error("Errore nel caricamento dei social:", err));
+  }, []);
+
+  const [contacts, setContacts] = useState<{ email: { [key: string]: string }; phone: string }>({
+    email: {},
+    phone: ""
+  });
+  useEffect(() => {
+    fetch("/data/contacts.json")
+        .then((res) => res.json())
+        .then((data) => setContacts(data.contacts))
+        .catch((err) => console.error("Errore nel caricamento dei contatti:", err));
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto min-h-screen flex items-center justify-center px-6">
@@ -64,19 +86,19 @@ export default function HomePage() {
             {t("job-title")}
           </p>
           <div className="flex flex-row gap-6 mt-6">
-            <SocialButton href="https://www.instagram.com/fede_mattu_?igsh=eTBndmF1bGswNTVi">
+            <SocialButton href={socials.instagram}>
               {getIcon("instagram", 24)}
               <p>{t("instagram")}</p>
             </SocialButton>
-            <SocialButton href="https://www.linkedin.com/in/federico-mattucci-13aa1a249?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
+            <SocialButton href={socials.linkedin}>
               {getIcon("linkedin", 24)}
               <p>{t("linkedin")}</p>
             </SocialButton>
-            <SocialButton href="https://github.com/FeMattu">
+            <SocialButton href={socials.github}>
               {getIcon("github", 24)}
               <p>{t("github")}</p>
             </SocialButton>
-            <SocialButton href="mailto:mattucci.federico@gmail.com">
+            <SocialButton href={"mailto:"+contacts.email["personal-email"]}>
               {getIcon("email", 24)}
               <p>{t("email")}</p>
             </SocialButton>
