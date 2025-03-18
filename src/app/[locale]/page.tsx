@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { ArrowUpRight, Earth, Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import SocialButton from "@/components/SocialButton";
 
 function LanguageTag({ language }: { language: string }) {
   const t = useTranslations();
@@ -10,18 +11,6 @@ function LanguageTag({ language }: { language: string }) {
     <div className="flex items-center gap-2 bg-gray-200 dark:bg-black/40 border border-gray-400 dark:border-gray-700 rounded-full px-4 py-1 text-lg font-semibold">
       <p>{t(language)}</p>
     </div>
-  );
-}
-
-function SocialButton({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link
-      href={href}
-      rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 px-4 py-2 border border-gray-400 dark:border-gray-600 rounded-2xl text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-all w-fit"
-    >
-      {children}
-    </Link>
   );
 }
 
