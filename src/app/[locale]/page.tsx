@@ -1,9 +1,10 @@
 import SkillsTag from "@/components/SkillsTags";
 import { Link } from "@/i18n/navigation";
-import { ArrowUpRight, Earth, Github, Instagram, Linkedin, Mail } from "lucide-react";
+import { ArrowUpRight, Earth } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import SocialButton from "@/components/SocialButton";
+import getIcon from "@/utils/IconMap";
 
 function LanguageTag({ language }: { language: string }) {
   const t = useTranslations();
@@ -48,7 +49,7 @@ export default function HomePage() {
           />
 
           <div className="flex items-center gap-4 text-lg font-semibold">
-            <Earth size={32} />
+            {getIcon("earth", 32)}
             <p>Lucca - {t("tuscany")} - {t("italy")}</p>
           </div>
 
@@ -65,20 +66,20 @@ export default function HomePage() {
           </p>
           <div className="flex flex-row gap-6 mt-6">
             <SocialButton href="https://www.instagram.com/fede_mattu_?igsh=eTBndmF1bGswNTVi">
-              <Instagram size={24} />
-              <p>Instagram</p>
+              {getIcon("instagram", 24)}
+              <p>{t("instagram")}</p>
             </SocialButton>
             <SocialButton href="https://www.linkedin.com/in/federico-mattucci-13aa1a249?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
-              <Linkedin size={24} />
-              <p>LinkedIn</p>
+              {getIcon("linkedin", 24)}
+              <p>{t("linkedin")}</p>
             </SocialButton>
             <SocialButton href="https://github.com/FeMattu">
-              <Github size={24} />
-              <p>GitHub</p>
+              {getIcon("github", 24)}
+              <p>{t("github")}</p>
             </SocialButton>
             <SocialButton href="mailto:mattucci.federico@gmail.com">
-              <Mail size={24} />
-              <p>Email</p>
+              {getIcon("email", 24)}
+              <p>{t("email")}</p>
             </SocialButton>
           </div>
           <p className="mt-15 text-wrap text-lg">
@@ -135,7 +136,7 @@ export default function HomePage() {
               <HobbieCard hobby="hobby-sports" description="hobby-description-sports" />
               <HobbieCard hobby="hobby-travel" description="hobby-description-travel" />
               <Link href="/portfolio" className="group relative flex flex-row items-start gap-4 hover:bg-gray-200 hover:dark:bg-black/20 rounded-lg transition cursor-pointer">
-                <ArrowUpRight className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {getIcon("arrow-up-right", 24, "absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300")}
                 <div className="flex flex-col">
                   <div className="flex items-start gap-4">
                     <h1 className="text-2xl font-bold text-left">
