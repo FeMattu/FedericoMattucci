@@ -1,8 +1,9 @@
 import { ReactNode } from "react";
 import { CiLinkedin } from "react-icons/ci";
-import { FaGithub, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaRegMoon, FaWhatsapp } from "react-icons/fa";
 import { FaEarthEurope, FaThreads, FaXTwitter } from "react-icons/fa6";
 import { FiArrowUpRight, FiFacebook, FiPhone } from "react-icons/fi";
+import { IoSunnyOutline } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
 import { TfiLayoutWidthDefaultAlt } from "react-icons/tfi";
 
@@ -20,6 +21,8 @@ export default function getIcon(name: string, size: number = 24, className?:stri
         "github": <FaGithub size={size} className={className}/>,
         "earth": <FaEarthEurope size={size} className={className}/>,
         "arrow-up-right": <FiArrowUpRight size={size} className={className}/>,
+        "moon": <FaRegMoon size={size} className={className}/>,
+        "sun": <IoSunnyOutline size={size} className={className}/>
     };
 
     return icons[name] || null;
