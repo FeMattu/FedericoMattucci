@@ -3,8 +3,10 @@ import { CiLinkedin } from "react-icons/ci";
 import { FaGithub, FaInstagram, FaRegMoon, FaWhatsapp } from "react-icons/fa";
 import { FaEarthEurope, FaThreads, FaXTwitter } from "react-icons/fa6";
 import { FiArrowUpRight, FiFacebook, FiPhone } from "react-icons/fi";
+import { IoMdClose } from "react-icons/io";
 import { IoSunnyOutline } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
+import { RiMenu3Fill } from "react-icons/ri";
 import { TfiLayoutWidthDefaultAlt } from "react-icons/tfi";
 
 export default function getIcon(name: string, size: number = 24, className?:string): ReactNode {
@@ -22,7 +24,10 @@ export default function getIcon(name: string, size: number = 24, className?:stri
         "earth": <FaEarthEurope size={size} className={className}/>,
         "arrow-up-right": <FiArrowUpRight size={size} className={className}/>,
         "moon": <FaRegMoon size={size} className={className}/>,
-        "sun": <IoSunnyOutline size={size} className={className}/>
+        "sun": <IoSunnyOutline size={size} className={className}/>,
+        "menu-mobile": <RiMenu3Fill size={size} className={className}/>,
+        "close-menu-mobile": <IoMdClose size={size} className={className}/>
+
     };
 
     return icons[name] || null;

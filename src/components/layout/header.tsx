@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Menu, X } from "lucide-react"; // Icone per il menu
 import LanguageSelector from "./language-selector";
 import Logo from "./logo";
 import DarkModeToggle from "./darkmode-selector";
+import getIcon from "@/utils/IconMap";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +25,7 @@ export default function Header() {
           <LanguageSelector className="hidden md:flex gap-2 border border-gray-300 rounded-lg px-3 py-1" />  
         </div>
         <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-gray-700">
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
+          {isOpen ?  getIcon("close-menu-mobile", 28) : getIcon("menu-mobile", 28)}
         </button>
       </div>
 
