@@ -4,7 +4,12 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const nextConfig: NextConfig = {
     allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev'],
     images: {
-      domains: ['db9pbmct2ycbl.cloudfront.net'],
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'db9pbmct2ycbl.cloudfront.net'
+        }
+      ],
     },
   };
  

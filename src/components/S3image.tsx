@@ -4,23 +4,23 @@ import { useEffect, useState } from 'react'
 import Image from "next/image";
 
 type Props = {
-  keyS3: string
+  src: string
   alt?: string
   className?: string
 }
 
-export default function S3Image({ keyS3, alt = '', className = '' }: Props) {
+export default function S3Image({ src, alt = '', className = '' }: Props) {
   const [url, setUrl] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchUrl = async () => {
-      const res = await fetch(`/api/images?key=${encodeURIComponent(keyS3)}`)
+      const res = await fetch(`/api/images?key=${encodeURIComponent(src)}`)
       const data = await res.json()
       setUrl(data.url)
     }
 
     fetchUrl()
-  }, [keyS3])
+  }, [src])
 
   if (!url) return <div className="bg-gray-200 animate-pulse h-64 w-full rounded-xl" />
 
@@ -28,9 +28,9 @@ export default function S3Image({ keyS3, alt = '', className = '' }: Props) {
     <Image
       src={url}
       alt={alt}
-      width={1280}
+      width={1000}
       height={250}
-      className={className + ' object-cover w-full h-full rounded-xl shadow'}
+      className={className}
       loading="lazy"
     />
   )
