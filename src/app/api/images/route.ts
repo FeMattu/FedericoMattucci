@@ -1,37 +1,37 @@
-import { getSignedUrl } from '@aws-sdk/cloudfront-signer'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
+import { getSignedUrl } from '@aws-sdk/cloudfront-signer';
 
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const key = searchParams.get('key');  // e.g. ?key=path/to/image.jpg
+
+  if (!key) {
+    // Missing key parameter
+    return NextResponse.json({ error: 'Missing "key" query parameter.' }, { status: 400 });
+  }
+
+  // Build the full URL to the S3 object through CloudFront
+  const baseUrl = process.env.CLOUDFRONT_URL || ''; 
+  // Ensure there are no duplicate slashes when concatenating
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const resourceKey = key.startsWith('/') ? key.substring(1) : key;
+  const resourceUrl = `${normalizedBase}/${resourceKey}`;
+
+  // Retrieve and format the private key (replace literal \n with actual newlines)
+  const rawPrivateKey = process.env.CLOUDFRONT_PRIVATE_KEY || '';
+  const privateKey = rawPrivateKey.replace(/\\n/g, '\n');
+
   try {
-    const { searchParams } = new URL(req.url)
-    const key = searchParams.get('key')
-
-    console.log('Richiesta image con key:', key)
-
-    if (!key) {
-      return NextResponse.json({ error: 'Chiave mancante' }, { status: 400 })
-    }
-
-    const CLOUDFRONT_URL = process.env.CLOUDFRONT_URL
-    const CLOUDFRONT_KEY_PAIR_ID = process.env.CLOUDFRONT_KEY_PAIR_ID
-    const CLOUDFRONT_PRIVATE_KEY = process.env.CLOUDFRONT_PRIVATE_KEY?.replace(/\\n/g, '\n')
-
-    if (!CLOUDFRONT_URL || !CLOUDFRONT_KEY_PAIR_ID || !CLOUDFRONT_PRIVATE_KEY) {
-      console.error('Variabili .env mancanti')
-      return NextResponse.json({ error: 'Configurazione mancante' }, { status: 500 })
-    }
-
+    // Generate a signed URL that expires in 1 hour from now
     const signedUrl = getSignedUrl({
-      url: `${CLOUDFRONT_URL}/${key}`,
-      keyPairId: CLOUDFRONT_KEY_PAIR_ID,
-      privateKey: CLOUDFRONT_PRIVATE_KEY,
-      dateLessThan: new Date(Date.now() + 60 * 60 * 1000),
-    })
-
-    return NextResponse.json({ url: signedUrl })
+      url: resourceUrl,
+      keyPairId: process.env.CLOUDFRONT_KEY_PAIR_ID || '',     // CloudFront Key Pair ID
+      privateKey: privateKey,                                  // RSA private key with newlines
+      dateLessThan: new Date(Date.now() + 60 * 60 * 1000)      // expiration time (current time + 1 hour)
+    });
+    return NextResponse.json({ url: signedUrl });
   } catch (err) {
-    console.error('Errore nel route images:', err)
-    return NextResponse.json({ error: 'Errore interno server' }, { status: 500 })
+    console.error('Error generating signed URL:', err);
+    return NextResponse.json({ error: 'Failed to generate signed URL' }, { status: 500 });
   }
 }
-

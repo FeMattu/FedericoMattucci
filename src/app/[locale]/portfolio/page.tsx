@@ -17,7 +17,7 @@ export default function Portfolio() {
 
                 <Suspense fallback={<p className="text-center">Caricamento immagini...</p>}>
                     <S3Image
-                    keyS3="portfolio/portrait/vane.jpg"
+                    keyS3="portfolio/street-photography/ferrari.jpg"
                     alt="Ferrari"
                     className="w-full max-w-md"
                     />

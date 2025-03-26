@@ -2,19 +2,9 @@ import {NextConfig} from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
  
 const nextConfig: NextConfig = {
+    allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev'],
     images: {
-      remotePatterns: [
-        {
-          protocol: "https",
-          hostname: "fm-website-bucket.s3.eu-west-3.amazonaws.com",
-        },
-        {
-            protocol: 'https',
-            hostname: 'https://83bcyhrw4y5rseam.public.blob.vercel-storage.com',
-            pathname: '/**',
-        },
-      ],
-      domains: ["fm-website-bucket.s3.eu-west-3.amazonaws.com"],
+      domains: ['db9pbmct2ycbl.cloudfront.net'],
     },
   };
  

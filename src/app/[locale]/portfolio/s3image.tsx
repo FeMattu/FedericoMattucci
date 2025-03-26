@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from "next/image";
 
 type Props = {
   keyS3: string
@@ -24,9 +25,11 @@ export default function S3Image({ keyS3, alt = '', className = '' }: Props) {
   if (!url) return <div className="bg-gray-200 animate-pulse h-64 w-full rounded-xl" />
 
   return (
-    <img
+    <Image
       src={url}
       alt={alt}
+      width={1280}
+      height={250}
       className={className + ' object-cover w-full h-full rounded-xl shadow'}
       loading="lazy"
     />

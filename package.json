@@ -11,10 +11,8 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.775.0",
     "@aws-sdk/cloudfront-signer": "^3.775.0",
-    "@aws-sdk/s3-request-presigner": "^3.775.0",
-    "@vercel/blob": "^0.27.3",
     "aws-sdk": "^2.1692.0",
-    "next": "15.2.1",
+    "next": "^15.2.4",
     "next-intl": "^4.0.2",
     "pnpm": "^10.5.2",
     "react": "^19.0.0",
