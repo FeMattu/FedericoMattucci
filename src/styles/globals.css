@@ -55,10 +55,14 @@
     @apply bg-[var(--button-bg)] text-[var(--button-text)] px-4 py-2 rounded-md hover:bg-[var(--button-hover)] transition;
   }
 
-  .masonry-column {
+  .my-masonry-grid {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    margin-left: -8px; /* gutter offset */
+    width: auto;
+  }
+  .my-masonry-grid_column {
+    padding-left: 8px; /* gutter size */
+    background-clip: padding-box;
   }
   
 }

@@ -40,17 +40,19 @@ export default function Gallery({ path }: GalleryProps) {
   return (
     <Masonry
       breakpointCols={breakpoints}
-      className="flex gap-4 w-full justify-center"
-      columnClassName="masonry-column p-4"
+      className="my-masonry-grid flex w-full"
+      columnClassName="my-masonry-grid_column px-2"
     >
       {images.map((src) => (
-        <Suspense fallback={<div className="h-60 bg-gray-100" />} key={src}>
-          <S3Image
-            src={src}
-            alt={src.split("/").pop() ?? "immagine"}
-            className="object-cover w-full h-full mb-4 rounded-xl shadow"
-          />
-        </Suspense>
+        <div key={src} className="mb-4 break-inside-avoid">
+          <Suspense fallback={<div className="h-60 bg-gray-100 rounded-xl" />}>
+            <S3Image
+              src={src}
+              alt={src.split("/").pop() ?? "immagine"}
+              className="w-full h-auto rounded-xl shadow object-cover transition-transform duration-300 ease-in-out hover:scale-[1.02]"
+            />
+          </Suspense>
+        </div>
       ))}
     </Masonry>
   );
