@@ -3,10 +3,10 @@
 import SkillsTag from "@/components/SkillsTags";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import SocialButton from "@/components/SocialButton";
 import getIcon from "@/utils/IconMap";
 import { useEffect, useState } from "react";
+import S3Image from "@/components/S3image";
 
 function LanguageTag({ language }: { language: string }) {
   const t = useTranslations();
@@ -61,12 +61,12 @@ export default function HomePage() {
       <div className="flex flex-col mt-10 md:flex-row items-start justify-center w-full gap-x-40">
         
         <div className="sticky top-10 flex flex-col items-center gap-6 text-center">
-          <Image
-            src="/images/homepage/entire.jpg"
+          <S3Image
+            src="profile/profile.jpg"
             alt="Federico Mattucci"
             width={250}
             height={250}
-            className="rounded-full object-top object-cover border border-gray-300 dark:border-gray-700 aspect-square overflow-hidden"
+            className="rounded-full object-cover border border-gray-300 dark:border-gray-700 aspect-square overflow-hidden"
           />
 
           <div className="flex items-center gap-4 text-lg font-semibold">

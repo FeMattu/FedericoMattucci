@@ -18,9 +18,11 @@ type Props = {
   src: string;
   alt?: string;
   className?: string;
+  width?: number;
+  height?: number;
 };
 
-export default function S3Image({ src, alt = '', className = '' }: Props) {
+export default function S3Image({ src, alt = '', width = undefined, height = undefined, className = '' }: Props) {
   const [metadata, setMetadata] = useState<ImageMetadata | null>(null);
   const [highResLoaded, setHighResLoaded] = useState(false);
 
@@ -39,8 +41,8 @@ export default function S3Image({ src, alt = '', className = '' }: Props) {
   }
 
   // Imposta le dimensioni dinamiche: se non disponibili usa valori di default
-  const width = metadata.width ? parseInt(metadata.width as string, 10) : 1000;
-  const height = metadata.height ? parseInt(metadata.height as string, 10) : 250;
+  const imageWidth = width ? width : metadata.width ? parseInt(metadata.width as string, 10) : 1000;
+  const imageHeight = height ? height : metadata.height ? parseInt(metadata.height as string, 10) : 250;
 
   return (
     <div className={`relative w-full ${className}`}>
@@ -49,9 +51,9 @@ export default function S3Image({ src, alt = '', className = '' }: Props) {
         <Image
           src={metadata.blurUrl}
           alt={metadata.alt || alt}
-          width={width}
-          height={height}
-          className="object-cover rounded-xl shadow absolute inset-0 transition-opacity duration-300"
+          width={imageWidth}
+          height={imageHeight}
+          className="shadow absolute inset-0 transition-opacity duration-300"
           style={{ filter: 'blur(20px)', opacity: highResLoaded ? 0 : 1 }}
           loading="eager"
         />
@@ -61,9 +63,9 @@ export default function S3Image({ src, alt = '', className = '' }: Props) {
       <Image
         src={metadata.url}
         alt={metadata.alt || alt}
-        width={width}
-        height={height}
-        className="object-cover rounded-xl shadow"
+        width={imageWidth}
+        height={imageHeight}
+        className={className}
         loading="lazy"
         onLoad={() => setHighResLoaded(true)}
       />

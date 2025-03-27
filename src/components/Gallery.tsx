@@ -41,7 +41,7 @@ export default function Gallery({ path }: GalleryProps) {
     <Masonry
       breakpointCols={breakpoints}
       className="flex gap-4 w-full justify-center"
-      columnClassName="masonry-column"
+      columnClassName="masonry-column p-4"
     >
       {images.map((src) => (
         <Suspense fallback={<div className="h-60 bg-gray-100" />} key={src}>
