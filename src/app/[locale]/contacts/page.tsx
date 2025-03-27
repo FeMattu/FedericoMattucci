@@ -30,24 +30,21 @@ function ContactList() {
     }, []);
 
     return (
-        <div className="flex flex-col gap-4">
-            {/* Emails */}
+        <div className="flex flex-col gap-2 items-center">
             {Object.entries(contacts.email).map(([emailType, emailValue]) => (
                 <Contact
                     key={emailType}
                     href={`mailto:${emailValue}`}
                     type={emailType}
-                    icon={getIcon("email", 24)} // Usa la funzione getIcon con la dimensione
+                    icon={getIcon("email", 24)}
                     contact={emailValue}
                 />
             ))}
-            
-            {/* Phone */}
             {contacts.phone && (
                 <Contact
                     href={`tel:${contacts.phone}`}
                     type="phone"
-                    icon={getIcon("phone", 24)} // Usa la funzione getIcon con la dimensione
+                    icon={getIcon("phone", 24)}
                     contact={contacts.phone}
                 />
             )}
@@ -79,15 +76,16 @@ function SocialLinks() {
         </div>
     );
 }
+
 export default function Contacts() {
     const t = useTranslations();
     return (
-        <div className="h-screen flex flex-row gap-20 max-h-screen items-center justify-center px-6">
-            <div className="flex flex-col items-center gap-6 max-w-lg">
+        <div className="min-h-screen px-6 py-10 flex flex-col sm:flex-row items-center justify-center gap-16 sm:gap-20 text-center sm:text-center">
+            <div className="flex flex-col items-center gap-4 max-w-lg">
                 <h1 className="text-4xl font-bold">{t("contact")}</h1>
                 <ContactList />
             </div>
-            <div className="flex flex-col items-center gap-6 max-w-lg">
+            <div className="flex flex-col items-center gap-4 max-w-lg">
                 <h1 className="text-4xl font-bold">{t("social-media")}</h1>
                 <SocialLinks />
             </div>
