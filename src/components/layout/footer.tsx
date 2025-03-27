@@ -12,10 +12,10 @@ export default function Footer() {
                 <Logo />
             </div>
             <nav className="flex gap-6">
-                <Link href="/" className="hover:font-bold">
+                <Link href="/portfolio" className="hover:font-bold">
                     {t("portfolio")}
                 </Link>
-                <Link href="/" className="hover:font-bold">
+                <Link href="/contacts" className="hover:font-bold">
                     {t("contact")}
                 </Link>
             </nav>

@@ -23,8 +23,7 @@
       "@/styles/": ["./src/styles/"],
       "@/components/": ["./src/ui/components"],
       "@/layouts/": ["./src/ui/layouts"],
-      "@/public/": ["./public/"],
-      "@/photos/": ["./public/images/portfolio/"],
+      "@/public/": ["./public/"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/image/route.ts"],
