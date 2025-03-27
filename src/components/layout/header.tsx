@@ -10,32 +10,40 @@ import getIcon from "@/utils/IconMap";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const t = useTranslations(); // Per le traduzioni
+  const t = useTranslations();
 
   return (
-    <nav className="sticky w-full">
+    <nav className="sticky w-full z-50 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <Logo />
+        
         <div className="hidden md:flex gap-6">
           <Link href="/portfolio" className="hover:font-bold">{t('portfolio')}</Link>
           <Link href="/contacts" className="hover:font-bold">{t('contact')}</Link>
         </div>
+
         <div className="flex gap-6 items-center">
           <DarkModeToggle />
-          <LanguageSelector className="hidden md:flex gap-2 border border-gray-300 rounded-lg px-3 py-1" />  
+          <LanguageSelector className="hidden md:flex gap-2 border border-gray-300 rounded-lg px-3 py-1" />
         </div>
+
         <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-gray-700">
-          {isOpen ?  getIcon("close-menu-mobile", 28) : getIcon("menu-mobile", 28)}
+          {isOpen ? getIcon("close-menu-mobile") : getIcon("menu-mobile")}
         </button>
       </div>
 
-      {/* Menu Mobile */}
+      {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t shadow-md absolute w-full left-0">
-          <div className="flex flex-col items-center gap-4 py-4">
-            <Link href="/" className="hover:text-blue-600">{t("home")}</Link>
-            <Link href="/portfolio" className="hover:text-blue-600">{t("portfolio")}</Link>
-            <Link href="/contatacts" className="hover:text-blue-600">{t("contatti")}</Link>
+        <div className="md:hidden fixed top-0 left-0 w-full h-screen z-50 bg-white/97 dark:bg-black/90 backdrop-blur-md px-6">
+          <div className="flex justify-end pt-6">
+            <button onClick={() => setIsOpen(false)} className="text-gray-700">
+              {getIcon("close-menu-mobile")}
+            </button>
+          </div>
+          <div className="flex flex-col items-center gap-6 mt-10 text-xl font-semibold">
+            <Link href="/" className="hover:text-blue-600" onClick={() => setIsOpen(false)}>{t("home")}</Link>
+            <Link href="/portfolio" className="hover:text-blue-600" onClick={() => setIsOpen(false)}>{t("portfolio")}</Link>
+            <Link href="/contacts" className="hover:text-blue-600" onClick={() => setIsOpen(false)}>{t("contact")}</Link>
             <LanguageSelector className="flex gap-4 mt-4 border border-gray-300 rounded-lg px-3 py-1" />
           </div>
         </div>

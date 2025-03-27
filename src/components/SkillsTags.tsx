@@ -27,7 +27,7 @@ export default function SkillsTag({ JSONfile, className }: { JSONfile: string; c
       {Object.entries(skills).map(([category, technologies]) => (
         <div key={category}>
           <CategoryTitle category={category} />
-          <div className="flex flex-wrap gap-2 mt-1">
+          <div className="flex items-center justify-center md:justify-start flex-wrap gap-2 mt-1">
             {Object.values(technologies).map((tech) => (
               <span
                 key={tech}

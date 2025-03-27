@@ -45,7 +45,7 @@ export default function S3Image({ src, alt = '', width = undefined, height = und
   const imageHeight = height ? height : metadata.height ? parseInt(metadata.height as string, 10) : 250;
 
   return (
-    <div className={`relative w-full ${className}`}>
+    <div className={`relative ${className}`}>
       {/* Versione blur come background */}
       {metadata.blurUrl && (
         <Image
