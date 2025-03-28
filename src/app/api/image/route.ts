@@ -2,15 +2,47 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSignedUrl } from '@aws-sdk/cloudfront-signer';
 import { S3Client, HeadObjectCommand } from '@aws-sdk/client-s3';
 
+const baseUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000/'
+    : process.env.NEXT_PUBLIC_DOMAIN;
+
+
 // Funzione helper per generare l'attributo alt a partire dal nome del file
 function getAltFromKey(key: string): string {
   const name = key.split('/').pop() || '';
   return name.replace(/[-_]/g, ' ').replace(/\.\w+$/, '');
 }
 
+async function dynamicBlurDataUrl(url:string): Promise<string>{
+  const base64str = await fetch(
+    `${baseUrl}/_next/image?url=${url}&w=64&q=75`
+  ).then(async (res) =>
+    Buffer.from(await res.arrayBuffer()).toString('base64')
+  );
+
+  const blurSvg = `
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'>
+      <filter id='b' color-interpolation-filters='sRGB'>
+        <feGaussianBlur stdDeviation='1' />
+      </filter>
+
+      <image preserveAspectRatio='none' filter='url(#b)' x='0' y='0' height='100%' width='100%' 
+      href='data:image/avif;base64,${base64str}' />
+    </svg>
+  `;
+
+  const toBase64 = (str:string) =>
+    typeof window === 'undefined'
+      ? Buffer.from(str).toString('base64')
+      : window.btoa(str);
+
+  return `data:image/svg+xml;base64,${toBase64(blurSvg)}`;
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const key = searchParams.get('key'); // es. ?key=portfolio/street-photography/ferrari.jpg
+  const key = searchParams.get('key');
 
   if (!key) {
     return NextResponse.json({ error: 'Missing "key" query parameter.' }, { status: 400 });
@@ -49,8 +81,6 @@ export async function GET(request: NextRequest) {
   const resourceUrl = `${normalizedBase}/${resourceKey}`;
 
   // Genera l'URL per la versione blur:
-  // Se il percorso inizia con "portfolio", lo sostituisci con "blur/portfolio",
-  // altrimenti aggiungi "blur/" come prefisso
   const blurKey = `blur/${resourceKey}`;
   const blurResourceUrl = `${normalizedBase}/${blurKey}`;
 
@@ -83,7 +113,7 @@ export async function GET(request: NextRequest) {
   // Restituisce i metadati completi insieme agli URL firmati
   return NextResponse.json({
     url: signedUrl,
-    blurUrl: signedBlurUrl,
+    blurUrl: await dynamicBlurDataUrl(signedBlurUrl),
     name: key.split('/').pop(),
     alt: getAltFromKey(key),
     width,

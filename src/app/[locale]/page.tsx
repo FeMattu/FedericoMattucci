@@ -72,7 +72,7 @@ export default function HomePage() {
             <p>Lucca - {t("tuscany")} - {t("italy")}</p>
           </div>
 
-          <div className="flex gap-2 flex-wrap justify-center md:justify-start">
+          <div className="flex gap-2 flex-wrap justify-center">
             <LanguageTag language="it" />
             <LanguageTag language="en" />
           </div>

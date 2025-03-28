@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import Masonry from "react-masonry-css";
 import S3Image from "./S3image";
+import { useTranslations } from "next-intl";
 
 interface GalleryProps {
   path: string;
@@ -11,6 +12,7 @@ interface GalleryProps {
 export default function Gallery({ path }: GalleryProps) {
   const [images, setImages] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const t = useTranslations()
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -35,7 +37,7 @@ export default function Gallery({ path }: GalleryProps) {
     500: 1,
   };
 
-  if (loading) return <p className="text-center">Caricamento immagini...</p>;
+  if (loading) return <p className="text-center">{t("fetch-images")}</p>;
 
   return (
     <Masonry

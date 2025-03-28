@@ -24,7 +24,6 @@ type Props = {
 
 export default function S3Image({ src, alt = '', width = undefined, height = undefined, className = '' }: Props) {
   const [metadata, setMetadata] = useState<ImageMetadata | null>(null);
-  const [highResLoaded, setHighResLoaded] = useState(false);
 
   useEffect(() => {
     const fetchMetadata = async () => {
@@ -45,31 +44,16 @@ export default function S3Image({ src, alt = '', width = undefined, height = und
   const imageHeight = height ? height : metadata.height ? parseInt(metadata.height as string, 10) : 250;
 
   return (
-    <div className={`relative ${className}`}>
-      {/* Versione blur come background */}
-      {metadata.blurUrl && (
-        <Image
-          src={metadata.blurUrl}
-          alt={metadata.alt || alt}
-          width={imageWidth}
-          height={imageHeight}
-          className="shadow absolute inset-0 transition-opacity duration-300"
-          style={{ filter: 'blur(20px)', opacity: highResLoaded ? 0 : 1 }}
-          loading="eager"
-        />
-      )}
-
-      {/* Immagine ad alta qualità */}
-      <Image
-        src={metadata.url}
-        alt={metadata.alt || alt}
-        width={imageWidth}
-        height={imageHeight}
-        className={className}
-        loading="lazy"
-        onLoad={() => setHighResLoaded(true)}
-      />
-    </div>
+    <Image
+      src={metadata.url}
+      alt={metadata.alt || alt}
+      width={imageWidth}
+      height={imageHeight}
+      className={className}
+      priority
+      placeholder='blur'
+      blurDataURL={metadata.blurUrl}
+    />
   );
 }
 
