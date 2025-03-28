@@ -5,7 +5,7 @@ import { S3Client, HeadObjectCommand } from '@aws-sdk/client-s3';
 const baseUrl =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000/'
-    : process.env.NEXT_PUBLIC_DOMAIN;
+    : 'https://'+process.env.VERCEL_URL;
 
 
 // Funzione helper per generare l'attributo alt a partire dal nome del file
