@@ -6,6 +6,8 @@ import Header from "@/components/layout/header";
 import "@/styles/globals.css";
 import Footer from "@/components/layout/footer";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: "Federico Mattucci",
@@ -29,6 +31,8 @@ export default async function RootLayout({
     <html lang={locale}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <Analytics/>
+        <SpeedInsights/>
       </head>
       <body className="font-sans">
         <ThemeProvider>
