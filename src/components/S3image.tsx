@@ -6,12 +6,12 @@ import Image from 'next/image';
 type ImageMetadata = {
   url: string;
   blurUrl?: string;
-  name: string | null;
   alt: string;
-  width: string | number | null;
-  height: string | number | null;
-  type: string | null;
-  exif: string | null;
+  metadata: {
+    width: number;
+    height: number;
+    exif: Record<string, any>;
+  };
 };
 
 type Props = {
@@ -27,9 +27,14 @@ export default function S3Image({ src, alt = '', width = undefined, height = und
 
   useEffect(() => {
     const fetchMetadata = async () => {
-      const res = await fetch(`/api/image?key=${encodeURIComponent(src)}`);
-      const data = await res.json();
-      setMetadata(data);
+      try {
+        const res = await fetch(`/api/image?filename=${encodeURIComponent(src)}`);
+        if (!res.ok) throw new Error('Impossibile caricare metadati');
+        const data = await res.json();
+        setMetadata(data);
+      } catch (error) {
+        console.error('Errore nel caricamento metadati:', error);
+      }
     };
 
     fetchMetadata();
@@ -39,9 +44,8 @@ export default function S3Image({ src, alt = '', width = undefined, height = und
     return <div className="bg-gray-200 animate-pulse h-64 w-full rounded-xl" />;
   }
 
-  // Imposta le dimensioni dinamiche: se non disponibili usa valori di default
-  const imageWidth = width ? width : metadata.width ? parseInt(metadata.width as string, 10) : 1000;
-  const imageHeight = height ? height : metadata.height ? parseInt(metadata.height as string, 10) : 250;
+  const imageWidth = width ?? metadata.metadata?.width ?? 1000;
+  const imageHeight = height ?? metadata.metadata?.height ?? 250;
 
   return (
     <Image
@@ -51,7 +55,7 @@ export default function S3Image({ src, alt = '', width = undefined, height = und
       height={imageHeight}
       className={className}
       priority
-      placeholder='blur'
+      placeholder="blur"
       blurDataURL={metadata.blurUrl}
     />
   );

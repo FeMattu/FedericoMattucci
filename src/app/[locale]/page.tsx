@@ -58,7 +58,7 @@ export default function HomePage() {
     <div className="max-w-7xl mx-auto min-h-screen px-4 sm:px-6 flex items-start justify-center">
       <div className="flex flex-col md:flex-row w-full gap-y-10 md:gap-x-10 lg:gap-x-40 mt-10">
         
-        <div className="flex flex-col items-center text-center md:sticky top-10 md:items-start md:text-left gap-6 sm:mb-10">
+        <div className="flex flex-col items-center text-center md:sticky top-10 md:text-left gap-6 sm:mb-10">
           <S3Image
             src="profile/profile.jpg"
             alt="Federico Mattucci"
