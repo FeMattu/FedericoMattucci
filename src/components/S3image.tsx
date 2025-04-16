@@ -10,7 +10,7 @@ type ImageMetadata = {
   metadata: {
     width: number;
     height: number;
-    exif: Record<string, any>;
+    exif: Record<string, string>;
   };
 };
 
