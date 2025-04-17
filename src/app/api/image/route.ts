@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
+import { getPlaiceholder } from 'plaiceholder';
 
 const baseUrl =
   process.env.NODE_ENV === 'development'
@@ -34,27 +35,12 @@ function getAltFromKey(key: string): string {
 }
 
 async function dynamicBlurDataUrl(url: string): Promise<string> {
-  const base64str = await fetch(
-    `${baseUrl}/_next/image?url=${url}&w=16&q=75`
-  ).then(async (res) =>
-    Buffer.from(await res.arrayBuffer()).toString('base64')
-  );
+  const response = await fetch(`${baseUrl}/_next/image?url=${url}&w=16&q=75`)
+  if (!response.ok) throw new Error('Errore nel fetch dell\'immagine da CloudFront');
 
-  const blurSvg = `
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 9">
-    <filter id="b" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="1.5" />
-    </filter>
-    <image filter="url(#b)" x="0" y="0" width="100%" height="100%" href="data:image/jpeg;base64,${base64str}" />
-  </svg>`;
-
-
-  const toBase64 = (str: string) =>
-    typeof window === 'undefined'
-      ? Buffer.from(str).toString('base64')
-      : window.btoa(str);
-  
-  return `data:image/svg+xml;base64,${toBase64(blurSvg)}`;  
+  const buffer = await response.arrayBuffer();
+  const { base64 } = await getPlaiceholder(Buffer.from(buffer), {size: 10});
+  return base64;
 }
 
 export async function GET(req: NextRequest) {
