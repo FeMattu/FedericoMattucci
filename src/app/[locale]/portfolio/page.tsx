@@ -1,7 +1,6 @@
 "use client";
 
 import Gallery from "@/components/Gallery";
-import { useTranslations } from "next-intl";
 
 export default function Portfolio() {
     return (
