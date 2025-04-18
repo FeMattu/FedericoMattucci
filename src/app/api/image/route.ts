@@ -35,7 +35,11 @@ function getAltFromKey(key: string): string {
 }
 
 async function dynamicBlurDataUrl(url: string): Promise<string> {
-  const response = await fetch(`${baseUrl}/_next/image?url=${url}&w=16&q=75`)
+  const response = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0',
+    },
+  });
   if (!response.ok) throw new Error('Errore nel fetch dell\'immagine da CloudFront');
 
   const buffer = await response.arrayBuffer();
@@ -53,6 +57,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const signedUrl = generateSignedUrl(filename);
+    const tinyImageUrl = signedUrl + '?w=16&q=30';
     const jsonFilename = filename.replace(/\.[^/.]+$/, ".json");
     const metadataUrl = generateSignedUrl(jsonFilename);
 
@@ -66,7 +71,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({
       url: signedUrl,
-      blurUrl: await dynamicBlurDataUrl(signedUrl),
+      blurUrl: await dynamicBlurDataUrl(tinyImageUrl),
       name: filename.split('/').pop(),
       alt: getAltFromKey(filename),
       metadata
