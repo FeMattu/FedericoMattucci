@@ -2,11 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
 import { getPlaiceholder } from 'plaiceholder';
 
-const baseUrl =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000/'
-    : 'https://' + process.env.VERCEL_URL;
-
 const cloudfrontUrl = process.env.CLOUDFRONT_URL || '';
 const normalizedBase = cloudfrontUrl.endsWith('/') ? cloudfrontUrl.slice(0, -1) : cloudfrontUrl;
 // Recupera e formatta la chiave privata
