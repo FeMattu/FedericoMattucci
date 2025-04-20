@@ -3,14 +3,18 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-type ImageMetadata = {
+type ImageMetadataResponse = {
   url: string;
-  blurUrl?: string;
+  name: string;
   alt: string;
   metadata: {
     width: number;
     height: number;
-    exif: Record<string, string>;
+    dpi?: [number, number];
+    filesize_bytes: number;
+    filesize_mb: number;
+    blurDataUrl?: string;
+    exif: Record<string, unknown>;
   };
 };
 
@@ -23,7 +27,7 @@ type Props = {
 };
 
 export default function S3Image({ src, alt = '', width = undefined, height = undefined, className = '' }: Props) {
-  const [metadata, setMetadata] = useState<ImageMetadata | null>(null);
+  const [metadata, setMetadata] = useState<ImageMetadataResponse | null>(null);
 
   useEffect(() => {
     const fetchMetadata = async () => {
@@ -46,6 +50,7 @@ export default function S3Image({ src, alt = '', width = undefined, height = und
 
   const imageWidth = width ?? metadata.metadata?.width ?? 1000;
   const imageHeight = height ?? metadata.metadata?.height ?? 250;
+  const blur = metadata.metadata?.blurDataUrl;
 
   return (
     <Image
@@ -55,9 +60,8 @@ export default function S3Image({ src, alt = '', width = undefined, height = und
       height={imageHeight}
       className={className}
       priority
-      placeholder="blur"
-      blurDataURL={metadata.blurUrl}
+      placeholder={blur ? 'blur' : 'empty'}
+      blurDataURL={blur}
     />
   );
 }
-

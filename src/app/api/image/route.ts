@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
-import { getPlaiceholder } from 'plaiceholder';
 
 const cloudfrontUrl = process.env.CLOUDFRONT_URL || '';
 const normalizedBase = cloudfrontUrl.endsWith('/') ? cloudfrontUrl.slice(0, -1) : cloudfrontUrl;
@@ -29,19 +28,6 @@ function getAltFromKey(key: string): string {
   return name.replace(/[-_]/g, ' ').replace(/\.\w+$/, '');
 }
 
-async function dynamicBlurDataUrl(url: string): Promise<string> {
-  const response = await fetch(url, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0',
-    },
-  });
-  if (!response.ok) throw new Error('Errore nel fetch dell\'immagine da CloudFront');
-
-  const buffer = await response.arrayBuffer();
-  const { base64 } = await getPlaiceholder(Buffer.from(buffer), {size: 10});
-  return base64;
-}
-
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const filename = searchParams.get("filename");
@@ -52,11 +38,9 @@ export async function GET(req: NextRequest) {
 
   try {
     const signedUrl = generateSignedUrl(filename);
-    const tinyImageUrl = signedUrl + '?w=16&q=30';
     const jsonFilename = filename.replace(/\.[^/.]+$/, ".json");
     const metadataUrl = generateSignedUrl(jsonFilename);
-
-    const metadataRes = await fetch(metadataUrl, { cache: "no-store" });
+    const metadataRes = await fetch(metadataUrl);
 
     if (!metadataRes.ok) {
       return NextResponse.json({ error: "Metadata not found" }, { status: 404 });
@@ -66,7 +50,6 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({
       url: signedUrl,
-      blurUrl: await dynamicBlurDataUrl(tinyImageUrl),
       name: filename.split('/').pop(),
       alt: getAltFromKey(filename),
       metadata

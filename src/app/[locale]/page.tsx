@@ -62,9 +62,7 @@ export default function HomePage() {
           <S3Image
             src="profile/profile.jpg"
             alt="Federico Mattucci"
-            width={250}
-            height={250}
-            className="rounded-full object-cover border border-gray-300 dark:border-gray-700 overflow-hidden"
+            className="rounded-full w-[250px] h-[250px] object-cover border border-gray-300 dark:border-gray-700 overflow-hidden"
           />
 
           <div className="flex items-center gap-4 text-lg font-semibold">
