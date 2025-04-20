@@ -62,6 +62,7 @@ export default function HomePage() {
           <S3Image
             src="profile/profile.jpg"
             alt="Federico Mattucci"
+            lightbox={false}
             className="rounded-full w-[250px] h-[250px] object-cover border border-gray-300 dark:border-gray-700 overflow-hidden"
           />
 
