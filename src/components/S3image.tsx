@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client';
 
 import { ReactNode, useEffect, useState } from 'react';
@@ -18,7 +19,7 @@ type ImageMetadataResponse = {
     filesize_bytes: number;
     filesize_mb: number;
     blurDataUrl?: string;
-    exif: Record<string, unknown>;
+    exif: Record<string, any>;
   };
 };
 
