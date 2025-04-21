@@ -1,7 +1,7 @@
 /* eslint-disable */
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import getIcon from '@/utils/IconMap';
@@ -35,6 +35,9 @@ type Props = {
 export default function S3Image({ src, alt = '', width, height, className = '', lightbox = true }: Props) {
   const [metadata, setMetadata] = useState<ImageMetadataResponse | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  // Gestione swipe up/down per mostrare/nascondere le informazioni
+  const [showInfo, setShowInfo] = useState(false);
+  const touchStartYRef = useRef<number | null>(null);
   const t = useTranslations();
 
   useEffect(() => {
@@ -55,6 +58,9 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
   if (!metadata) {
     return <div className="bg-gray-200 animate-pulse h-64 w-full rounded-xl" />;
   }
+
+  const handleSwipeUp = () => setShowInfo(true);
+  const handleSwipeDown = () => setShowInfo(false);
 
   const imageWidth = width ?? metadata.metadata?.width ?? 1000;
   const imageHeight = height ?? metadata.metadata?.height ?? 250;
@@ -98,7 +104,10 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
             exit={{ opacity: 0 }}
             onClick={() => setIsOpen(false)}
           >
-            <div className="text-black dark:text-white rounded-xl shadow-lg max-w-7xl w-full h-[90vh] flex flex-col md:flex-row overflow-hidden backdrop-blur-xl" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="text-black dark:text-white rounded-xl shadow-lg max-w-7xl w-full h-[90vh] flex flex-col md:flex-row overflow-hidden backdrop-blur-xl relative"
+              onClick={(e) => e.stopPropagation()}
+            >
               {/* Bottone chiusura */}
               <button
                 className="absolute top-4 right-4 z-10 bg-transparent hover:scale-110 transition-transform"
@@ -108,75 +117,91 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                 {getIcon("close-menu-mobile", 24)}
               </button>
 
-              {/* Lato immagine */}
-              <div className="flex-1 relative h-1/2 md:h-full">
+              {/* Immagine con padding mobile */}
+              <div
+                className="relative flex-1 flex items-center justify-center px-4 py-6"
+                onTouchStart={(e) => (touchStartYRef.current = e.touches[0].clientY)}
+                onTouchEnd={(e) => {
+                  const touchEndY = e.changedTouches[0].clientY;
+                  if (touchStartYRef.current !== null) {
+                    if (touchStartYRef.current - touchEndY > 50) handleSwipeUp();
+                    if (touchEndY - touchStartYRef.current > 50) handleSwipeDown();
+                  }
+                  touchStartYRef.current = null;
+                }}
+              >
                 <Image
                   src={metadata.url}
                   alt={metadata.alt || alt}
                   fill
                   className="object-contain"
                 />
+
+                {!showInfo && (
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+                    {getIcon("arrow-down", 24)}
+                  </div>
+                )}
               </div>
 
               {/* Lato metadati */}
-              <div className="w-full md:w-1/3 flex flex-col justify-center p-6 overflow-y-auto space-y-6">
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">{t("dimentions")}</h2>
-                  <div className='space-x-2 space-y-2'>
-                    <InfoTag icon={getIcon("ratio", iconSize)} value={`${metadata.metadata.width}×${metadata.metadata.height}px`} />
-                    {metadata.metadata.dpi && (
-                      <InfoTag icon={getIcon("dpi", iconSize)} value={metadata.metadata.dpi.join(' × ')} />
-                    )}
+              {(showInfo || typeof window !== 'undefined' && window.innerWidth >= 768) && (
+                <div className="w-full md:w-1/3 flex flex-col justify-center p-6 overflow-y-auto space-y-6">
+                  <div>
+                    <h2 className="text-2xl font-bold mb-2">{t("dimentions")}</h2>
+                    <div className='space-x-2 space-y-2'>
+                      <InfoTag icon={getIcon("ratio", iconSize)} value={`${metadata.metadata.width}×${metadata.metadata.height}px`} />
+                      {metadata.metadata.dpi && (
+                        <InfoTag icon={getIcon("dpi", iconSize)} value={metadata.metadata.dpi.join(' × ')} />
+                      )}
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">{t("settings")}</h2>
-                  <div className='space-x-2 space-y-2'>
-                    {exif.aperture && exif.aperture !== '' && (
-                      <InfoTag icon={getIcon("aperture", iconSize)} value={exif.aperture} />
-                    )}
-                    {exif.exposure_time && exif.exposure_time !== '' && (
-                      <InfoTag icon={getIcon("shutter-speed", iconSize)} value={exif.exposure_time} />
-                    )}
-                    {exif.iso && (
-                      <InfoTag icon={getIcon("iso", iconSize)} value={exif.iso} />
-                    )}
+                  <div>
+                    <h2 className="text-2xl font-bold mb-2">{t("settings")}</h2>
+                    <div className='space-x-2 space-y-2'>
+                      {exif.aperture && exif.aperture !== '' && (
+                        <InfoTag icon={getIcon("aperture", iconSize)} value={exif.aperture} />
+                      )}
+                      {exif.exposure_time && exif.exposure_time !== '' && (
+                        <InfoTag icon={getIcon("shutter-speed", iconSize)} value={exif.exposure_time+'s'} />
+                      )}
+                      {exif.iso && (
+                        <InfoTag icon={getIcon("iso", iconSize)} value={exif.iso+' ISO'} />
+                      )}
+                    </div>
                   </div>
-                </div>
-                
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">{t("camera")}</h2>
-                  <div className="space-y-2 space-x-2">
-                    {(exif.make || exif.model) && (
-                      <InfoTag icon={getIcon("camera", iconSize)} value={[exif.make, exif.model].filter(Boolean).join(' - ')} />
-                    )}
-                    {exif.lens_model && exif.lens_model !== '' && (
-                      <InfoTag icon={getIcon("lens", iconSize)} value={exif.lens_model} />
-                    )}
-                    {exif.datetime_original && exif.datetime_original !== '' && (
-                      <InfoTag icon={getIcon("date", iconSize)} value={exif.datetime_original} />
-                    )}
-                  </div>  
-                </div>
+                  
+                  <div>
+                    <h2 className="text-2xl font-bold mb-2">{t("camera")}</h2>
+                    <div className="space-y-2 space-x-2">
+                      {(exif.make || exif.model) && (
+                        <InfoTag icon={getIcon("camera", iconSize)} value={[exif.make, exif.model].filter(Boolean).join(' - ')} />
+                      )}
+                      {exif.lens_model && exif.lens_model !== '' && (
+                        <InfoTag icon={getIcon("lens", iconSize)} value={exif.lens_model} />
+                      )}
+                    </div>  
+                  </div>
 
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">{t("other")}</h2>
-                  <div className="flex flex-wrap gap-2">
-                    {exif.datetime_original && exif.datetime_original !== '' && (
-                      <InfoTag
-                        icon={getIcon("date", iconSize)}
-                        value={format(parseExifDate(exif.datetime_original), 'dd/MM/yyyy HH:mm')}
-                      />
-                    )}
-                    {(exif.gps && exif.gps.latitude && exif.gps.longitude) && (
-                      <InfoTag
-                        icon={getIcon("location", iconSize)}
-                        value={`${exif.gps.latitude}, ${exif.gps.longitude}`}
-                      />
-                    )}
+                  <div>
+                    <h2 className="text-2xl font-bold mb-2">{t("other")}</h2>
+                    <div className="flex flex-wrap gap-2">
+                      {exif.datetime_original && exif.datetime_original !== '' && (
+                        <InfoTag
+                          icon={getIcon("date", iconSize)}
+                          value={format(parseExifDate(exif.datetime_original), 'dd/MM/yyyy HH:mm')}
+                        />
+                      )}
+                      {(exif.gps && exif.gps.latitude && exif.gps.longitude) && (
+                        <InfoTag
+                          icon={getIcon("location", iconSize)}
+                          value={`${exif.gps.latitude}, ${exif.gps.longitude}`}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </motion.div>
         )}
