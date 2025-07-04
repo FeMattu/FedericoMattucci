@@ -3,7 +3,7 @@ import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
 
 // Cache per le risposte API
 const CACHE_DURATION = 60 * 60; // 1 ora in secondi
-const imageMetadataCache = new Map<string, { data: any, timestamp: number }>();
+const imageMetadataCache = new Map<string, { data: Record<string, unknown>, timestamp: number }>();
 
 const cloudfrontUrl = process.env.CLOUDFRONT_URL || '';
 const normalizedBase = cloudfrontUrl.endsWith('/') ? cloudfrontUrl.slice(0, -1) : cloudfrontUrl;

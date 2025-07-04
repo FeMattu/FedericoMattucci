@@ -1,5 +1,11 @@
 'use server';
 
+interface ImageItem {
+  key: string;
+  url: string;
+  name?: string;
+}
+
 /**
  * Funzione server per ottenere l'elenco delle immagini da precaricare
  * @param folderPath Percorso della cartella contenente le immagini
@@ -20,7 +26,7 @@ export async function getImagesForPrefetching(folderPath: string): Promise<strin
     }
     
     const data = await response.json();
-    return data.images.map((img: any) => img.url);
+    return data.images.map((img: ImageItem) => img.url);
   } catch (error) {
     console.error('Errore nel prefetching delle immagini:', error);
     return [];

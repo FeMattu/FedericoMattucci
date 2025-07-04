@@ -7,8 +7,8 @@ import { useCache } from '@/providers/CacheProvider';
 interface UseSmartNavigationReturn {
   isLoading: boolean;
   navigateTo: (href: string) => void;
-  setPageData: (key: string, data: any) => void;
-  getPageData: (key: string) => any;
+  setPageData: <T>(key: string, data: T) => void;
+  getPageData: <T>(key: string) => T | null;
 }
 
 /**
@@ -32,17 +32,17 @@ export function useSmartNavigation(): UseSmartNavigationReturn {
   }, [router]);
 
   // Salva i dati di una pagina nella cache
-  const setPageData = useCallback((key: string, data: any) => {
+  const setPageData = useCallback(function<T>(key: string, data: T): void {
     // Crea una chiave specifica per la pagina corrente
     const pageKey = `${pathname}:${key}`;
     setCache(pageKey, data);
   }, [pathname, setCache]);
 
   // Recupera i dati di una pagina dalla cache
-  const getPageData = useCallback((key: string) => {
+  const getPageData = useCallback(function<T>(key: string): T | null {
     // Recupera i dati usando la chiave specifica per la pagina
     const pageKey = `${pathname}:${key}`;
-    return getCache(pageKey);
+    return getCache(pageKey) as T | null;
   }, [pathname, getCache]);
 
   // Resetta lo stato di caricamento quando la transizione è completata

@@ -8,12 +8,18 @@ import { useCache } from "@/providers/CacheProvider";
 import ImagePrefetcher from "./ImagePrefetcher";
 import { withPageCache } from "@/utils/withPageCache";
 
+interface ImageItem {
+  key: string;
+  url: string;
+  name?: string;
+}
+
 interface GalleryProps {
   path: string;
 }
 
 function Gallery({ path }: GalleryProps) {
-  const [images, setImages] = useState<any[]>([]);
+  const [images, setImages] = useState<ImageItem[]>([]);
   const [loading, setLoading] = useState(true);
   const t = useTranslations();
   const { setCache, getCache } = useCache();

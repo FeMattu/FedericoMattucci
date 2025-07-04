@@ -3,7 +3,7 @@ import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3';
 
 // Cache per le risposte API
 const CACHE_DURATION = 60 * 60 * 24; // 24 ore in secondi
-const imageCache = new Map<string, { data: any, timestamp: number }>();
+const imageCache = new Map<string, { data: Record<string, unknown>, timestamp: number }>();
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION!,

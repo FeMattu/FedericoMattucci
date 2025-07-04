@@ -34,7 +34,8 @@ export default async function RootLayout({
   let messages;
   try {
     messages = (await import(`../../../public/languages/${locale}.json`)).default;
-  } catch (error) {
+  } catch (err) {
+    console.error("Errore nel caricamento dei messaggi:", err);
     notFound();
   }
  
