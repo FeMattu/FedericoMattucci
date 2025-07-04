@@ -26,7 +26,7 @@ export function withPageCache<P extends object>(
       
       if (cachedScrollPosition) {
         // Ripristina la posizione dello scroll
-        window.scrollTo(0, cachedScrollPosition);
+        window.scrollTo(0, Number(cachedScrollPosition));
       }
       
       // Salva la posizione dello scroll quando l'utente lascia la pagina

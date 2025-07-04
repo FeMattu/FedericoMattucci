@@ -10,6 +10,20 @@ import { format } from 'date-fns';
 import { useCache } from '@/providers/CacheProvider';
 import OptimizedImage from './OptimizedImage';
 
+type ExifData = {
+  aperture?: string;
+  exposure_time?: string;
+  iso?: string | number;
+  make?: string;
+  model?: string;
+  lens_model?: string;
+  datetime_original?: string;
+  gps?: {
+    latitude: string | number;
+    longitude: string | number;
+  };
+};
+
 type ImageMetadataResponse = {
   url: string;
   name: string;
@@ -21,7 +35,7 @@ type ImageMetadataResponse = {
     filesize_bytes: number;
     filesize_mb: number;
     blurDataUrl?: string;
-    exif: Record<string, any>;
+    exif: ExifData;
   };
 };
 
@@ -48,7 +62,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
     const fetchMetadata = async () => {
       try {
         // Controlla se i metadati sono già nella cache
-        const cachedMetadata = getCache(cacheKey);
+        const cachedMetadata = getCache<ImageMetadataResponse>(cacheKey);
         if (cachedMetadata) {
           setMetadata(cachedMetadata);
           return;
@@ -57,10 +71,10 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
         // Altrimenti, recupera i metadati dall'API
         const res = await fetch(`/api/image?filename=${encodeURIComponent(src)}`);
         if (!res.ok) throw new Error('Impossibile caricare metadati');
-        const data = await res.json();
+        const data: ImageMetadataResponse = await res.json();
         
         // Salva i metadati nella cache
-        setCache(cacheKey, data);
+        setCache<ImageMetadataResponse>(cacheKey, data);
         setMetadata(data);
       } catch (error) {
         console.error('Errore nel caricamento metadati:', error);
@@ -80,7 +94,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
   const imageWidth = width ?? metadata.metadata?.width ?? 1000;
   const imageHeight = height ?? metadata.metadata?.height ?? 250;
   const blur = metadata.metadata?.blurDataUrl;
-  const exif = metadata.metadata.exif ?? {};
+  const exif: ExifData = metadata.metadata.exif || {};
   const iconSize = 20; // Dimensione dell'icona in pixel
 
   const InfoTag = ({ icon, value }: { icon: ReactNode; value: string | number }) => (

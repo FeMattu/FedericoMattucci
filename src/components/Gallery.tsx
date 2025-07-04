@@ -29,7 +29,7 @@ function Gallery({ path }: GalleryProps) {
     const fetchImages = async () => {
       try {
         // Verifica se le immagini sono già nella cache
-        const cachedImages = getCache(cacheKey);
+        const cachedImages = getCache<ImageItem[]>(cacheKey);
         if (cachedImages) {
           setImages(cachedImages);
           setLoading(false);

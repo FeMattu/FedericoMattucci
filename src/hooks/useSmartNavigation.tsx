@@ -42,7 +42,7 @@ export function useSmartNavigation(): UseSmartNavigationReturn {
   const getPageData = useCallback(function<T>(key: string): T | null {
     // Recupera i dati usando la chiave specifica per la pagina
     const pageKey = `${pathname}:${key}`;
-    return getCache(pageKey) as T | null;
+    return getCache<T>(pageKey);
   }, [pathname, getCache]);
 
   // Resetta lo stato di caricamento quando la transizione è completata
