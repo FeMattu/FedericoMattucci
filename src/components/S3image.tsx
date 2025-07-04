@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import getIcon from '@/utils/IconMap';
 import { useTranslations } from "next-intl";
 import { format } from 'date-fns';
+import { useCache } from '@/providers/CacheProvider';
+import OptimizedImage from './OptimizedImage';
 
 type ImageMetadataResponse = {
   url: string;
@@ -39,13 +41,26 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
   const [showInfo, setShowInfo] = useState(false);
   const touchStartYRef = useRef<number | null>(null);
   const t = useTranslations();
+  const { setCache, getCache } = useCache();
+  const cacheKey = `image:${src}`;
 
   useEffect(() => {
     const fetchMetadata = async () => {
       try {
+        // Controlla se i metadati sono già nella cache
+        const cachedMetadata = getCache(cacheKey);
+        if (cachedMetadata) {
+          setMetadata(cachedMetadata);
+          return;
+        }
+
+        // Altrimenti, recupera i metadati dall'API
         const res = await fetch(`/api/image?filename=${encodeURIComponent(src)}`);
         if (!res.ok) throw new Error('Impossibile caricare metadati');
         const data = await res.json();
+        
+        // Salva i metadati nella cache
+        setCache(cacheKey, data);
         setMetadata(data);
       } catch (error) {
         console.error('Errore nel caricamento metadati:', error);
@@ -53,10 +68,10 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
     };
 
     fetchMetadata();
-  }, [src]);
+  }, [src, cacheKey, setCache, getCache]);
 
   if (!metadata) {
-    return <div className="bg-gray-200 animate-pulse h-64 w-full rounded-xl" />;
+    return <div className="bg-gray-200 dark:bg-gray-800 animate-pulse h-64 w-full rounded-xl" />;
   }
 
   const handleSwipeUp = () => setShowInfo(true);
@@ -83,15 +98,14 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
 
   return (
     <>
-      <Image
+      <OptimizedImage
         src={metadata.url}
         alt={metadata.alt || alt}
         width={imageWidth}
         height={imageHeight}
         className={`${className} ${lightbox ? 'cursor-zoom-in' : ''}`}
-        priority
-        placeholder={blur ? 'blur' : 'empty'}
-        blurDataURL={blur}
+        priority={false}
+        quality={80}
         onClick={lightbox ? () => setIsOpen(true) : undefined}
       />
 
@@ -130,7 +144,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                   touchStartYRef.current = null;
                 }}
               >
-                <Image
+                <OptimizedImage
                   src={metadata.url}
                   alt={metadata.alt || alt}
                   fill

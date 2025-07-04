@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
 
+// Cache per le risposte API
+const CACHE_DURATION = 60 * 60; // 1 ora in secondi
+const imageMetadataCache = new Map<string, { data: any, timestamp: number }>();
+
 const cloudfrontUrl = process.env.CLOUDFRONT_URL || '';
 const normalizedBase = cloudfrontUrl.endsWith('/') ? cloudfrontUrl.slice(0, -1) : cloudfrontUrl;
 // Recupera e formatta la chiave privata
@@ -36,23 +40,60 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Missing filename" }, { status: 400 });
   }
 
+  // Verifica se abbiamo una risposta nella cache valida
+  const cacheKey = `image:${filename}`;
+  const now = Date.now();
+  const cachedResponse = imageMetadataCache.get(cacheKey);
+  
+  if (cachedResponse && (now - cachedResponse.timestamp) < CACHE_DURATION * 1000) {
+    // Genera un nuovo URL firmato per l'immagine (poiché questi scadono)
+    const signedUrl = generateSignedUrl(filename);
+    const responseData = {
+      ...cachedResponse.data,
+      url: signedUrl // Aggiorna l'URL firmato mantenendo gli altri metadati
+    };
+    
+    return NextResponse.json(responseData, {
+      headers: {
+        'Cache-Control': `public, max-age=${CACHE_DURATION}, s-maxage=${CACHE_DURATION}`,
+        'X-Cache': 'HIT'
+      }
+    });
+  }
+
   try {
     const signedUrl = generateSignedUrl(filename);
     const jsonFilename = filename.replace(/\.[^/.]+$/, ".json");
     const metadataUrl = generateSignedUrl(jsonFilename);
-    const metadataRes = await fetch(metadataUrl);
+    const metadataRes = await fetch(metadataUrl, {
+      next: { revalidate: CACHE_DURATION }
+    });
 
     if (!metadataRes.ok) {
       return NextResponse.json({ error: "Metadata not found" }, { status: 404 });
     }
 
     const metadata = await metadataRes.json();
-
-    return NextResponse.json({
+    
+    // Costruisci la risposta
+    const responseData = {
       url: signedUrl,
       name: filename.split('/').pop(),
       alt: getAltFromKey(filename),
       metadata
+    };
+
+    // Memorizza il risultato nella cache
+    imageMetadataCache.set(cacheKey, { 
+      data: responseData, 
+      timestamp: now 
+    });
+
+    return NextResponse.json(responseData, {
+      headers: {
+        'Cache-Control': `public, max-age=${CACHE_DURATION}, s-maxage=${CACHE_DURATION}`,
+        'X-Cache': 'MISS'
+      }
     });
   } catch (error) {
     console.error("Errore nel recupero metadati o generazione URL firmati:", error);

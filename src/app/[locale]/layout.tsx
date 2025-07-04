@@ -6,6 +6,7 @@ import Header from "@/components/layout/header";
 import "@/styles/globals.css";
 import Footer from "@/components/layout/footer";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { CacheProvider } from "@/providers/CacheProvider";
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
@@ -13,6 +14,9 @@ export const metadata: Metadata = {
   title: "Federico Mattucci",
   description: "Personal website of Federico Mattucci",
 };
+
+// Aggiunto per evitare il reloading completo della pagina durante la navigazione
+export const runtime = 'edge';
 
 export default async function RootLayout({
   children,
@@ -26,21 +30,31 @@ export default async function RootLayout({
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+
+  let messages;
+  try {
+    messages = (await import(`../../../public/languages/${locale}.json`)).default;
+  } catch (error) {
+    notFound();
+  }
  
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/images/logo/Logo-black-big.jpg" sizes="any" />
+        <link rel="preconnect" href="https://db9pbmct2ycbl.cloudfront.net" />
         <Analytics/>
         <SpeedInsights/>
       </head>
       <body className="font-sans">
         <ThemeProvider>
-          <NextIntlClientProvider>
-            <Header />
-            {children}
-            <Footer />
-          </NextIntlClientProvider>
+          <CacheProvider>
+            <NextIntlClientProvider locale={locale} messages={messages} timeZone="Europe/Rome">
+              <Header />
+              {children}
+              <Footer />
+            </NextIntlClientProvider>
+          </CacheProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -10,6 +10,15 @@ const nextConfig: NextConfig = {
           hostname: 'db9pbmct2ycbl.cloudfront.net'
         }
       ],
+      minimumCacheTTL: 60 * 60 * 24 * 7, // 7 days caching
+      deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+      formats: ['image/webp'],
+    },
+    // Aggiungo caching aggressivo per i contenuti statici
+    staticPageGenerationTimeout: 90,
+    onDemandEntries: {
+      maxInactiveAge: 60 * 60 * 24 * 7, // 7 days
+      pagesBufferLength: 100,
     },
   };
  

@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3';
 
+// Cache per le risposte API
+const CACHE_DURATION = 60 * 60 * 24; // 24 ore in secondi
+const imageCache = new Map<string, { data: any, timestamp: number }>();
+
 const s3 = new S3Client({
   region: process.env.AWS_REGION!,
   credentials: {
@@ -32,22 +36,56 @@ async function listAllObjects(bucket: string, prefix: string): Promise<string[]>
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const path = searchParams.get('path');
+  const folder = searchParams.get('folder') || '';
 
-  if (!path) {
-    return NextResponse.json({ error: 'Missing "path" query parameter' }, { status: 400 });
+  if (!folder) {
+    return NextResponse.json({ error: 'Missing "folder" query parameter' }, { status: 400 });
+  }
+
+  // Verifica se abbiamo una risposta nella cache valida
+  const cacheKey = `images:${folder}`;
+  const now = Date.now();
+  const cachedResponse = imageCache.get(cacheKey);
+  
+  if (cachedResponse && (now - cachedResponse.timestamp) < CACHE_DURATION * 1000) {
+    // Risposta dalla cache
+    return NextResponse.json(cachedResponse.data, {
+      headers: {
+        'Cache-Control': `public, max-age=${CACHE_DURATION}, s-maxage=${CACHE_DURATION}`,
+        'X-Cache': 'HIT'
+      }
+    });
   }
 
   try {
     const bucket = process.env.AWS_S3_BUCKET!;
-    const images = await listAllObjects(bucket, path);
+    const allKeys = await listAllObjects(bucket, folder);
 
     // Solo file immagine
-    const filtered = images.filter(key =>
+    const filtered = allKeys.filter(key =>
       key.match(/\.(jpg|jpeg|png|webp|avif|gif)$/i)
     );
 
-    return NextResponse.json(filtered);
+    // Costruisci gli URL delle immagini
+    const images = filtered.map(key => ({
+      key,
+      url: `https://${process.env.CLOUDFRONT_DOMAIN}/${key}`,
+      name: key.split('/').pop()
+    }));
+
+    // Memorizza il risultato nella cache
+    const responseData = { images };
+    imageCache.set(cacheKey, { 
+      data: responseData, 
+      timestamp: now 
+    });
+
+    return NextResponse.json(responseData, {
+      headers: {
+        'Cache-Control': `public, max-age=${CACHE_DURATION}, s-maxage=${CACHE_DURATION}`,
+        'X-Cache': 'MISS'
+      }
+    });
   } catch (err) {
     console.error('S3 list error:', err);
     return NextResponse.json({ error: 'Error listing images from S3' }, { status: 500 });
