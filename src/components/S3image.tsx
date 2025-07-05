@@ -57,6 +57,15 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
   const t = useTranslations();
   const { setCache, getCache } = useCache();
   const cacheKey = `image:${src}`;
+  const [blurImage, setBlurImage] = useState<string | undefined>(undefined);
+
+  // Controlla inizialmente se abbiamo un blur image in cache
+  useEffect(() => {
+    const cachedBlur = getCache<string>(`blur:${src}`);
+    if (cachedBlur) {
+      setBlurImage(cachedBlur);
+    }
+  }, [src, getCache]);
 
   useEffect(() => {
     const fetchMetadata = async () => {
@@ -65,6 +74,12 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
         const cachedMetadata = getCache<ImageMetadataResponse>(cacheKey);
         if (cachedMetadata) {
           setMetadata(cachedMetadata);
+          // Se c'è un blurDataUrl nei metadati, usalo
+          if (cachedMetadata.metadata?.blurDataUrl) {
+            setBlurImage(cachedMetadata.metadata.blurDataUrl);
+            // Salva anche nella cache per OptimizedImage
+            setCache(`blur:${src}`, cachedMetadata.metadata.blurDataUrl);
+          }
           return;
         }
 
@@ -72,6 +87,13 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
         const res = await fetch(`/api/image?filename=${encodeURIComponent(src)}`);
         if (!res.ok) throw new Error('Impossibile caricare metadati');
         const data: ImageMetadataResponse = await res.json();
+        
+        // Salva il blurDataUrl se esiste
+        if (data.metadata?.blurDataUrl) {
+          setBlurImage(data.metadata.blurDataUrl);
+          // Salva anche nella cache per OptimizedImage
+          setCache(`blur:${src}`, data.metadata.blurDataUrl);
+        }
         
         // Salva i metadati nella cache
         setCache<ImageMetadataResponse>(cacheKey, data);
@@ -85,7 +107,20 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
   }, [src, cacheKey, setCache, getCache]);
 
   if (!metadata) {
-    return <div className="bg-gray-200 dark:bg-gray-800 animate-pulse h-64 w-full rounded-xl" />;
+    // Mostra un placeholder con blur se possibile
+    return (
+      <div className={`bg-gray-200 dark:bg-gray-800 animate-pulse ${className} rounded-xl overflow-hidden`} style={{ height: height || 250, width: width || '100%' }}>
+        {blurImage && (
+          <Image 
+            src={blurImage} 
+            alt="Loading..." 
+            fill 
+            className="object-cover opacity-30" 
+            style={{ filter: 'blur(20px)' }} 
+          />
+        )}
+      </div>
+    );
   }
 
   const handleSwipeUp = () => setShowInfo(true);
@@ -93,7 +128,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
 
   const imageWidth = width ?? metadata.metadata?.width ?? 1000;
   const imageHeight = height ?? metadata.metadata?.height ?? 250;
-  const blur = metadata.metadata?.blurDataUrl;
+  const blur = blurImage || metadata.metadata?.blurDataUrl;
   const exif: ExifData = metadata.metadata.exif || {};
   const iconSize = 20; // Dimensione dell'icona in pixel
 
@@ -120,13 +155,15 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
         className={`${className} ${lightbox ? 'cursor-zoom-in' : ''}`}
         priority={false}
         quality={80}
+        placeholder={blur ? 'blur' : 'empty'}
+        blurDataURL={blur}
         onClick={lightbox ? () => setIsOpen(true) : undefined}
       />
 
       <AnimatePresence>
         {lightbox && isOpen && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center"
+            className="fixed inset-0 z-50 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -163,6 +200,8 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                   alt={metadata.alt || alt}
                   fill
                   className="object-contain"
+                  placeholder={blur ? 'blur' : 'empty'}
+                  blurDataURL={blur}
                 />
 
                 {!showInfo && (

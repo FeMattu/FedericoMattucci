@@ -11,6 +11,41 @@ import { TfiLayoutWidthDefaultAlt } from "react-icons/tfi";
 import { LuCalendar1 } from "react-icons/lu";
 import { TiFlashOutline } from "react-icons/ti";
 
+/**
+ * Funzione per ottenere un'icona in base al nome:
+ * * default
+ * * email
+ * * phone
+ * * instagram
+ * * facebook
+ * * linkedin
+ * * threads
+ * * x-twitter
+ * * whatsapp
+ * * github
+ * * earth
+ * * arrow-up-right
+ * * moon
+ * * sun
+ * * menu-mobile
+ * * close-menu-mobile
+ * * aperture
+ * * shutter-speed
+ * * focal-lenght
+ * * camera
+ * * lens
+ * * date
+ * * location
+ * * ratio
+ * * iso
+ * * flash
+ * * dpi
+
+ * @param name 
+ * @param size 
+ * @param className 
+ * @returns 
+ */
 export default function getIcon(name: string, size: number = 24, className?:string): ReactNode {
     const icons: { [key: string]: ReactNode } = {
         "default": <TfiLayoutWidthDefaultAlt size={size} className={className}/>,
@@ -38,9 +73,8 @@ export default function getIcon(name: string, size: number = 24, className?:stri
         "location": <FaLocationArrow size={size} className={className}/>,
         "ratio": <MdOutlineAspectRatio size={size} className={className}/>,
         "iso": <MdOutlineIso size={size} className={className}/>,
-        "falsh": <TiFlashOutline size={size} className={className}/>,
+        "flash": <TiFlashOutline size={size} className={className}/>,
         "dpi": <DPIIcon size={size} className={className} />,
-
     };
 
     return icons[name] || null;

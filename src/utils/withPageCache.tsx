@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useEffect, ComponentType } from 'react';
+import { useEffect, ComponentType, useState } from 'react';
 import { useCache } from '@/providers/CacheProvider';
 
 /**
@@ -18,33 +18,69 @@ export function withPageCache<P extends object>(
     const pathname = usePathname();
     const { setCache, getCache } = useCache();
     const pageKey = cacheKey || `page:${pathname}`;
+    const [isScrollRestored, setIsScrollRestored] = useState(false);
 
     // Effetto per gestire lo scroll ripristinando la posizione precedente
     useEffect(() => {
-      // Recupera la posizione di scroll precedente dalla cache
-      const cachedScrollPosition = getCache(`${pageKey}:scrollPosition`);
+      if (typeof window === 'undefined') return;
       
-      if (cachedScrollPosition) {
-        // Ripristina la posizione dello scroll
-        window.scrollTo(0, Number(cachedScrollPosition));
+      // Recupera la posizione di scroll precedente dalla cache
+      const cachedScrollPosition = getCache<number>(`${pageKey}:scrollPosition`);
+      
+      if (cachedScrollPosition && !isScrollRestored) {
+        // Ripristina la posizione dello scroll con un leggero ritardo
+        // per consentire al DOM di renderizzare completamente
+        const timer = setTimeout(() => {
+          window.scrollTo({
+            top: cachedScrollPosition,
+            behavior: 'auto'
+          });
+          setIsScrollRestored(true);
+        }, 100);
+        
+        return () => clearTimeout(timer);
       }
       
-      // Salva la posizione dello scroll quando l'utente lascia la pagina
+      // Registra il valore iniziale dello scroll
+      if (!isScrollRestored) {
+        setIsScrollRestored(true);
+      }
+      
+      // Salva la posizione dello scroll quando l'utente scorre la pagina
       const handleScroll = () => {
-        setCache(`${pageKey}:scrollPosition`, window.scrollY);
+        // Usa un debounce per non chiamare setCache troppo frequentemente
+        if (window.requestIdleCallback) {
+          window.requestIdleCallback(() => {
+            setCache(`${pageKey}:scrollPosition`, window.scrollY);
+          });
+        } else {
+          setTimeout(() => {
+            setCache(`${pageKey}:scrollPosition`, window.scrollY);
+          }, 200);
+        }
       };
       
-      // Aggiungi un listener per l'evento scroll
-      window.addEventListener('scroll', handleScroll, { passive: true });
+      // Aggiungi un listener per l'evento scroll con throttling
+      let scrollTimeout: number | undefined;
+      const throttledScrollHandler = () => {
+        if (scrollTimeout) return;
+        scrollTimeout = window.setTimeout(() => {
+          handleScroll();
+          scrollTimeout = undefined;
+        }, 100);
+      };
+      
+      window.addEventListener('scroll', throttledScrollHandler, { passive: true });
       
       return () => {
-        // Rimuovi il listener quando il componente viene smontato
-        window.removeEventListener('scroll', handleScroll);
+        // Pulizia
+        window.removeEventListener('scroll', throttledScrollHandler);
+        if (scrollTimeout) clearTimeout(scrollTimeout);
         
         // Salva la posizione finale dello scroll
         setCache(`${pageKey}:scrollPosition`, window.scrollY);
       };
-    }, [pageKey, setCache, getCache]);
+    }, [pageKey, setCache, getCache, isScrollRestored]);
 
     return <Component {...props} />;
   };
