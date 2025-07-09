@@ -41,7 +41,48 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
   // Gestione swipe up/down per mostrare/nascondere le informazioni
   const [showInfo, setShowInfo] = useState(false);
   const touchStartYRef = useRef<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const t = useTranslations();
+
+  // Check if mobile on mount
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Prevent body scroll when lightbox is open
+  useEffect(() => {
+    if (isOpen) {
+      // Store current scroll position
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore scroll position
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    }
+
+    // Cleanup on unmount
+    return () => {
+      if (isOpen) {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+      }
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const fetchMetadata = async () => {
@@ -86,7 +127,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
   const iconSize = 20; // Dimensione dell'icona in pixel
 
   const InfoTag = ({ icon, value }: { icon: ReactNode; value: string | number }) => (
-    <li className="inline-flex items-center bg-gray-200 dark:bg-zinc-800 px-3 py-1 rounded-full">
+    <li className="inline-flex items-center bg-zinc-800 px-3 py-1 rounded-full">
       {icon}
       <span className="ml-2 text-center">{value}</span>
     </li>
@@ -120,6 +161,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsOpen(false)}
+            onTouchMove={(e) => e.preventDefault()} // Prevent scrolling on the backdrop
           >
             <div
               className="text-black dark:text-white rounded-xl shadow-lg max-w-7xl w-full h-[90vh] flex flex-col md:flex-row overflow-hidden backdrop-blur-xl relative"
@@ -137,12 +179,22 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
               {/* Immagine con padding mobile */}
               <div
                 className="relative flex-1 flex items-center justify-center px-4 py-6"
-                onTouchStart={(e) => (touchStartYRef.current = e.touches[0].clientY)}
+                onTouchStart={(e) => {
+                  e.stopPropagation();
+                  touchStartYRef.current = e.touches[0].clientY;
+                }}
+                onTouchMove={(e) => {
+                  e.preventDefault(); // Prevent default scrolling
+                  e.stopPropagation();
+                }}
                 onTouchEnd={(e) => {
+                  e.stopPropagation();
                   const touchEndY = e.changedTouches[0].clientY;
                   if (touchStartYRef.current !== null) {
-                    if (touchStartYRef.current - touchEndY > 50) handleSwipeUp();
-                    if (touchEndY - touchStartYRef.current > 50) handleSwipeDown();
+                    const deltaY = touchStartYRef.current - touchEndY;
+                    // Increased sensitivity for swipe detection
+                    if (deltaY > 30) handleSwipeUp(); // Swipe up
+                    if (deltaY < -30) handleSwipeDown(); // Swipe down
                   }
                   touchStartYRef.current = null;
                 }}
@@ -154,7 +206,15 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                   className="object-contain"
                 />
 
-                {!showInfo && (
+                {/* Arrow indicator for mobile - only show on mobile and when info is not shown */}
+                {isMobile && !showInfo && (
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+                    {getIcon("arrow-up", 24)}
+                  </div>
+                )}
+
+                {/* Arrow indicator for mobile - only show on mobile when info is shown */}
+                {isMobile && showInfo && (
                   <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
                     {getIcon("arrow-down", 24)}
                   </div>
@@ -162,7 +222,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
               </div>
 
               {/* Lato metadati */}
-              {(showInfo || typeof window !== 'undefined' && window.innerWidth >= 768) && (
+              {(showInfo || !isMobile) && (
                 <div className="w-full md:w-1/3 flex flex-col justify-center p-6 overflow-y-auto space-y-6">
                   <div>
                     <h2 className="text-2xl font-bold mb-2">{t("dimentions")}</h2>

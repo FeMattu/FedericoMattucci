@@ -21,7 +21,7 @@ export default function Footer() {
             </nav>
         </div>
         <div className="w-full text-center text-sm mt-4">
-            <p>© {new Date().getFullYear()} - All rights reserved</p>
+            <p>© {new Date().getFullYear()} Federico Mattucci - All rights reserved</p>
         </div>
     </footer>
 
