@@ -8,6 +8,7 @@ import Footer from "@/components/layout/footer";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { CacheProvider } from "@/providers/CacheProvider";
 
 export const metadata: Metadata = {
   title: "Federico Mattucci",
@@ -28,7 +29,7 @@ export default async function RootLayout({
   }
  
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/images/logo/Logo-black-big.jpg" sizes="any" />
         <Analytics/>
@@ -36,11 +37,13 @@ export default async function RootLayout({
       </head>
       <body className="font-sans">
         <ThemeProvider>
-          <NextIntlClientProvider>
-            <Header />
-            {children}
-            <Footer />
-          </NextIntlClientProvider>
+          <CacheProvider>
+            <NextIntlClientProvider>
+              <Header />
+              {children}
+              <Footer />
+            </NextIntlClientProvider>
+          </CacheProvider>
         </ThemeProvider>
       </body>
     </html>

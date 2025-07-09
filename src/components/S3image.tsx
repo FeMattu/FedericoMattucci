@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import getIcon from '@/utils/IconMap';
 import { useTranslations } from "next-intl";
 import { format } from 'date-fns';
+import { useCache } from '@/providers/CacheProvider';
 
 type ImageMetadataResponse = {
   url: string;
@@ -35,6 +36,8 @@ type Props = {
 export default function S3Image({ src, alt = '', width, height, className = '', lightbox = true }: Props) {
   const [metadata, setMetadata] = useState<ImageMetadataResponse | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const { getCache, setCache } = useCache();
+  const [error, setError] = useState(false);
   // Gestione swipe up/down per mostrare/nascondere le informazioni
   const [showInfo, setShowInfo] = useState(false);
   const touchStartYRef = useRef<number | null>(null);
@@ -43,17 +46,31 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
   useEffect(() => {
     const fetchMetadata = async () => {
       try {
-        const res = await fetch(`/api/image?filename=${encodeURIComponent(src)}`);
-        if (!res.ok) throw new Error('Impossibile caricare metadati');
-        const data = await res.json();
-        setMetadata(data);
+        const cachedData = getCache<ImageMetadataResponse>(src);
+        if (!cachedData) {
+          const res = await fetch(`/api/image?filename=${encodeURIComponent(src)}`);
+          if (!res.ok) throw new Error('Impossibile caricare metadati');
+          const data = await res.json();
+          setMetadata(data);
+          setCache(src, data); // Salva i metadati nella cache
+          return;
+        }
+        setMetadata(cachedData);
       } catch (error) {
         console.error('Errore nel caricamento metadati:', error);
+        setError(true);
       }
     };
-
     fetchMetadata();
-  }, [src]);
+  }, [src, getCache]);
+
+  if (!metadata && error) {
+    return (
+      <div className="bg-red-100 text-red-500 p-4 rounded-xl">
+        Error loading image metadata
+      </div>
+    );
+  }
 
   if (!metadata) {
     return <div className="bg-gray-200 animate-pulse h-64 w-full rounded-xl" />;
