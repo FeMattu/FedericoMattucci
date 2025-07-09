@@ -129,7 +129,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
   const InfoTag = ({ icon, value }: { icon: ReactNode; value: string | number }) => (
     <li className="inline-flex items-center bg-zinc-800 px-3 py-1 rounded-full">
       {icon}
-      <span className="ml-2 text-center">{value}</span>
+      <span className="ml-2 text-center text-white">{value}</span>
     </li>
   );
 
@@ -164,7 +164,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
             onTouchMove={(e) => e.preventDefault()} // Prevent scrolling on the backdrop
           >
             <div
-              className="text-black dark:text-white rounded-xl shadow-lg max-w-7xl w-full h-[90vh] flex flex-col md:flex-row overflow-hidden backdrop-blur-xl relative"
+              className="text-white rounded-xl shadow-lg max-w-7xl w-full h-[90vh] flex flex-col md:flex-row overflow-hidden backdrop-blur-xl relative"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Bottone chiusura */}
@@ -194,7 +194,15 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                     const deltaY = touchStartYRef.current - touchEndY;
                     // Increased sensitivity for swipe detection
                     if (deltaY > 30) handleSwipeUp(); // Swipe up
-                    if (deltaY < -30) handleSwipeDown(); // Swipe down
+                    if (deltaY < -30) {
+                      if (showInfo) {
+                        // Se le info sono mostrate, nascondi le info
+                        handleSwipeDown();
+                      } else {
+                        // Se le info non sono mostrate, chiudi il lightbox
+                        setIsOpen(false);
+                      }
+                    }
                   }
                   touchStartYRef.current = null;
                 }}
@@ -208,9 +216,15 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
 
                 {/* Arrow indicator for mobile - only show on mobile and when info is not shown */}
                 {isMobile && !showInfo && (
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
-                    {getIcon("arrow-up", 24)}
-                  </div>
+                  <>
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+                      {getIcon("arrow-up", 24)}
+                    </div>
+                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+                      {getIcon("arrow-down", 24)}
+                      <span className="ml-2 text-xs">Chiudi</span>
+                    </div>
+                  </>
                 )}
 
                 {/* Arrow indicator for mobile - only show on mobile when info is shown */}
@@ -225,7 +239,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
               {(showInfo || !isMobile) && (
                 <div className="w-full md:w-1/3 flex flex-col justify-center p-6 overflow-y-auto space-y-6">
                   <div>
-                    <h2 className="text-2xl font-bold mb-2">{t("dimentions")}</h2>
+                    <h2 className="text-2xl text-white font-bold mb-2">{t("dimentions")}</h2>
                     <div className='space-x-2 space-y-2'>
                       <InfoTag icon={getIcon("ratio", iconSize)} value={`${metadata.metadata.width}×${metadata.metadata.height}px`} />
                       {metadata.metadata.dpi && (
@@ -234,7 +248,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                     </div>
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold mb-2">{t("settings")}</h2>
+                    <h2 className="text-2xl text-white font-bold mb-2">{t("settings")}</h2>
                     <div className='space-x-2 space-y-2'>
                       {exif.aperture && exif.aperture !== '' && (
                         <InfoTag icon={getIcon("aperture", iconSize)} value={exif.aperture} />
@@ -249,7 +263,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                   </div>
                   
                   <div>
-                    <h2 className="text-2xl font-bold mb-2">{t("camera")}</h2>
+                    <h2 className="text-2xl text-white font-bold mb-2">{t("camera")}</h2>
                     <div className="space-y-2 space-x-2">
                       {(exif.make || exif.model) && (
                         <InfoTag icon={getIcon("camera", iconSize)} value={[exif.make, exif.model].filter(Boolean).join(' - ')} />
@@ -261,7 +275,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                   </div>
 
                   <div>
-                    <h2 className="text-2xl font-bold mb-2">{t("other")}</h2>
+                    <h2 className="text-2xl text-white font-bold mb-2">{t("other")}</h2>
                     <div className="flex flex-wrap gap-2">
                       {exif.datetime_original && exif.datetime_original !== '' && (
                         <InfoTag
