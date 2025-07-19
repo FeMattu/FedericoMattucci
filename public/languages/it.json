@@ -1,72 +1,533 @@
 {
-    "it": "Italiano",
-    "en": "Inglese",
-    "tuscany": "Toscana",
-    "italy": "Italia",
-    "europe": "Europa",
-    "title": "Benvenuto",
-    "description": "Questa è una pagina di esempio",
     "welcome": "Benvenuto",
-    "home": "Home",
-    "experience": "Esperienze",
-    "portfolio": "Portfolio",
-    "contact": "Contatti",
-    "email": "E-Mail",
-    "personal-email":"E-mail Personale",
-    "institutional-email":"E-mail Istituzionale",
-    "phone":"Telefono",
-    "instagram":"Instagram",
-    "facebook":"Facebook",
-    "linkedin":"LinkedIn",
-    "threads":"Threads",
-    "x-twitter":"X-Twitter",
-    "whatsapp":"WhatsApp",
-    "github":"GitHub",
-    "homepage-description": "Ciao! Sono Federico Mattucci, studente di Informatica presso l'Università di Pisa. Con questo sito voglio raccontarvi un po' di me.",
-    "job-title": "Studente di Informatica",
-    "self-description": "Sono Federico, uno studente di Scienze Informatiche all'Università di Pisa con un background da perito informatico. Appassionato di tecnologia, fotografia e cucina. Mi piace approfondire nuove sfide nel mondo dello sviluppo software e dell'ottimizzazione delle prestazioni. Ho esperienza lavorativa tramite stage e possiedo una certificazione IELTS (6.5). Il mio obiettivo è arricchire il mio percorso con un'esperienza lavorativa all'estero e prepararmi per studiare all'MIT.",
-    "studies-title": "Educazione",
-    "studies-high-school-name": "Istituto Tecnico Industriale Statale 'E. Fermi'",
-    "studies-high-school-description": "Perito Informatico",
-    "studies-university-name": "Università di Pisa",
-    "studies-university-description": "Laurea triennale in Informatica",
-    "skills-title": "Competenze",
-    "skills-programming-languages": "Linguaggi di programmazione",
-    "skills-technologies": "Tecnologie",
-    "front-end": "Front End",
-    "back-end": "Back End",
-    "database": "Database",
-    "mobile": "Mobile",
-    "other": "Altro",
-    "office": "Office",
-    "adobe": "Adobe",
-    "operative-systems": "Sistemi Operativi",
-    "website-developing": "Sviluppo Web",
-    "google-tools": "Strumenti Google",
-    "social-media": "Social Media",
-    "hobbies-title": "Hobbies",
-    "hobbies-description": "Nel tempo libero mi piace fare sport, fotografia, viaggiare e cucinare.",
-    "hobby-technologies": "Tecnologie",
-    "hobby-description-technologies": "Amo esplorare le ultime innovazioni e sviluppare soluzioni digitali creative. La tecnologia mi affascina perché trasforma idee in realtà, migliorando la nostra vita quotidiana in modi inaspettati.",
-    "hobby-photography": "Fotografia",
-    "hobby-description-photography":"Mi piace catturare momenti speciali e condividere le mie foto con gli altri. Mi sono appassionato alla fotografia in modo del tutto inaspettato; Le foto mi ispirano bellezza e semplicità.",
-    "hobby-travel": "Viaggi",
-    "hobby-description-travel": "Mi piace viaggiare e scoprire nuove culture e mentalità. Sono stato negli USA (2 volte), in Inghilterra, Scozia, Irlanda, Francia, Spagna, Austria, Germania, Repubblica Ceca, Ungheria, Svizzera, oltre che molti luoghi in Italia. Amo la mia terra di Lucca.",
-    "hobby-cooking": "Cucina",
-    "hobby-description-cooking": "Cucinare mi dà una sensazione di libera espressività e mi permette di sbagliare e sperimentare nuove ricette per migliorarmi",
-    "hobby-sports": "Sport",
-    "hobby-description-sports": "Lo sport mi permette di scaricarmi e rilassarmi; inoltre, mi piace sfidare me stesso e curare il mio corpo.",
-    "portfolio-photography-description": "Mi sono appassionato alla fotografia in modo del tutto inaspettato. Un giorno, mio padre mi chiese di fare delle foto a degli orologi che voleva mettere in vendita. All’epoca avevo un telefono che non aveva ancora una fotocamera ben sviluppata e nessuna conoscenza della fotografia. Quando iniziai a fare le foto, mi resi conto che tutte le immagini erano piene di riflessi, sovraesposte o sottoesposte. Non avendo strumenti per fare delle foto ben fatte, iniziai a ingegnarmi per poterli “creare”. Realizzai dei “pannelli” da usare come softbox usando quattro fogli di carta su cui avevo stampato delle pagine tutte nere. Questi mi permettevano di rimuovere i riflessi, ma rendevano anche le foto sottoesposte. Creai poi anche una luce con diffusore utilizzando sempre dei fogli di carta bianchi e una luce con braccio a molle, in modo da illuminare meglio gli orologi. Inizialmente non mi piaceva perché era troppo complicato, ma poi, con il passare del tempo, facendo foto a questi oggetti, cominciai ad appassionarmi e da lì iniziò il mio studio della fotografia.",
-    "fetch-images":"Caricamento immagini...",
-    "camera":"Macchina Fotografica",
-    "dimentions":"Dimensioni",
-    "settings":"Impostazioni",
-    "admin": {
-        "title": "Pannello Admin",
-        "subtitle": "Accedi per gestire i contenuti del sito",
-        "signin": "Accedi con Google",
-        "dashboard": "Dashboard Admin",
-        "welcome": "Benvenuto",
-        "logged-in-as": "Sei connesso come"
+    "language":{
+        "default": "Lingua",
+        "it": "Italiano",
+        "en": "Inglese",
+        "fr": "Francese",
+        "de": "Tedesco",
+        "es": "Spagnolo",
+        "pt": "Portoghese",
+        "ru": "Russo",
+        "zh": "Cinese",
+        "ja": "Giapponese",
+        "fi": "Finlandese"
+    },
+    "date": {
+        "default": "Data",
+        "today": "Oggi",
+        "present": "Presente",
+        "month": {
+            "default": "Mese",
+            "january": "Gennaio",
+            "february": "Febbraio",
+            "march": "Marzo",
+            "april": "Aprile",
+            "may": "Maggio",
+            "june": "Giugno",
+            "july": "Luglio",
+            "august": "Agosto",
+            "september": "Settembre",
+            "october": "Ottobre",
+            "november": "Novembre",
+            "december": "Dicembre"
+        },
+        "day": {
+            "default": "Giorno",
+            "sunday": "Domenica",
+            "monday": "Lunedì",
+            "tuesday": "Martedì",
+            "wednesday": "Mercoledì",
+            "thursday": "Giovedì",
+            "friday": "Venerdì",
+            "saturday": "Sabato"
+        },
+        "year": "Anno",
+        "time": {
+            "default": "Ora",
+            "hours": "Ore",
+            "minutes": "Minuti",
+            "seconds": "Secondi"
+        }
+    },
+    "location": {
+        "default": "Posizione",
+        "address": {
+            "default": "Indirizzo",
+            "street": "Via",
+            "number": "Numero",
+            "postal_code": "Codice Postale"
+        },
+        "coordinate": {
+            "default": "Coordinate",
+            "latitude": "Latitudine",
+            "longitude": "Longitudine"
+        },
+        "city": {
+            "default": "Città",
+            "lucca": "Lucca",
+            "pisa": "Pisa",
+            "florence": "Firenze",
+            "rome": "Roma",
+            "milan": "Milano",
+            "venice": "Venezia",
+            "bologna": "Bologna",
+            "naples": "Napoli",
+            "turin": "Torino",
+            "palermo": "Palermo",
+            "catania": "Catania",
+            "verona": "Verona",
+            "genoa": "Genova"
+        },
+        "region": {
+            "default": "Regione",
+            "tuscany": "Toscana",
+            "lazio": "Lazio",
+            "lombardy": "Lombardia",
+            "campania": "Campania",
+            "sicily": "Sicilia",
+            "emilia-romagna": "Emilia-Romagna",
+            "piemonte": "Piemonte",
+            "veneto": "Veneto",
+            "puglia": "Puglia",
+            "calabria": "Calabria",
+            "sardinia": "Sardegna",
+            "liguria": "Liguria",
+            "abruzzo": "Abruzzo",
+            "friuli-venezia-giulia": "Friuli-Venezia Giulia",
+            "trentino-alto-adige": "Trentino-Alto Adige",
+            "molise": "Molise",
+            "umbria": "Umbria",
+            "basilicata": "Basilicata",
+            "aosta-valley": "Valle d'Aosta",
+            "marche": "Marche"
+        },
+        "country": {
+            "default": "Paese",
+            "italy": "Italia",
+            "france": "Francia",
+            "spain": "Spagna",
+            "germany": "Germania",
+            "uk": "Regno Unito",
+            "us": "Stati Uniti",
+            "canada": "Canada",
+            "australia": "Australia",
+            "japan": "Giappone",
+            "china": "Cina",
+            "india": "India",
+            "brazil": "Brasile"
+        },
+        "continent": {
+            "default": "Continente",
+            "europe": "Europa",
+            "asia": "Asia",
+            "america": {
+                "default": "America",
+                "north": "America del Nord",
+                "south": "America del Sud",
+                "central": "America Centrale"
+            },
+            "africa": "Africa",
+            "oceania": "Oceania",
+            "antartica": "Antartide"
+        }
+    },
+    "settings": {
+        "default": "Impostazioni",
+        "description": "Gestisci le impostazioni del sito",
+        "language": "Lingua",
+        "theme": "Tema",
+        "dark-mode": "Modalità scura",
+        "light-mode": "Modalità chiara",
+        "auto-mode": "Modalità automatica",
+        "save-changes": "Salva modifiche",
+        "changes-saved": "Modifiche salvate con successo!",
+        "error-saving-changes": "Errore durante il salvataggio delle modifiche.",
+        "error": "Errore",
+        "edit": "Modifica"
+    },
+    "loading": {
+        "default": "Caricamento in corso...",
+        "images": "Caricamento immagini in corso...",
+        "settings": "Caricamento impostazioni in corso...",
+        "user-info": "Caricamento informazioni utente in corso...",
+        "admin-dashboard": "Caricamento dashboard admin in corso...",
+        "admin-settings": "Caricamento impostazioni admin in corso...",
+        "metadata":"Caricamento metadati in corso..."
+    },
+    "auth": {
+        "default": "Autenticazione",
+        "sign-in": "Accedi",
+        "sign-out": "Disconnetti",
+        "sign-up": "Registrati"
+    },
+    "profile": {
+        "default": "Profilo",
+        "user-info": "Informazioni Utente",
+        "fullname": "Nome Completo",
+        "username": "Nome Utente",
+        "bio": "Bio",
+        "contact-info": "Informazioni di Contatto",
+        "edit-profile": "Modifica Profilo",
+        "view-profile": "Visualizza Profilo",
+        "tabs": {
+            "overview": "Panoramica",
+            "social": "Social",
+            "education": "Istruzione",
+            "skills": "Competenze",
+            "hobbies": "Hobby",
+            "experience": "Esperienze",
+            "projects": "Progetti",
+            "photos": "Foto"
+        }
+    },
+    "contatti": {
+        "default": "Contatti",
+        "website": "Sito Web",
+        "email": {
+            "default": "E-Mail",
+            "personal": "E-mail Personale",
+            "institutional": "E-mail Istituzionale",
+            "work": "E-mail di Lavoro"
+        },
+        "phone": {
+            "default": "Telefono",
+            "number": "Numero",
+            "type": {
+                "default": "Tipo numero",
+                "mobile": "Cellulare",
+                "landline": "Fisso",
+                "fax": "Fax"
+            },
+            "scope": {
+                "default": "Ambito",
+                "personal": "Personale",
+                "work": "Lavoro",
+                "institutional": "Istituzionale",
+                "other": "Altro"
+            }
+        },
+        "social": {
+            "default": "Social",
+            "instagram":"Instagram",
+            "facebook":"Facebook",
+            "linkedin":"LinkedIn",
+            "threads":"Threads",
+            "x-twitter":"X-Twitter",
+            "whatsapp":"WhatsApp",
+            "github":"GitHub",
+            "tiktok":"TikTok",
+            "youtube":"YouTube",
+            "twitch":"Twitch",
+            "snapchat":"Snapchat",
+            "pinterest":"Pinterest"
+        }
+    },
+    "job": {
+        "default": "Lavoro",
+        "type": {
+            "default": "Tipo di Lavoro",
+            "full-time": "Tempo Pieno",
+            "part-time": "Part-Time",
+            "internship": "Tirocinio/Stage",
+            "freelance": "Libero Professionista"
+        },
+        "company": "Azienda",
+        "location": "Luogo di Lavoro",
+        "start-date": "Data di Inizio",
+        "end-date": "Data di Fine",
+        "description": "Descrizione del Lavoro"
+    },
+    "education": {
+        "default": "Educazione",
+        "studies": {
+            "default": "Studi",
+            "title": {
+                "high-school": "Scuola Superiore",
+                "master": "Master",
+                "post-graduate": "Post Laurea",
+                "university": "Università"
+            },
+            "name": "Nome del Corso di Studio",
+            "description": "Descrizione del Corso di Studio",
+            "institution": "Istituzione",
+            "location": "Luogo di Studio",
+            "start-date": {
+                "month": "Mese di Inizio",
+                "year": "Anno di Inizio"
+            },
+            "end-date": {
+                "month": "Mese di Fine",
+                "year": "Anno di Fine",
+                "present": "In Corso"
+            },
+            "grade": "Voto finale"
+        },
+        "degree":{
+            "default": "Laurea",
+            "name": "Nome della Laurea",
+            "description": "Descrizione della Laurea",
+            "type": {
+                "default": "Tipo di Laurea",
+                "bachelor": "Laurea Triennale",
+                "master": "Laurea Magistrale",
+                "phd": "Dottorato di Ricerca"
+            }
+        },
+        "course": {
+            "default": "Corsi",
+            "name": "Nome del Corso",
+            "description": "Descrizione del Corso",
+            "credits": "Crediti"
+        }
+    },
+    "skills": {
+        "default": "Competenze",
+        "level": {
+            "default": "Livello",
+            "beginner": "Principiante",
+            "intermediate": "Intermedio",
+            "advanced": "Avanzato",
+            "expert": "Esperto"
+        },
+        "other": "Altre competenze",
+        "social-media": "Social Media",
+        "programming-languages": {
+            "default": "Linguaggi di Programmazione",
+            "front-end": {
+                "default": "Front End",
+                "html": "HTML",
+                "css": "CSS",
+                "javascript": "JavaScript",
+                "typescript": "TypeScript",
+                "frameworks": {
+                    "default": "Framework Front End",
+                    "angular": "Angular",
+                    "react": "React",
+                    "vue": "Vue.js",
+                    "nextjs": "NextJs"
+                }
+            },
+            "back-end": {
+                "default": "Back End",
+                "php": "PHP",
+                "python": "Python",
+                "c/c++": "C/C++",
+                "java": "Java",
+                "frameworks": {
+                    "default": "Frameworks Back End",
+                    "nodejs": "NodeJs",
+                    "spring-boot": "Spring Boot",
+                    "django": "Django",
+                    "flask": "Flask"
+                }
+            },
+            "mobile": {
+                "default": "mobile",
+                "flutter": "Flutter",
+                "react-native": "React Native",
+                "swift": "Swift",
+                "kotlin": "Kotlin",
+                "dart": "Dart"
+            },
+            "other": {
+                "deafult": "Altri linguaggi",
+                "ocaml": "OCaml",
+                "assembly": "Assembly"
+            }
+        },
+        "database": {
+            "default": "Database",
+            "mysql": "MySQL",
+            "postgresql": "PostgreSQL",
+            "sqlite": "SQLite",
+            "mongodb": "MongoDB",
+            "redis": "Redis",
+            "firebase": "Firebase",
+            "couchdb": "CouchDB",
+            "dynamodb": "DynamoDB",
+            "mariadb": "MariaDB"
+        },
+        "cloud-services": {
+            "default": "Servizi Cloud",
+            "aws": "AWS",
+            "azure": "Azure",
+            "google-cloud": "Google Cloud",
+            "heroku": "Heroku",
+            "vercel": "Vercel",
+            "netlify": "Netlify",
+            "docker": "Docker",
+            "kubernetes": "Kubernetes"
+        },
+        "tools":{
+            "deafult": "Strumenti",
+            "other": "Altri Strumenti",
+            "latex": "LaTeX",
+            "developing":{
+                "git": "Git",
+                "docker": "Docker",
+                "kuberneets": "Kuberneets",
+                "bash": "Bash"
+            },
+            "office": {
+                "default": "Office",
+                "word": "Word",
+                "excel": "Excel",
+                "powerpoint": "Powerpoint",
+                "outlook": "Outlook",
+                "OneDrive": "OneDrive",
+                "teams": "Teams",
+                "visio": "Visio"
+            },
+            "design":{
+                "default": "Design",
+                "figma": "Figma",
+                "canva": "Canva",
+                "adobe-xd": "Adobe XD",
+                "sketch": "Sketch"
+            },
+            "project-management":{
+                "default": "Gestione Progetti",
+                "jira": "Jira",
+                "trello": "Trello",
+                "asana": "Asana",
+                "clickup": "ClickUp",
+                "monday": "Monday.com"
+            },
+            "google":{
+                "default": "Strumenti Google",
+                "drive": "Google Drive",
+                "docs": "Google Docs",
+                "sheets": "Google Sheets",
+                "slides": "Google Slides",
+                "gmail": "Gmail",
+                "meet": "Google Meet",
+                "chat": "Google Chat",
+                "calendar": "Google Calendar",
+                "forms": "Google Forms",
+                "sites": "Google Sites"
+            },
+            "adobe":{
+                "default": "Adobe",
+                "photoshop": "Photoshop",
+                "lightroom": "Lightroom"
+            },
+            "website-developing":{
+                "default": "Sviluppo Web",
+                "wordpress": "Wordpress",
+                "elementor": "Elementor"
+            }
+        },
+        "so":{
+            "default": "Sistemi Operativi",
+            "linux": "Linux",
+            "windows": "Windows",
+            "mac": "Mac"
+        }
+    },
+    "hobby": {
+        "default": "Hobby",
+        "description": "Descrizione generale",
+        "hobby":{
+            "name": "Nome Hobby",
+            "description": "Descrizione dell'Hobby"
+        }
+    },
+    "image":{
+        "default": "Immagine",
+        "url": "URL",
+        "name": "Nome",
+        "title": "Titolo",
+        "alt": "Descrizione alternativa (ALT)",
+        "metadata": {
+            "filename": "Nome File",
+            "dimensions":{
+                "default": "Dimensioni",
+                "width": "Larghezza",
+                "height": "Altezza"
+            },
+            "dpi": "DPI",
+            "filesize":{
+                "bytes": "Bytes",
+                "mb": "MB"
+            },
+            "exif": {
+                "default": "EXIF",
+                "camera": {
+                    "default": "Fotocamera",
+                    "make": "Marca",
+                    "model": "Modello"
+                },
+                "lens": {
+                    "default": "Obiettivo",
+                    "model": "Modello",
+                    "spec": "Specifiche"
+                },
+                "datetime": "Data e Ora",
+                "exposure": {
+                    "default": "Tempo di esposizione",
+                    "mode": "Modalità di Esposizione",
+                    "value": "Valore di Esposizione",
+                    "shutter-speed": "Velocità Otturatore",
+                    "aperture": {
+                        "default": "Apertura",
+                        "value": "Valore Apertura",
+                        "stop-value": "Valore Stop Apertura"
+                    },
+                    "iso": "ISO",
+                    "focal-length": "Lunghezza Focale",
+                    "white_balance": "Bilanciamento del Bianco",
+                    "flash": {
+                        "default": "Flash",
+                        "mode": "Modalità Flash",
+                        "status": {
+                            "default": "Stato Flash",
+                            "auto": "Flash Automatico",
+                            "on": "Flash Attivo",
+                            "off": "Flash Spento"
+                        }
+                    },
+                    "metering-mode": "Modalità di Misurazione"
+                },                
+                "copyright": null
+            }
+        }
+    },
+    "pages":{
+        "home": {
+            "default": "Home",
+            "description": "Ciao! Sono Federico Mattucci, studente di Informatica presso l'Università di Pisa. Con questo sito voglio raccontarvi un po' di me."
+        },
+        "experience": {
+            "default": "Esperienze",
+            "description": "Questa sezione è dedicata alle mie esperienze lavorative e di stage."
+        },
+        "portfolio": {
+            "default": "Portfolio",
+            "description": "Qui puoi trovare alcuni dei miei progetti e lavori.",
+            "photography-description": "Mi sono appassionato alla fotografia in modo del tutto inaspettato. Un giorno, mio padre mi chiese di fare delle foto a degli orologi che voleva mettere in vendita. All’epoca avevo un telefono che non aveva ancora una fotocamera ben sviluppata e nessuna conoscenza della fotografia. Quando iniziai a fare le foto, mi resi conto che tutte le immagini erano piene di riflessi, sovraesposte o sottoesposte. Non avendo strumenti per fare delle foto ben fatte, iniziai a ingegnarmi per poterli “creare”. Realizzai dei “pannelli” da usare come softbox usando quattro fogli di carta su cui avevo stampato delle pagine tutte nere. Questi mi permettevano di rimuovere i riflessi, ma rendevano anche le foto sottoesposte. Creai poi anche una luce con diffusore utilizzando sempre dei fogli di carta bianchi e una luce con braccio a molle, in modo da illuminare meglio gli orologi. Inizialmente non mi piaceva perché era troppo complicato, ma poi, con il passare del tempo, facendo foto a questi oggetti, cominciai ad appassionarmi e da lì iniziò il mio studio della fotografia."
+
+        },
+        "contact": {
+            "default": "Contatti",
+            "description": "Questa sezione è dedicata ai miei contatti."
+        },
+        "projects": {
+            "default": "Progetti",
+            "description": "Questa sezione è dedicata ai miei progetti."
+        },
+        "admin": {
+            "default": "Admin",
+            "title": "Pannello Amministratore",
+            "description": "Questa sezione è riservata agli amministratori.",
+            "dashboard": "Dashboard Amministratore",
+            "subtitle": "Accedi per gestire i contenuti del sito",
+            "logged-in-as": "Sei connesso come"
+        },
+        "not-found": {
+            "default": "Pagina non trovata",
+            "description": "La pagina che stai cercando non esiste.",
+            "go-back": "Torna alla Home"
+        }
     }
 }

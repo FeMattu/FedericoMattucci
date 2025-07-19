@@ -1,16 +1,16 @@
 import { ReactNode } from "react";
 import { CiLinkedin } from "react-icons/ci";
-import { FaCamera, FaGithub, FaInstagram, FaLocationArrow, FaRegMoon, FaWhatsapp } from "react-icons/fa";
+import { FaCamera, FaGithub, FaInstagram, FaLocationArrow, FaRegMoon, FaWhatsapp, FaSignOutAlt, FaGraduationCap, FaBriefcase, FaUser, FaHeart } from "react-icons/fa";
 import { FaEarthEurope, FaThreads, FaXTwitter } from "react-icons/fa6";
 import { FiAperture, FiArrowUpRight, FiFacebook, FiPhone } from "react-icons/fi";
 import { IoMdClose } from "react-icons/io";
 import { IoSunnyOutline } from "react-icons/io5";
-import { MdOutlineAspectRatio, MdOutlineEmail, MdOutlineIso, MdOutlineShutterSpeed } from "react-icons/md";
+import { MdOutlineAspectRatio, MdOutlineEmail, MdOutlineIso, MdOutlineShutterSpeed, MdComputer } from "react-icons/md";
 import { RiMenu3Fill } from "react-icons/ri";
 import { TfiLayoutWidthDefaultAlt } from "react-icons/tfi";
 import { LuCalendar1 } from "react-icons/lu";
 import { TiFlashOutline } from "react-icons/ti";
-import { ExternalLink } from "lucide-react"
+import { ExternalLink, User, Share2, BookOpen, Trophy, Coffee } from "lucide-react"
 
 export default function getIcon(name: string, size: number = 24, className?:string): ReactNode {
     const icons: { [key: string]: ReactNode } = {
@@ -41,7 +41,17 @@ export default function getIcon(name: string, size: number = 24, className?:stri
         "iso": <MdOutlineIso size={size} className={className}/>,
         "flash": <TiFlashOutline size={size} className={className}/>,
         "dpi": <DPIIcon size={size} className={className} />,
-        "external-link": <ExternalLink size={size} className={className}/>
+        "external-link": <ExternalLink size={size} className={className}/>,
+        "sign-out": <FaSignOutAlt size={size} className={className}/>,
+        "user": <User size={size} className={className}/>,
+        "graduation": <FaGraduationCap size={size} className={className}/>,
+        "briefcase": <FaBriefcase size={size} className={className}/>,
+        "share": <Share2 size={size} className={className}/>,
+        "book": <BookOpen size={size} className={className}/>,
+        "trophy": <Trophy size={size} className={className}/>,
+        "coffee": <Coffee size={size} className={className}/>,
+        "computer": <MdComputer size={size} className={className}/>,
+        "heart": <FaHeart size={size} className={className}/>
     };
 
     return icons[name] || null;

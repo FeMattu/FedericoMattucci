@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import UserInfo from '@/components/UserInfo';
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
@@ -30,7 +31,8 @@ export default function AdminDashboard() {
         <p className="text-gray-600 dark:text-gray-400 mb-4">
           {t('admin.logged-in-as')} {session?.user?.email}.
         </p>
-        
+        <UserInfo />
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg shadow-sm">
             <h3 className="font-medium text-lg mb-2">Projects</h3>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "@/lib/translation";
 import { Link } from "@/i18n/navigation";
 import LanguageSelector from "../ui/language-selector";
 import Logo from "../ui/logo";
@@ -10,7 +10,7 @@ import getIcon from "@/lib/IconMap";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const t = useTranslations();
+  const t = useTranslation();
 
   return (
     <nav className="sticky w-full z-50 backdrop-blur-md">
@@ -18,8 +18,8 @@ export default function Header() {
         <Logo />
         
         <div className="hidden md:flex gap-6">
-          <Link href="/portfolio" className="hover:font-bold">{t('portfolio')}</Link>
-          <Link href="/contacts" className="hover:font-bold">{t('contact')}</Link>
+          <Link href="/portfolio" className="hover:font-bold">{t('pages.portfolio.default')}</Link>
+          <Link href="/contacts" className="hover:font-bold">{t('pages.contact.default')}</Link>
         </div>
 
         <div className="flex gap-6 items-center">
