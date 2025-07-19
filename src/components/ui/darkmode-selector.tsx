@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "@/providers/ThemeProvider"; // Importiamo il contesto
-import getIcon from "@/utils/IconMap";
+import getIcon from "@/lib/IconMap";
 
 const DarkModeToggle = () => {
   const { theme, toggleTheme } = useTheme();

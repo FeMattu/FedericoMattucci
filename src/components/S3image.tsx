@@ -4,7 +4,7 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import getIcon from '@/utils/IconMap';
+import getIcon from '@/lib/IconMap';
 import { useTranslations } from "next-intl";
 import { format } from 'date-fns';
 import { useCache } from '@/providers/CacheProvider';

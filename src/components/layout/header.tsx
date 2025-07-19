@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import LanguageSelector from "./language-selector";
-import Logo from "./logo";
-import DarkModeToggle from "./darkmode-selector";
-import getIcon from "@/utils/IconMap";
+import LanguageSelector from "../ui/language-selector";
+import Logo from "../ui/logo";
+import DarkModeToggle from "../ui/darkmode-selector";
+import getIcon from "@/lib/IconMap";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);

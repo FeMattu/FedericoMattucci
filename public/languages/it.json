@@ -60,5 +60,13 @@
     "fetch-images":"Caricamento immagini...",
     "camera":"Macchina Fotografica",
     "dimentions":"Dimensioni",
-    "settings":"Impostazioni"
+    "settings":"Impostazioni",
+    "admin": {
+        "title": "Pannello Admin",
+        "subtitle": "Accedi per gestire i contenuti del sito",
+        "signin": "Accedi con Google",
+        "dashboard": "Dashboard Admin",
+        "welcome": "Benvenuto",
+        "logged-in-as": "Sei connesso come"
+    }
 }

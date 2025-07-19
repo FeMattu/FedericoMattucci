@@ -4,7 +4,7 @@ import SkillsTag from "@/components/SkillsTags";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import SocialButton from "@/components/SocialButton";
-import getIcon from "@/utils/IconMap";
+import getIcon from "@/lib/IconMap";
 import { useEffect, useState } from "react";
 import S3Image from "@/components/S3image";
 
