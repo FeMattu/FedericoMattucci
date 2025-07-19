@@ -2,6 +2,10 @@ import NextAuth from "next-auth"
 import "next-auth/jwt"
 import Google from "next-auth/providers/google"
 
+if (!process.env.NEXTAUTH_URL && process.env.VERCEL_URL) {
+  process.env.NEXTAUTH_URL = `https://${process.env.VERCEL_URL}`;
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: !!process.env.AUTH_DEBUG,
   secret: process.env.NEXTAUTH_SECRET,
