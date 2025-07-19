@@ -10,6 +10,7 @@ import { RiMenu3Fill } from "react-icons/ri";
 import { TfiLayoutWidthDefaultAlt } from "react-icons/tfi";
 import { LuCalendar1 } from "react-icons/lu";
 import { TiFlashOutline } from "react-icons/ti";
+import { ExternalLink } from "lucide-react"
 
 export default function getIcon(name: string, size: number = 24, className?:string): ReactNode {
     const icons: { [key: string]: ReactNode } = {
@@ -38,9 +39,9 @@ export default function getIcon(name: string, size: number = 24, className?:stri
         "location": <FaLocationArrow size={size} className={className}/>,
         "ratio": <MdOutlineAspectRatio size={size} className={className}/>,
         "iso": <MdOutlineIso size={size} className={className}/>,
-        "falsh": <TiFlashOutline size={size} className={className}/>,
+        "flash": <TiFlashOutline size={size} className={className}/>,
         "dpi": <DPIIcon size={size} className={className} />,
-
+        "external-link": <ExternalLink size={size} className={className}/>
     };
 
     return icons[name] || null;

@@ -60,5 +60,13 @@
     "fetch-images":"Loading images...",
     "camera":"Camera",
     "dimentions":"Dimension",
-    "settings":"Settings"
+    "settings":"Settings",
+    "admin": {
+        "title": "Admin Panel",
+        "subtitle": "Sign in to manage site content",
+        "signin": "Sign in with Google",
+        "dashboard": "Admin Dashboard",
+        "welcome": "Welcome",
+        "logged-in-as": "You are logged in as"
+    }
 }

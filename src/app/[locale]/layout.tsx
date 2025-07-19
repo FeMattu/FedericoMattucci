@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import {NextIntlClientProvider, hasLocale} from 'next-intl';
-import {notFound} from 'next/navigation';
-import {routing} from '@/i18n/routing';
+import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n/routing';
 import Header from "@/components/layout/header";
 import "@/styles/globals.css";
 import Footer from "@/components/layout/footer";
 import { ThemeProvider } from "@/providers/ThemeProvider";
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CacheProvider } from "@/providers/CacheProvider";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Federico Mattucci",
@@ -20,14 +21,13 @@ export default async function RootLayout({
   params
 }: {
   children: React.ReactNode;
-  params: Promise<{locale: string}>;
+  params: { locale: string };
 }) {
-  // Ensure that the incoming `locale` is valid
-  const {locale} = await params;
+  const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
- 
+
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
@@ -36,15 +36,17 @@ export default async function RootLayout({
         <SpeedInsights/>
       </head>
       <body className="font-sans">
-        <ThemeProvider>
-          <CacheProvider>
-            <NextIntlClientProvider>
-              <Header />
-              {children}
-              <Footer />
-            </NextIntlClientProvider>
-          </CacheProvider>
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider>
+            <CacheProvider>
+              <NextIntlClientProvider locale={locale}>
+                <Header />
+                {children}
+                <Footer />
+              </NextIntlClientProvider>
+            </CacheProvider>
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );

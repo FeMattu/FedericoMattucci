@@ -1,0 +1,15 @@
+services:
+  authjs-docker-test:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/data
+    networks:
+      - authjs-network
+
+networks:
+  authjs-network:
+    driver: bridge

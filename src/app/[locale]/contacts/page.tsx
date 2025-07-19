@@ -4,7 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { ReactNode, useEffect, useState } from "react";
 import SocialButton from "@/components/SocialButton";
-import getIcon from "@/utils/IconMap";
+import getIcon from "@/lib/IconMap";
 
 function Contact({ href, type, icon, contact }: { href: string; type: string; icon: ReactNode; contact: string }) {
     const t = useTranslations();
