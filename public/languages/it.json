@@ -32,7 +32,7 @@
             "november": "Novembre",
             "december": "Dicembre"
         },
-        "day": {
+        "weekDay": {
             "default": "Giorno",
             "sunday": "Domenica",
             "monday": "Lunedì",
@@ -45,9 +45,10 @@
         "year": "Anno",
         "time": {
             "default": "Ora",
-            "hours": "Ore",
-            "minutes": "Minuti",
-            "seconds": "Secondi"
+            "hour": "Ore",
+            "minute": "Minuti",
+            "second": "Secondi",
+            "millisecond": "Millisecondi"
         }
     },
     "location": {
@@ -86,7 +87,7 @@
             "lombardy": "Lombardia",
             "campania": "Campania",
             "sicily": "Sicilia",
-            "emilia-romagna": "Emilia-Romagna",
+            "emiliaRomagna": "Emilia-Romagna",
             "piemonte": "Piemonte",
             "veneto": "Veneto",
             "puglia": "Puglia",
@@ -94,8 +95,8 @@
             "sardinia": "Sardegna",
             "liguria": "Liguria",
             "abruzzo": "Abruzzo",
-            "friuli-venezia-giulia": "Friuli-Venezia Giulia",
-            "trentino-alto-adige": "Trentino-Alto Adige",
+            "friuliVeneziaGiulia": "Friuli-Venezia Giulia",
+            "trentinoAltoAdige": "Trentino-Alto Adige",
             "molise": "Molise",
             "umbria": "Umbria",
             "basilicata": "Basilicata",
@@ -137,12 +138,12 @@
         "description": "Gestisci le impostazioni del sito",
         "language": "Lingua",
         "theme": "Tema",
-        "dark-mode": "Modalità scura",
-        "light-mode": "Modalità chiara",
-        "auto-mode": "Modalità automatica",
-        "save-changes": "Salva modifiche",
-        "changes-saved": "Modifiche salvate con successo!",
-        "error-saving-changes": "Errore durante il salvataggio delle modifiche.",
+        "darkMode": "Modalità scura",
+        "lightMode": "Modalità chiara",
+        "autoMode": "Modalità automatica",
+        "saveChanges": "Salva modifiche",
+        "changesSaved": "Modifiche salvate con successo!",
+        "errorSavingChanges": "Errore durante il salvataggio delle modifiche.",
         "error": "Errore",
         "edit": "Modifica"
     },
@@ -151,25 +152,27 @@
         "images": "Caricamento immagini in corso...",
         "settings": "Caricamento impostazioni in corso...",
         "user-info": "Caricamento informazioni utente in corso...",
-        "admin-dashboard": "Caricamento dashboard admin in corso...",
-        "admin-settings": "Caricamento impostazioni admin in corso...",
+        "adminDashboard": "Caricamento dashboard admin in corso...",
+        "adminSettings": "Caricamento impostazioni admin in corso...",
         "metadata":"Caricamento metadati in corso..."
     },
     "auth": {
         "default": "Autenticazione",
-        "sign-in": "Accedi",
-        "sign-out": "Disconnetti",
-        "sign-up": "Registrati"
+        "signIn": "Accedi",
+        "signOut": "Disconnetti",
+        "signUp": "Registrati"
     },
     "profile": {
         "default": "Profilo",
-        "user-info": "Informazioni Utente",
+        "userInfo": "Informazioni Utente",
         "fullname": "Nome Completo",
         "username": "Nome Utente",
+        "profileImageUrl": "URL immagine profilo",
         "bio": "Bio",
-        "contact-info": "Informazioni di Contatto",
-        "edit-profile": "Modifica Profilo",
-        "view-profile": "Visualizza Profilo",
+        "jobTitle": "Titolo Lavoro",
+        "contactInfo": "Informazioni di Contatto",
+        "editProfile": "Modifica Profilo",
+        "viewProfile": "Visualizza Profilo",
         "tabs": {
             "overview": "Panoramica",
             "social": "Social",
@@ -181,7 +184,7 @@
             "photos": "Foto"
         }
     },
-    "contatti": {
+    "contacts": {
         "default": "Contatti",
         "website": "Sito Web",
         "email": {
@@ -223,10 +226,10 @@
             "pinterest":"Pinterest"
         }
     },
-    "job": {
-        "default": "Lavoro",
+    "experience": {
+        "default": "Esperienza",
         "type": {
-            "default": "Tipo di Lavoro",
+            "default": "Tipo di Esperienza/Lavoro",
             "full-time": "Tempo Pieno",
             "part-time": "Part-Time",
             "internship": "Tirocinio/Stage",
@@ -234,8 +237,8 @@
         },
         "company": "Azienda",
         "location": "Luogo di Lavoro",
-        "start-date": "Data di Inizio",
-        "end-date": "Data di Fine",
+        "startDate": "Data di Inizio",
+        "endDate": "Data di Fine",
         "description": "Descrizione del Lavoro"
     },
     "education": {
@@ -251,34 +254,50 @@
             "name": "Nome del Corso di Studio",
             "description": "Descrizione del Corso di Studio",
             "institution": "Istituzione",
-            "location": "Luogo di Studio",
-            "start-date": {
-                "month": "Mese di Inizio",
-                "year": "Anno di Inizio"
-            },
-            "end-date": {
-                "month": "Mese di Fine",
-                "year": "Anno di Fine",
-                "present": "In Corso"
-            },
-            "grade": "Voto finale"
-        },
-        "degree":{
-            "default": "Laurea",
-            "name": "Nome della Laurea",
-            "description": "Descrizione della Laurea",
-            "type": {
-                "default": "Tipo di Laurea",
-                "bachelor": "Laurea Triennale",
-                "master": "Laurea Magistrale",
-                "phd": "Dottorato di Ricerca"
-            }
+            "location": "Luogo degli Studi",
+            "startDate": "Data di inizio degli studi",
+            "endDate": "Data di fine degli studi"
         },
         "course": {
             "default": "Corsi",
             "name": "Nome del Corso",
             "description": "Descrizione del Corso",
-            "credits": "Crediti"
+            "institution": "Istituzione del Corso",
+            "location": "Luogo del Corso",
+            "startDate": "Data di inizio corso",
+            "endDate": "Data di fine corso"
+        },
+        "degree": {
+            "default": "Laurea/Diploma",
+            "title": "Titolo della Laurea/Diploma",
+            "description": "Descrizione della Laurea/Diploma",
+            "grade": "Voto finale",
+            "institution": "Istituzione della Laurea/Diploma",
+            "type": {
+                "default": "Tipo di Laurea/Diploma",
+                "diploma": "Diploma",
+                "bachelor": "Laurea Triennale",
+                "master": "Laurea Magistrale",
+                "phd": "Dottorato di Ricerca"
+            },
+            "date": "Data di conseguimento della Laurea/Diploma"
+        },
+        "certification": {
+            "default": "Certificazioni",
+            "name": "Nome della Certificazione",
+            "description": "Descrizione della Certificazione",
+            "issued-by": "Istituzione che rilascia la Certificazione",
+            "id": "ID della Certificazione",
+            "url": "URL della Certificazione",
+            "issuedDate": "Data di Rilascio",
+            "expirationDate": "Data di Scadenza",
+            "validity": {
+                "default": "Validità",
+                "permanent": "Permanente",
+                "temporary": "Temporanea"
+            },
+            "valid": "Valida",
+            "expired": "Scaduta"
         }
     },
     "skills": {

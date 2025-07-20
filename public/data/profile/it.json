@@ -2,131 +2,94 @@
     "fullname": "Federico Mattucci",
     "username": "federico-mattucci",
     "image": "profile/profile.jpg",
-    "job-title": "Studente di Informatica",
+    "jobTitle": "Studente di Informatica",
     "bio": "Sono Federico, uno studente di Scienze Informatiche all'Università di Pisa con un background da perito informatico. Appassionato di tecnologia, fotografia e cucina. Mi piace approfondire nuove sfide nel mondo dello sviluppo software e dell'ottimizzazione delle prestazioni. Ho esperienza lavorativa tramite stage e possiedo una certificazione IELTS (6.5). Il mio obiettivo è arricchire il mio percorso con un'esperienza lavorativa all'estero e prepararmi per studiare all'MIT.",
-    "languages": {
-        "it": "_it_",
-        "en": "_en_"
-    },
+    "languages": [
+        {
+            "language": "_it_",
+            "level": "_native_"
+        },
+        {
+            "language": "_en_",
+            "level": "_advanced_"
+        }
+    ],
     "location": {
         "city": "_lucca_",
         "region": "_tuscany_",
         "country": "_italy_"
     },
     "contacts":{
-        "email":{
-            "personal": "mattucci.federico@gmail.com",
-            "institutional": "f.mattucci1@studenti.unipi.it",
-            "work": "federico.mattucci@jevis.it"
-        },
-        "phone":{
-            "number": "+39 334-1854239",
-            "type": "_mobile_"
-        }
+        "websiteUrl": "www.federico-mattucci.vercel.app",
+        "email":[
+            {
+                "type": "_personal_",
+                "address": "mattucci.federico@gmail.com"
+            },
+            {
+                "type": "_institutional_",
+                "address": "f.mattucci1@studenti.unipi.it"
+            },
+            {
+                "type": "_work_",
+                "address": "federico.mattucci@jevis.it"
+            }
+        ],
+        "phone":[
+            {
+                "type": "_mobile_",
+                "number": "+39 334-1854239"
+            }
+        ],
+        "social":[
+            {
+                "name": "_instagram_",
+                "link": "https://www.instagram.com/fede_mattu_?igsh=eTBndmF1bGswNTVi"
+            },
+            {
+                "name": "_facebook_",
+                "link": "https://www.facebook.com/share/1MwBGtJodS/"
+            },
+            {
+                "name": "_linkedin_",
+                "link": "https://www.linkedin.com/in/federico-mattucci-13aa1a249?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+            },
+            {
+                "name": "_whatsapp_",
+                "link": "https://wa.me/+393341854239"
+            },
+            {
+                "name": "_github_",
+                "link": "https://github.com/FeMattu"
+            }
+        ]
     },
-    "social":{
-        "instagram":"https://www.instagram.com/fede_mattu_?igsh=eTBndmF1bGswNTVi",
-        "facebook":"https://www.facebook.com/share/1MwBGtJodS/",
-        "linkedin":"https://www.linkedin.com/in/federico-mattucci-13aa1a249?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-        "whatsapp":"https://wa.me/+393341854239",
-        "github":"https://github.com/FeMattu"
-    },
-    "jobs": [
+    "experiences": [
         {
             "title": "Studente",
-            "type": "_full-time_",
+            "type": "_fullTime_",
             "company": "Università di Pisa",
             "description": "Studente di Scienze Informatiche con focus su sviluppo software e ottimizzazione delle prestazioni.",
             "location": {
                 "city": "_pisa_",
+                "region": "_tuscany_",
                 "country": "_italy_"
             },
-            "start-date": {
+            "startDate": {
                 "month": "_september_",
                 "year": 2023
             },
-            "end-date": {
+            "endDate": {
                 "month": "_july_",
-                "year": 2026
-            }
-        },
-        {
-            "title": "Studente",
-            "type": "_full-time_",
-            "company": "Università di Pisa",
-            "description": "Studente di Scienze Informatiche con focus su sviluppo software e ottimizzazione delle prestazioni.",
-            "location": {
-                "city": "_pisa_",
-                "country": "_italy_"
-            },
-            "start-date": {
-                "month": "_september_",
-                "year": 2023
-            },
-            "end-date": {
-                "month": "_july_",
-                "year": 2026
-            }
-        },
-        {
-            "title": "Studente",
-            "type": "_full-time_",
-            "company": "Università di Pisa",
-            "description": "Studente di Scienze Informatiche con focus su sviluppo software e ottimizzazione delle prestazioni.",
-            "location": {
-                "city": "_pisa_",
-                "country": "_italy_"
-            },
-            "start-date": {
-                "month": "_september_",
-                "year": 2023
-            },
-            "end-date": {
-                "month": "_july_",
-                "year": 2026
-            }
-        },
-        {
-            "title": "Studente",
-            "type": "_full-time_",
-            "company": "Università di Pisa",
-            "description": "Studente di Scienze Informatiche con focus su sviluppo software e ottimizzazione delle prestazioni.",
-            "location": {
-                "city": "_pisa_",
-                "country": "_italy_"
-            },
-            "start-date": {
-                "month": "_september_",
-                "year": 2023
-            },
-            "end-date": {
-                "month": "_july_",
-                "year": 2026
-            }
-        },
-        {
-            "title": "Studente",
-            "type": "_full-time_",
-            "company": "Università di Pisa",
-            "description": "Studente di Scienze Informatiche con focus su sviluppo software e ottimizzazione delle prestazioni.",
-            "location": {
-                "city": "_pisa_",
-                "country": "_italy_"
-            },
-            "start-date": {
-                "month": "_september_",
-                "year": 2023
-            },
-            "end-date": {
-                "month": "_july_",
-                "year": 2026
+                "year": 2026,
+                "present": true
             }
         }
     ],
     "education": {
         "studies":[
             {
-                "title": "_high-school_",
+                "title": "_highSchool_",
                 "name": "Perito Informatico",
                 "istitution": "Istituto Tecnico Industriale Statale 'E. Fermi'",
                 "description": "Perito Informatico",
@@ -135,11 +98,11 @@
                     "city": "_lucca_",
                     "country": "_italy_"
                 },
-                "start-date": {
+                "startDate": {
                     "month": "_september_",
                     "year": 2018
                 },
-                "end-date": {
+                "endDate": {
                     "month": "_july_",
                     "year": 2023
                 }
@@ -154,84 +117,69 @@
                     "city": "_pisa_",
                     "country": "_italy_"
                 },
-                "start-date": {
+                "startDate": {
                     "month": "_september_",
                     "year": 2023
                 },
-                "end-date": {
+                "endDate": {
                     "month": "_july_",
                     "year": 2026,
                     "present": true
                 }
             }
-        ]
+        ],
+        "courses": [],
+        "certification": [],
+        "degrees": []
     },
     "skills": [
         {
-            "name": "_programming-languages_",
-            "front-end": {
-                "title": "_programming-languages.front-end_",
-                "list":[
-                    {
-                        "name": "_html_",
-                        "level": "_expert_"
-                    },
-                    {
-                        "name": "_css_",
-                        "level": "_expert_"
-                    },
-                    {
-                        "name": "_javascript_",
-                        "level": "_expert_"
-                    },
-                    {
-                        "name": "_typescript_",
-                        "level": "_expert_"
-                    },
-                    {
-                        "name": "_front_end.frameworks_",
-                        "list": [
-                            {
-                                "name": "_angular_",
-                                "level": "_intermediate_"
-                            },
-                            {
-                                "name": "_react_",
-                                "level": "_advanced_"
-                            }
-                        ]
-                    }
-                ]
-            },
-            "back-end": {
-                "title": "_programming-languages.back-end_",
-                "list":[
-                    {
-                        "name": "_python_",
-                        "level": "_advanced_"
-                    },
-                    {
-                        "name": "_javascript_",
-                        "level": "_advanced_"
-                    },
-                    {
-                        "name": "_java_",
-                        "level": "_advanced_"
-                    },
-                    {
-                        "name": "_c/c++_",
-                        "level": "_expert_"
-                    },
-                    {
-                        "name": "_back-end.frameworks_",
-                        "list": [
-                            {
-                                "name": "_python_",
-                                "level": "_advanced_"
-                            },
-                            {
-                                "name": "_javascript_",
-                                "level": "_advanced_"
+            "name": "_programmingLanguages",
+            "list": [
+                {
+                    "name": "_backEnd_",
+                    "list":[
+                        {
+                            "name": "_html_",
+                            "level": "_expert_"
+                        },
+                        {
+                            "name": "_css_",
+                            "level": "_expert_"
+                        },
+                        {
+                            "name": "_javascript_",
+                            "level": "_expert_"
+                        },
+                        {
+                            "name": "_typescript_",
+                            "level": "_expert_"
+                        },
+                        {
+                            "name": "_frameworks_",
+                            "list": [
+                                {
+                                    "name": "_angular_",
+                                    "level": "_intermediate_"
+                                },
+                                {
+                                    "name": "_react_",
+                                    "level": "_advanced_"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "_backEnd_",
+                    "list":[
+                        {
+                            "name": "_python_",
+                            "level": "_advanced_"
+                        },
+                        {
+                            "name": "_javascript_",
+                            "level": "_advanced_"
                             },
                             {
                                 "name": "_java_",
@@ -249,7 +197,7 @@
                                         "level": "_advanced_"
                                     },
                                     {
-                                        "name": "_spring_boot_",
+                                        "name": "_springBoot_",
                                         "level": "_intermediate_"
                                     },
                                     {
@@ -258,27 +206,25 @@
                                     }
                                 ]
                             }
-
                         ]
-                    }
-                ]
-            },
-            "mobile": {
-                "title": "_programming-languages.mobile_",
-                "list":[
-                    {
-                        "name": "_flutter_",
-                        "level": "_beginner_"
-                    },
-                    {
-                        "name": "_react_native_",
-                        "level": "_intermediate_"
-                    }
-                ]
-            }
+                },
+                {
+                    "name":"_mobile_",
+                    "list":[
+                        {
+                            "name":"_flutter_", 
+                            "level":"_beginner_" 
+                        },
+                        {
+                            "name":"_reactNative_", 
+                            "level":"_intermediate_" 
+                        }
+                    ]
+                }
+            ]
         },
         {
-            "name": "_databases_",
+            "name": "_database_",
             "list": [
                 {
                     "name": "_mysql_",
@@ -291,7 +237,7 @@
             ]
         },
         {
-            "name": "_cloud-services_",
+            "name": "_cloudServices_",
             "list": [
                 {
                     "name": "_aws_",
@@ -304,7 +250,7 @@
             ]
         },
         {
-            "name": "tools",
+            "name": "_tools_",
             "list": [
                 {
                     "name": "_developing_",
@@ -337,7 +283,7 @@
                     ]
                 },
                 {
-                    "name": "_project-management_",
+                    "name": "_projectManagement_",
                     "list": [
                         {
                             "name": "_jira_",
@@ -410,26 +356,31 @@
             ]
         }
     ],
-    "hobbies": [
-        {
-            "name": "Tecnologie",
-            "description": "Amo esplorare le ultime innovazioni e sviluppare soluzioni digitali creative. La tecnologia mi affascina perché trasforma idee in realtà, migliorando la nostra vita quotidiana in modi inaspettati."
-        },
-        {
-            "name": "Fotografia",
-            "description": "Appassionato di fotografia, mi piace catturare momenti speciali e paesaggi.",
-            "link": "/portfolio"
-        },
-        {
-            "name": "Cucina",
-            "description": "Cucinare mi dà una sensazione di libera espressività e mi permette di sbagliare e sperimentare nuove ricette per migliorarmi continuamente."
-        },
-        {
-            "name": "Viaggi",
-            "description": "Mi piace viaggiare e scoprire nuove culture e mentalità. Sono stato negli USA (2 volte), in Inghilterra, Scozia, Irlanda, Francia, Spagna, Austria, Germania, Repubblica Ceca, Ungheria, Svizzera, oltre che molti luoghi in Italia. Amo la mia terra di Lucca."
-        },{
-            "name": "Sport",
-            "description": "Lo sport mi permette di scaricarmi e rilassarmi; inoltre, mi piace sfidare me stesso e curare il mio corpo."
-        }
-    ]
+    "hobbies": {
+        "name": "_hobby_",
+        "description": "Nel tempo libero mi piace fare sport, fotografia, viaggiare e cucinare.",
+        "list": [
+            {
+                "name": "Tecnologie",
+                "description": "Amo esplorare le ultime innovazioni e sviluppare soluzioni digitali creative. La tecnologia mi affascina perché trasforma idee in realtà, migliorando la nostra vita quotidiana in modi inaspettati."
+            },
+            {
+                "name": "Fotografia",
+                "description": "Appassionato di fotografia, mi piace catturare momenti speciali e paesaggi.",
+                "link": "/portfolio"
+            },
+            {
+                "name": "Cucina",
+                "description": "Cucinare mi dà una sensazione di libera espressività e mi permette di sbagliare e sperimentare nuove ricette per migliorarmi continuamente."
+            },
+            {
+                "name": "Viaggi",
+                "description": "Mi piace viaggiare e scoprire nuove culture e mentalità. Sono stato negli USA (2 volte), in Inghilterra, Scozia, Irlanda, Francia, Spagna, Austria, Germania, Repubblica Ceca, Ungheria, Svizzera, oltre che molti luoghi in Italia. Amo la mia terra di Lucca."
+            },
+            {
+                "name": "Sport",
+                "description": "Lo sport mi permette di scaricarmi e rilassarmi; inoltre, mi piace sfidare me stesso e curare il mio corpo."
+            }
+        ]
+    }
 }
