@@ -13,6 +13,12 @@
         "ja": "Giapponese",
         "fi": "Finlandese"
     },
+    "level": {
+        "default": "Livello",
+        "beginner": "Principiante",
+        "intermediate": "Intermedio",
+        "advanced": "Avanzato"
+    },
     "date": {
         "default": "Data",
         "today": "Oggi",

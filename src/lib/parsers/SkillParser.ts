@@ -1,11 +1,25 @@
 import Skill from "../interfaces/Skill";
+import { cleanValue } from "../utils";
 
-export default function ParseSkill(){
-    /*
-    TODO: Skill parser, deve avere il seguento comportamento, se il campo non level è presente ed è presente list allora è una superSkill
-    ovvero tipo supercategoria che contiene altre skill altrimenti è una Skill vera e propria, ovvero guardando il campo Skills del file 
-    JSON come un albero le skill vere e proprie sono le foglie;
+export default function ParseSkills(rawSkill: any, locale: string, scope: string = "skills"): Skill {
+    // Se il campo level non è presente ed è presente list allora è una superSkill (supercategoria)
+    // altrimenti è una Skill vera e propria (foglia dell'albero)
+    
+    const result: Skill = {
+        name: cleanValue(rawSkill.name, scope)
+    };
 
-    il campo name serve anche per lo scoping all interno del file di traduzione
-    */
+    // Se ha level ed è una foglia
+    if (rawSkill.level && !rawSkill.list) {
+        result.level = cleanValue(rawSkill.level, scope);
+    }
+    
+    // Se ha una lista, è una supercategoria che contiene altre skill
+    if (rawSkill.list && Array.isArray(rawSkill.list)) {
+        // Per le sottocategorie, costruisco lo scope gerarchico
+        const childScope = `${scope}.${rawSkill.name}`;
+        result.list = rawSkill.list.map((subSkill: any) => ParseSkills(subSkill, locale, childScope));
+    }
+
+    return result;
 }
