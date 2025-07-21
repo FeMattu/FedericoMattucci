@@ -1,7 +1,7 @@
 "use client";
 
 import Gallery from "@/components/Gallery";
-import { useTranslation } from "@/lib/translation";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function Portfolio() {
     const t = useTranslation();

@@ -1,7 +1,8 @@
 import Location from "../interfaces/Location";
 import { cleanValue } from "../utils";
+import { TFunction } from "../../hooks/useTranslation";
 
-export default function ParseLocation(rawLocation: any, locale: string): Location {
+export default function ParseLocation(rawLocation: any, t: TFunction): Location {
     return {
         coordinate: rawLocation.coordinate ? {
             longitude: rawLocation.coordinate.logitue,
@@ -12,9 +13,9 @@ export default function ParseLocation(rawLocation: any, locale: string): Locatio
             number: rawLocation.address.number,
             postalCode: rawLocation.address.postalCode
         } : {street: "", number: NaN, postalCode: ""},
-        region: cleanValue(rawLocation.region, "location.region"),
-        city: cleanValue(rawLocation.city, "location.city"),
-        country: cleanValue(rawLocation.country, "location.country"),
-        continent: rawLocation.continent ? cleanValue(rawLocation, "location.continent") : ""
+        region: cleanValue(t, rawLocation.region, "location.region"),
+        city: cleanValue(t, rawLocation.city, "location.city"),
+        country: cleanValue(t, rawLocation.country, "location.country"),
+        continent: rawLocation.continent ? cleanValue(t, rawLocation.continent, "location.continent") : ""
     };
 }

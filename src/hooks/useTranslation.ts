@@ -1,10 +1,12 @@
 import { useTranslations } from "next-intl";
 
-export function useTranslation() {
+export type TFunction = (key: string, options?: any) => string;
+
+export function useTranslation(): TFunction {
   const t = useTranslations();
 
-  const customT = (key: string, options?: any) => {
-    
+  const customT = (key: string, options?: any): string => {
+
     let result = t(key, { ...options, returnObjects: true });
     
     if(result == key){

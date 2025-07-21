@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react";
-import { useTranslation } from "@/lib/translation";
+import { useTranslation } from "@/hooks/useTranslation";
 import { Link } from "@/i18n/navigation";
 import LanguageSelector from "../ui/language-selector";
 import Logo from "../ui/logo";

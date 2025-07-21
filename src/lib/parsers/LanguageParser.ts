@@ -1,9 +1,10 @@
 import Language from "../interfaces/Language";
 import { cleanValue } from "../utils";
+import { TFunction } from "../../hooks/useTranslation";
 
-export default function ParseLanguage(rawLanguage: any, locale: string): Language {
+export default function ParseLanguage(rawLanguage: any, t: TFunction): Language {
     return {
-        language: cleanValue(rawLanguage.language, "language"),
-        level: cleanValue(rawLanguage.level, "level")
+        language: cleanValue(t, rawLanguage.language, "language"),
+        level: cleanValue(t, rawLanguage.level, "level")
     };
 }

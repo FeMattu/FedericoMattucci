@@ -2,36 +2,18 @@
 
 import SkillsTags from "@/components/SkillsTags";
 import { Link } from "@/i18n/navigation";
-import { useTranslation } from "@/lib/translation";
-import { getUserData } from "@/lib/utils";
+import { useTranslation } from "@/hooks/useTranslation";
+import { useUserData } from "@/hooks/useUserData";
 import SocialButton from "@/components/SocialButton";
 import getIcon from "@/lib/IconMap";
 import S3Image from "@/components/S3image";
-import { useEffect, useState } from "react";
-import UserData from "@/lib/interfaces/UserData";
 import { useParams } from "next/navigation";
 
 export default function HomePage() {
   const t = useTranslation();
   const params = useParams();
   const locale = params.locale as string || "it";
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getUserData(locale);
-        setUserData(data);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    
-    fetchData();
-  }, [locale]);
+  const { data: userData, loading } = useUserData(locale);
 
   if (loading || !userData) {
     return (

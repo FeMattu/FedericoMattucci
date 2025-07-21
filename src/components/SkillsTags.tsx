@@ -1,10 +1,8 @@
 "use client";
 
-import { useTranslation } from "@/lib/translation";
-import { getUserData } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useTranslation } from "@/hooks/useTranslation";
+import { useUserData } from "@/hooks/useUserData";
 import { useParams } from "next/navigation";
-import UserData from "@/lib/interfaces/UserData";
 import Skill from "@/lib/interfaces/Skill";
 
 function SkillTag({ skill }: { skill: Skill }) {
@@ -48,23 +46,7 @@ export default function SkillsTags({ className, skillType }: { className?: strin
   const t = useTranslation();
   const params = useParams();
   const locale = params.locale as string || "it";
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getUserData(locale);
-        setUserData(data);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    
-    fetchData();
-  }, [locale]);
+  const { data: userData, loading } = useUserData(locale);
 
   if (loading || !userData) {
     return (

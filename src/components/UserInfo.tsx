@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSession, signOut } from "next-auth/react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import getIcon from '@/lib/IconMap';
-import { useTranslation } from '@/lib/translation';
-import { getUserData } from '@/lib/utils';
-import UserData from '@/lib/interfaces/UserData';
+import { useTranslation } from '@/hooks/useTranslation';
+import { useUserData } from '@/hooks/useUserData';
 import { useParams } from 'next/navigation';
 
 type TabType = 'overview' | 'social' | 'education' | 'skills' | 'hobbies' | 'experience';
@@ -15,24 +14,8 @@ export default function UserInfo() {
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const params = useParams();
   const locale = params.locale as string || "it";
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { data: userData, loading } = useUserData(locale);
   const t = useTranslation();
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getUserData(locale);
-        setUserData(data);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    
-    fetchData();
-  }, [locale]);
 
   // Loading state
   if (loading || !userData) {

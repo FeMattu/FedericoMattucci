@@ -9,6 +9,7 @@ if (!process.env.NEXTAUTH_URL && process.env.VERCEL_URL) {
 export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: !!process.env.AUTH_DEBUG,
   secret: process.env.NEXTAUTH_SECRET,
+  trustHost: true,
   theme: { 
     colorScheme: "auto",
     logo: "https://authjs.dev/img/logo-sm.png" 

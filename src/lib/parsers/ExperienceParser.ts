@@ -2,15 +2,16 @@ import Experience from "../interfaces/Experience";
 import ParseLocation from "./LocationParser";
 import ParseDate from "./DateParser";
 import { cleanValue } from "../utils";
+import { TFunction } from "../../hooks/useTranslation";
 
-export default function ParseExperience(rawExperience: any, locale: string): Experience {
+export default function ParseExperience(rawExperience: any, t: TFunction): Experience {
     return {
         title: rawExperience.title,
-        type: cleanValue(rawExperience.type, "experience.type"),
+        type: cleanValue(t, rawExperience.type, "experience.type"),
         company: rawExperience.company,
         description: rawExperience.description,
-        location: ParseLocation(rawExperience.location, locale),
-        startDate: ParseDate(rawExperience.startDate, locale),
-        endDate: ParseDate(rawExperience.endDate, locale)
+        location: ParseLocation(rawExperience.location, t),
+        startDate: ParseDate(rawExperience.startDate, t),
+        endDate: ParseDate(rawExperience.endDate, t)
     };
 }
