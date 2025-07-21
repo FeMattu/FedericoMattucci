@@ -63,7 +63,7 @@
             "default": "Indirizzo",
             "street": "Via",
             "number": "Numero",
-            "postal_code": "Codice Postale"
+            "postalCode": "Codice Postale"
         },
         "coordinate": {
             "default": "Coordinate",
@@ -128,12 +128,10 @@
             "default": "Continente",
             "europe": "Europa",
             "asia": "Asia",
-            "america": {
-                "default": "America",
-                "north": "America del Nord",
-                "south": "America del Sud",
-                "central": "America Centrale"
-            },
+            "america":"America",
+            "northAmerica": "America del Nord",
+            "southAmerica": "Americadel Sud",
+            "centralAmerica": "America Centrale",
             "africa": "Africa",
             "oceania": "Oceania",
             "antartica": "Antartide"
@@ -292,7 +290,7 @@
             "default": "Certificazioni",
             "name": "Nome della Certificazione",
             "description": "Descrizione della Certificazione",
-            "issued-by": "Istituzione che rilascia la Certificazione",
+            "issuedBy": "Istituzione che rilascia la Certificazione",
             "id": "ID della Certificazione",
             "url": "URL della Certificazione",
             "issuedDate": "Data di Rilascio",
@@ -316,10 +314,10 @@
             "expert": "Esperto"
         },
         "other": "Altre competenze",
-        "social-media": "Social Media",
-        "programming-languages": {
+        "socialMedia": "Social Media",
+        "programmingLanguages": {
             "default": "Linguaggi di Programmazione",
-            "front-end": {
+            "frontEnd": {
                 "default": "Front End",
                 "html": "HTML",
                 "css": "CSS",
@@ -333,7 +331,7 @@
                     "nextjs": "NextJs"
                 }
             },
-            "back-end": {
+            "backEnd": {
                 "default": "Back End",
                 "php": "PHP",
                 "python": "Python",
@@ -373,11 +371,11 @@
             "dynamodb": "DynamoDB",
             "mariadb": "MariaDB"
         },
-        "cloud-services": {
+        "cloudServices": {
             "default": "Servizi Cloud",
             "aws": "AWS",
             "azure": "Azure",
-            "google-cloud": "Google Cloud",
+            "googleCloud": "Google Cloud",
             "heroku": "Heroku",
             "vercel": "Vercel",
             "netlify": "Netlify",
@@ -411,7 +409,7 @@
                 "adobe-xd": "Adobe XD",
                 "sketch": "Sketch"
             },
-            "project-management":{
+            "projectManagement":{
                 "default": "Gestione Progetti",
                 "jira": "Jira",
                 "trello": "Trello",
@@ -437,7 +435,7 @@
                 "photoshop": "Photoshop",
                 "lightroom": "Lightroom"
             },
-            "website-developing":{
+            "websiteDeveloping":{
                 "default": "Sviluppo Web",
                 "wordpress": "Wordpress",
                 "elementor": "Elementor"

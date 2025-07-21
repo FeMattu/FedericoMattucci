@@ -11,13 +11,13 @@ export default function ParseSkills(rawSkill: any, locale: string, scope: string
 
     // Se ha level ed è una foglia
     if (rawSkill.level && !rawSkill.list) {
-        result.level = cleanValue(rawSkill.level, scope);
+        result.level = cleanValue(rawSkill.level, "skills.level");
     }
     
     // Se ha una lista, è una supercategoria che contiene altre skill
     if (rawSkill.list && Array.isArray(rawSkill.list)) {
         // Per le sottocategorie, costruisco lo scope gerarchico
-        const childScope = `${scope}.${rawSkill.name}`;
+        const childScope = `${scope}.${cleanValue(rawSkill.name)}`;
         result.list = rawSkill.list.map((subSkill: any) => ParseSkills(subSkill, locale, childScope));
     }
 

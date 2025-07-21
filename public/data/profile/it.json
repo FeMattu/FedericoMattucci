@@ -38,6 +38,7 @@
         "phone":[
             {
                 "type": "_mobile_",
+                "scope": "_personal_",
                 "number": "+39 334-1854239"
             }
         ],
@@ -91,9 +92,8 @@
             {
                 "title": "_highSchool_",
                 "name": "Perito Informatico",
-                "istitution": "Istituto Tecnico Industriale Statale 'E. Fermi'",
+                "institution": "Istituto Tecnico Industriale Statale 'E. Fermi'",
                 "description": "Perito Informatico",
-                "grade": "100/100 con lode",
                 "location": {
                     "city": "_lucca_",
                     "country": "_italy_"
@@ -112,7 +112,6 @@
                 "name": "Scienze Informatiche",
                 "istitution": "Università di Pisa",
                 "description": "Laurea triennale in Informatica",
-                "grade": "In corso",
                 "location": {
                     "city": "_pisa_",
                     "country": "_italy_"
@@ -357,7 +356,6 @@
         }
     ],
     "hobbies": {
-        "name": "_hobby_",
         "description": "Nel tempo libero mi piace fare sport, fotografia, viaggiare e cucinare.",
         "list": [
             {

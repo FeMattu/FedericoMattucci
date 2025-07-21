@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { CiLinkedin } from "react-icons/ci";
-import { FaCamera, FaGithub, FaInstagram, FaLocationArrow, FaRegMoon, FaWhatsapp, FaSignOutAlt, FaGraduationCap, FaBriefcase, FaUser, FaHeart } from "react-icons/fa";
+import { FaCamera, FaGithub, FaInstagram, FaLocationArrow, FaRegMoon, FaWhatsapp, FaSignOutAlt, FaGraduationCap, FaBriefcase, FaHeart } from "react-icons/fa";
 import { FaEarthEurope, FaThreads, FaXTwitter } from "react-icons/fa6";
 import { FiAperture, FiArrowUpRight, FiFacebook, FiPhone } from "react-icons/fi";
 import { IoMdClose } from "react-icons/io";

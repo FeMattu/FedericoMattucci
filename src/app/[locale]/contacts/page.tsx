@@ -2,10 +2,12 @@
 
 import { Link } from "@/i18n/navigation";
 import { useTranslation } from "@/lib/translation";
-import { useUserData } from "@/lib/utils";
-import { ReactNode } from "react";
+import { getUserData } from "@/lib/utils";
+import { ReactNode, useEffect, useState } from "react";
 import SocialButton from "@/components/SocialButton";
 import getIcon from "@/lib/IconMap";
+import UserData from "@/lib/interfaces/UserData";
+import { useParams } from "next/navigation";
 
 function Contact({ href, type, icon, contact }: { href: string; type: string; icon: ReactNode; contact: string }) {
     const t = useTranslation();
@@ -18,10 +20,28 @@ function Contact({ href, type, icon, contact }: { href: string; type: string; ic
 }
 
 function ContactList() {
-    const userData = useUserData();
     const t = useTranslation();
+    const params = useParams();
+    const locale = params.locale as string || "it";
+    const [userData, setUserData] = useState<UserData | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    if (!userData) {
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const data = await getUserData(locale);
+                setUserData(data);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        
+        fetchData();
+    }, [locale]);
+
+    if (loading || !userData) {
         return (
             <div className="flex flex-col gap-2 items-center">
                 <p className="text-[var(--text-secondary)]">{t('loading.user-info')}</p>
@@ -31,39 +51,51 @@ function ContactList() {
 
     return (
         <div className="flex flex-col gap-2 items-center">
-            <Contact
-                href={`mailto:${userData.contacts.email.personal}`}
-                type="contatti.email.personal"
-                icon={getIcon("email", 24)}
-                contact={userData.contacts.email.personal}
-            />
-            <Contact
-                href={`mailto:${userData.contacts.email.institutional}`}
-                type="contatti.email.institutional"
-                icon={getIcon("email", 24)}
-                contact={userData.contacts.email.institutional}
-            />
-            <Contact
-                href={`mailto:${userData.contacts.email.work}`}
-                type="contatti.email.work"
-                icon={getIcon("email", 24)}
-                contact={userData.contacts.email.work}
-            />
-            <Contact
-                href={`tel:${userData.contacts.phone.number}`}
-                type="contatti.phone"
-                icon={getIcon("phone", 24)}
-                contact={`${userData.contacts.phone.number} (${userData.contacts.phone.type})`}
-            />
+            {userData.contacts.email.map((email, index) => (
+                <Contact
+                    key={`email-${index}`}
+                    href={`mailto:${email.address}`}
+                    type={`contatti.email.${email.type.toLowerCase()}`}
+                    icon={getIcon("email", 24)}
+                    contact={email.address}
+                />
+            ))}
+            {userData.contacts.phone.map((phone, index) => (
+                <Contact
+                    key={`phone-${index}`}
+                    href={`tel:${phone.number}`}
+                    type="contatti.phone"
+                    icon={getIcon("phone", 24)}
+                    contact={`${phone.number} (${phone.type})`}
+                />
+            ))}
         </div>
     );
 }
 
 function SocialLinks() {
-    const userData = useUserData();
     const t = useTranslation();
+    const params = useParams();
+    const locale = params.locale as string || "it";
+    const [userData, setUserData] = useState<UserData | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    if (!userData) {
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const data = await getUserData(locale);
+                setUserData(data);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        
+        fetchData();
+    }, [locale]);
+
+    if (loading || !userData) {
         return (
             <div className="flex flex-wrap gap-4 justify-center">
                 <p className="text-[var(--text-secondary)]">{t('loading.user-info')}</p>
@@ -73,14 +105,12 @@ function SocialLinks() {
 
     return (
         <div className="flex flex-wrap gap-4 justify-center">
-            {Object.entries(userData.social).map(([platform, link]) =>
-                link ? (
-                    <SocialButton key={platform} href={link}>
-                        {getIcon(platform, 24) || getIcon("default", 24)} 
-                        <p>{t(`contatti.social.${platform}`)}</p>
-                    </SocialButton>
-                ) : null
-            )}
+            {userData.contacts.social.map((social, index) => (
+                <SocialButton key={`${social.network}-${index}`} href={social.link}>
+                    {getIcon(social.network.toLowerCase(), 24) || getIcon("default", 24)} 
+                    <p>{t(`contatti.social.${social.network.toLowerCase()}`)}</p>
+                </SocialButton>
+            ))}
         </div>
     );
 }

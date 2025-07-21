@@ -6,6 +6,7 @@ export default interface Contacts {
   }>
   phone: Array<{
     type: string
+    scope: string
     number: string
   }>
   social: Array<{

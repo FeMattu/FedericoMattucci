@@ -21,8 +21,7 @@ export default function ParseUserData(rawData: any, locale: string): UserData {
         education: ParseEducation(rawData.education, locale),
         skills: rawData.skills.map((skill: any) => ParseSkills(skill, locale, "skills")),
         hobbies: {
-            name: rawData.hobbies?.name || "Hobbies",
-            description: rawData.hobbies?.description || "I miei hobby e interessi personali.",
+            description: rawData.hobbies.description || "",
             list: rawData.hobbies ? rawData.hobbies.map((hobby: any) => ParseHobby(hobby, locale)) : []
         }
     };

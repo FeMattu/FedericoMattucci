@@ -19,8 +19,7 @@ export default interface UserData {
   education: Education
   skills: Array<Skill>
   hobbies: {
-    name: string
-    description: string,
+    description?: string,
     list: Array<Hobby>
   }
 }

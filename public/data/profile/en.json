@@ -3,143 +3,106 @@
     "username": "federico-mattucci",
     "image": "profile/profile.jpg",
     "jobTitle": "Computer Science Student",
-    "bio": "I'm Federico, a Computer Science student at the University of Pisa with a background as a computer technician. Passionate about technology, photography and cooking. I like to deepen new challenges in the world of software development and performance optimization. I have work experience through internships and I have an IELTS certification (6.5). My goal is to enrich my path with a work experience abroad and prepare myself to study at MIT.",
-    "languages": {
-        "it": "_it_",
-        "en": "_en_"
-    },
+    "bio": "I'm Federico, a Computer Science student at the University of Pisa with a background as an IT technician. Passionate about technology, photography, and cooking. I love exploring new challenges in software development and performance optimization. I have work experience through internships and hold an IELTS certification (6.5). My goal is to enrich my journey with a work experience abroad and prepare to study at MIT.",
+    "languages": [
+        {
+            "language": "_it_",
+            "level": "_native_"
+        },
+        {
+            "language": "_en_",
+            "level": "_advanced_"
+        }
+    ],
     "location": {
         "city": "_lucca_",
         "region": "_tuscany_",
         "country": "_italy_"
     },
     "contacts":{
-        "email":{
-            "personal": "mattucci.federico@gmail.com",
-            "institutional": "f.mattucci1@studenti.unipi.it",
-            "work": "federico.mattucci@jevis.it"
-        },
-        "phone":{
-            "number": "+39 334-1854239",
-            "type": "_mobile_"
-        }
+        "websiteUrl": "www.federico-mattucci.vercel.app",
+        "email":[
+            {
+                "type": "_personal_",
+                "address": "mattucci.federico@gmail.com"
+            },
+            {
+                "type": "_institutional_",
+                "address": "f.mattucci1@studenti.unipi.it"
+            },
+            {
+                "type": "_work_",
+                "address": "federico.mattucci@jevis.it"
+            }
+        ],
+        "phone":[
+            {
+                "type": "_mobile_",
+                "scope": "_personal_",
+                "number": "+39 334-1854239"
+            }
+        ],
+        "social":[
+            {
+                "name": "_instagram_",
+                "link": "https://www.instagram.com/fede_mattu_?igsh=eTBndmF1bGswNTVi"
+            },
+            {
+                "name": "_facebook_",
+                "link": "https://www.facebook.com/share/1MwBGtJodS/"
+            },
+            {
+                "name": "_linkedin_",
+                "link": "https://www.linkedin.com/in/federico-mattucci-13aa1a249?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+            },
+            {
+                "name": "_whatsapp_",
+                "link": "https://wa.me/+393341854239"
+            },
+            {
+                "name": "_github_",
+                "link": "https://github.com/FeMattu"
+            }
+        ]
     },
-    "social":{
-        "instagram":"https://www.instagram.com/fede_mattu_?igsh=eTBndmF1bGswNTVi",
-        "facebook":"https://www.facebook.com/share/1MwBGtJodS/",
-        "linkedin":"https://www.linkedin.com/in/federico-mattucci-13aa1a249?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-        "whatsapp":"https://wa.me/+393341854239",
-        "github":"https://github.com/FeMattu"
-    },
-    "jobs": [
+    "experiences": [
         {
             "title": "Student",
-            "type": "_full-time_",
+            "type": "_fullTime_",
             "company": "University of Pisa",
-            "description": "Computer Science student with focus on software development and performance optimization.",
+            "description": "Computer Science student focused on software development and performance optimization.",
             "location": {
                 "city": "_pisa_",
+                "region": "_tuscany_",
                 "country": "_italy_"
             },
-            "start-date": {
+            "startDate": {
                 "month": "_september_",
                 "year": 2023
             },
-            "end-date": {
+            "endDate": {
                 "month": "_july_",
-                "year": 2026
-            }
-        },
-        {
-            "title": "Student",
-            "type": "_full-time_",
-            "company": "University of Pisa",
-            "description": "Computer Science student with focus on software development and performance optimization.",
-            "location": {
-                "city": "_pisa_",
-                "country": "_italy_"
-            },
-            "start-date": {
-                "month": "_september_",
-                "year": 2023
-            },
-            "end-date": {
-                "month": "_july_",
-                "year": 2026
-            }
-        },
-        {
-            "title": "Student",
-            "type": "_full-time_",
-            "company": "University of Pisa",
-            "description": "Computer Science student with focus on software development and performance optimization.",
-            "location": {
-                "city": "_pisa_",
-                "country": "_italy_"
-            },
-            "start-date": {
-                "month": "_september_",
-                "year": 2023
-            },
-            "end-date": {
-                "month": "_july_",
-                "year": 2026
-            }
-        },
-        {
-            "title": "Student",
-            "type": "_full-time_",
-            "company": "University of Pisa",
-            "description": "Computer Science student with focus on software development and performance optimization.",
-            "location": {
-                "city": "_pisa_",
-                "country": "_italy_"
-            },
-            "start-date": {
-                "month": "_september_",
-                "year": 2023
-            },
-            "end-date": {
-                "month": "_july_",
-                "year": 2026
-            }
-        },
-        {
-            "title": "Student",
-            "type": "_full-time_",
-            "company": "University of Pisa",
-            "description": "Computer Science student with focus on software development and performance optimization.",
-            "location": {
-                "city": "_pisa_",
-                "country": "_italy_"
-            },
-            "start-date": {
-                "month": "_september_",
-                "year": 2023
-            },
-            "end-date": {
-                "month": "_july_",
-                "year": 2026
+                "year": 2026,
+                "present": true
             }
         }
     ],
     "education": {
         "studies":[
             {
-                "title": "_high-school_",
-                "name": "Computer Technician",
-                "istitution": "State Technical Industrial Institute 'E. Fermi'",
-                "description": "Computer Technician",
-                "grade": "100/100 with honors",
+                "title": "_highSchool_",
+                "name": "IT Technician",
+                "institution": "Technical Industrial Institute 'E. Fermi'",
+                "description": "IT Technician",
                 "location": {
                     "city": "_lucca_",
                     "country": "_italy_"
                 },
-                "start-date": {
+                "startDate": {
                     "month": "_september_",
                     "year": 2018
                 },
-                "end-date": {
+                "endDate": {
                     "month": "_july_",
                     "year": 2023
                 }
@@ -149,89 +112,73 @@
                 "name": "Computer Science",
                 "istitution": "University of Pisa",
                 "description": "Bachelor's degree in Computer Science",
-                "grade": "In progress",
                 "location": {
                     "city": "_pisa_",
                     "country": "_italy_"
                 },
-                "start-date": {
+                "startDate": {
                     "month": "_september_",
                     "year": 2023
                 },
-                "end-date": {
+                "endDate": {
                     "month": "_july_",
                     "year": 2026,
                     "present": true
                 }
             }
-        ]
+        ],
+        "courses": [],
+        "certification": [],
+        "degrees": []
     },
     "skills": [
         {
-            "name": "_programming-languages_",
-            "front-end": {
-                "title": "_programming-languages.front_end_",
-                "list":[
-                    {
-                        "name": "_html_",
-                        "level": "_expert_"
-                    },
-                    {
-                        "name": "_css_",
-                        "level": "_expert_"
-                    },
-                    {
-                        "name": "_javascript_",
-                        "level": "_expert_"
-                    },
-                    {
-                        "name": "_typescript_",
-                        "level": "_expert_"
-                    },
-                    {
-                        "name": "_front-end.frameworks_",
-                        "list": [
-                            {
-                                "name": "_angular_",
-                                "level": "_intermediate_"
-                            },
-                            {
-                                "name": "_react_",
-                                "level": "_advanced_"
-                            }
-                        ]
-                    }
-                ]
-            },
-            "back-end": {
-                "title": "_programming-languages.back_end_",
-                "list":[
-                    {
-                        "name": "_python_",
-                        "level": "_advanced_"
-                    },
-                    {
-                        "name": "_javascript_",
-                        "level": "_advanced_"
-                    },
-                    {
-                        "name": "_java_",
-                        "level": "_advanced_"
-                    },
-                    {
-                        "name": "_c/c++_",
-                        "level": "_expert_"
-                    },
-                    {
-                        "name": "_back-end.frameworks_",
-                        "list": [
-                            {
-                                "name": "_python_",
-                                "level": "_advanced_"
-                            },
-                            {
-                                "name": "_javascript_",
-                                "level": "_advanced_"
+            "name": "_programmingLanguages_",
+            "list": [
+                {
+                    "name": "_frontEnd_",
+                    "list":[
+                        {
+                            "name": "_html_",
+                            "level": "_expert_"
+                        },
+                        {
+                            "name": "_css_",
+                            "level": "_expert_"
+                        },
+                        {
+                            "name": "_javascript_",
+                            "level": "_expert_"
+                        },
+                        {
+                            "name": "_typescript_",
+                            "level": "_expert_"
+                        },
+                        {
+                            "name": "_frameworks_",
+                            "list": [
+                                {
+                                    "name": "_angular_",
+                                    "level": "_intermediate_"
+                                },
+                                {
+                                    "name": "_react_",
+                                    "level": "_advanced_"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "_backEnd_",
+                    "list":[
+                        {
+                            "name": "_python_",
+                            "level": "_advanced_"
+                        },
+                        {
+                            "name": "_javascript_",
+                            "level": "_advanced_"
                             },
                             {
                                 "name": "_java_",
@@ -249,7 +196,7 @@
                                         "level": "_advanced_"
                                     },
                                     {
-                                        "name": "_spring_boot_",
+                                        "name": "_springBoot_",
                                         "level": "_intermediate_"
                                     },
                                     {
@@ -258,27 +205,25 @@
                                     }
                                 ]
                             }
-
                         ]
-                    }
-                ]
-            },
-            "mobile": {
-                "title": "_programming-languages.mobile_",
-                "list":[
-                    {
-                        "name": "_flutter_",
-                        "level": "_beginner_"
-                    },
-                    {
-                        "name": "_react_native_",
-                        "level": "_intermediate_"
-                    }
-                ]
-            }
+                },
+                {
+                    "name":"_mobile_",
+                    "list":[
+                        {
+                            "name":"_flutter_", 
+                            "level":"_beginner_" 
+                        },
+                        {
+                            "name":"_reactNative_", 
+                            "level":"_intermediate_" 
+                        }
+                    ]
+                }
+            ]
         },
         {
-            "name": "_databases_",
+            "name": "_database_",
             "list": [
                 {
                     "name": "_mysql_",
@@ -291,7 +236,7 @@
             ]
         },
         {
-            "name": "_cloud-services_",
+            "name": "_cloudServices_",
             "list": [
                 {
                     "name": "_aws_",
@@ -304,7 +249,7 @@
             ]
         },
         {
-            "name": "tools",
+            "name": "_tools_",
             "list": [
                 {
                     "name": "_developing_",
@@ -337,7 +282,7 @@
                     ]
                 },
                 {
-                    "name": "_project_management_",
+                    "name": "_projectManagement_",
                     "list": [
                         {
                             "name": "_jira_",
@@ -410,27 +355,30 @@
             ]
         }
     ],
-    "hobbies": [
-        {
-            "name": "Technologies",
-            "description": "I love exploring new technologies and staying updated with the latest trends in software development."
-        },
-        {
-            "name": "Cooking",
-            "description": "Cooking is one of my greatest passions. I enjoy experimenting with new recipes and flavors."
-        },
-        {
-            "name": "Sports",
-            "description": "I practice various sports to stay fit and challenge myself physically."
-        },
-        {
-            "name": "Travel",
-            "description": "I love traveling and discovering new cultures, places and traditions around the world."
-        },
-        {
-            "name": "Photography",
-            "description": "Photography allows me to capture special moments and see the world from different perspectives.",
-            "link": "/portfolio"
-        }
-    ]
+    "hobbies": {
+        "description": "In my free time I enjoy sports, photography, traveling, and cooking.",
+        "list": [
+            {
+                "name": "Technology",
+                "description": "I love exploring the latest innovations and developing creative digital solutions. Technology fascinates me because it transforms ideas into reality, improving our daily lives in unexpected ways."
+            },
+            {
+                "name": "Photography",
+                "description": "Passionate about photography, I enjoy capturing special moments and landscapes.",
+                "link": "/portfolio"
+            },
+            {
+                "name": "Cooking",
+                "description": "Cooking gives me a sense of free expression and allows me to make mistakes and experiment with new recipes to continuously improve myself."
+            },
+            {
+                "name": "Travel",
+                "description": "I love traveling and discovering new cultures and mentalities. I've been to the USA (twice), England, Scotland, Ireland, France, Spain, Austria, Germany, Czech Republic, Hungary, Switzerland, as well as many places in Italy. I love my homeland of Lucca."
+            },
+            {
+                "name": "Sports",
+                "description": "Sports allow me to release stress and relax; moreover, I like challenging myself and taking care of my body."
+            }
+        ]
+    }
 }

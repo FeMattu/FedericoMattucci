@@ -1,21 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSession, signOut } from "next-auth/react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import getIcon from '@/lib/IconMap';
 import { useTranslation } from '@/lib/translation';
-import { useUserData } from '@/lib/utils';
+import { getUserData } from '@/lib/utils';
+import UserData from '@/lib/interfaces/UserData';
+import { useParams } from 'next/navigation';
 
 type TabType = 'overview' | 'social' | 'education' | 'skills' | 'hobbies' | 'experience';
 
 export default function UserInfo() {
   const { data: session } = useSession();
   const [activeTab, setActiveTab] = useState<TabType>('overview');
-  const userData = useUserData();
+  const params = useParams();
+  const locale = params.locale as string || "it";
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [loading, setLoading] = useState(true);
   const t = useTranslation();
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getUserData(locale);
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchData();
+  }, [locale]);
+
   // Loading state
-  if (!userData) {
+  if (loading || !userData) {
     return (
       <div className="max-w-4xl mx-auto p-6">
         <div className="bg-[var(--card-bg)] rounded-lg shadow-lg p-6 text-center">
@@ -38,6 +58,38 @@ export default function UserInfo() {
     { id: 'hobbies' as TabType, label: t('profile.tabs.hobbies'), icon: 'heart' },
     { id: 'experience' as TabType, label: t('profile.tabs.experience'), icon: 'briefcase' }
   ];
+
+  // Helper function to recursively render skills
+  const renderSkill = (skill: any, depth: number = 0): React.ReactNode => {
+    if (skill.level && !skill.list) {
+      // It's a leaf skill with a level
+      return (
+        <span className="px-3 py-1 bg-[var(--button-bg)] text-[var(--button-text)] rounded-full text-sm">
+          {skill.name} ({skill.level})
+        </span>
+      );
+    }
+
+    if (skill.list) {
+      // It's a category with subcategories
+      return (
+        <div className={depth > 0 ? "ml-4" : ""}>
+          <h5 className={`font-medium text-[var(--text-primary)] mb-2 ${depth > 0 ? "text-sm" : ""}`}>
+            {skill.name}
+          </h5>
+          <div className={`flex flex-wrap gap-2 ${depth > 0 ? "mb-2" : "mb-4"}`}>
+            {skill.list.map((subSkill: any, index: number) => (
+              <div key={index}>
+                {renderSkill(subSkill, depth + 1)}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   // Helper function to extract username from social URLs
   const extractUsername = (url: string) => {
@@ -67,15 +119,15 @@ export default function UserInfo() {
               </div>
               <div className="flex items-center space-x-3">
                 {getIcon('earth', 20, 'text-[var(--button-bg)]')}
-                <span className="text-[var(--text-secondary)]">federico-mattucci.vercel.app</span>
+                <span className="text-[var(--text-secondary)]">{userData.contacts.websiteUrl}</span>
               </div>
               <div className="flex items-center space-x-3">
                 {getIcon('email', 20, 'text-[var(--button-bg)]')}
-                <span className="text-[var(--text-secondary)]">{userData.contacts.email.personal}</span>
+                <span className="text-[var(--text-secondary)]">{userData.contacts.email[0]?.address || ""}</span>
               </div>
               <div className="flex items-center space-x-3">
                 {getIcon('phone', 20, 'text-[var(--button-bg)]')}
-                <span className="text-[var(--text-secondary)]">{userData.contacts.phone.number} ({userData.contacts.phone.type})</span>
+                <span className="text-[var(--text-secondary)]">{userData.contacts.phone[0]?.number || ""} ({userData.contacts.phone[0]?.type || ""})</span>
               </div>
             </div>
           </div>
@@ -86,19 +138,19 @@ export default function UserInfo() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('contatti.social')}</h3>
             <div className="grid grid-cols-1 gap-3">
-              {Object.entries(userData.social).filter(([, url]) => url).map(([platform, url]) => (
-                <div key={platform} className="flex items-center justify-between p-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-color)]">
+              {userData.contacts.social.map((social, index) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-color)]">
                   <div className="flex items-center space-x-3">
-                    {getIcon(platform === 'x-twitter' ? 'x-twitter' : platform, 20, 'text-[var(--button-bg)]')}
-                    <span className="text-[var(--text-primary)] capitalize">{t(`contatti.social.${platform}`)}</span>
+                    {getIcon(social.network.toLowerCase(), 20, 'text-[var(--button-bg)]')}
+                    <span className="text-[var(--text-primary)] capitalize">{t(`contatti.social.${social.network.toLowerCase()}`)}</span>
                   </div>
                   <a 
-                    href={url} 
+                    href={social.link} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-[var(--text-secondary)] hover:text-[var(--button-bg)] transition-colors"
                   >
-                    {extractUsername(url)}
+                    {extractUsername(social.link)}
                   </a>
                 </div>
               ))}
@@ -117,12 +169,11 @@ export default function UserInfo() {
                   <div>
                     <h4 className="font-semibold text-[var(--text-primary)]">{study.title}</h4>
                     <p className="text-[var(--text-secondary)]">{study.name}</p>
-                    <p className="text-sm text-[var(--text-secondary)]">{study.istitution}</p>
+                    <p className="text-sm text-[var(--text-secondary)]">{study.institution}</p>
                     <p className="text-sm text-[var(--text-secondary)] opacity-75">
-                      {study["start-date"].month} {study["start-date"].year} - {study["end-date"].present ? t('date.present') : `${study["end-date"].month} ${study["end-date"].year}`}
+                      {study.startDate.month} {study.startDate.year} - {study.endDate.present ? t('date.present') : `${study.endDate.month} ${study.endDate.year}`}
                     </p>
                     <p className="text-sm text-[var(--text-secondary)] mt-2">{study.description}</p>
-                    <p className="text-sm font-medium text-[var(--button-bg)] mt-1">{study.grade}</p>
                   </div>
                 </div>
               </div>
@@ -133,78 +184,20 @@ export default function UserInfo() {
       case 'skills':
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('skills')}</h3>
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('skills.default')}</h3>
             {userData.skills.map((skillCategory, categoryIndex) => (
               <div key={categoryIndex} className="p-4 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-color)]">
                 <h4 className="font-semibold text-[var(--text-primary)] mb-3 flex items-center">
                   {getIcon('computer', 18, 'text-[var(--button-bg)] mr-2')}
                   {skillCategory.name}
                 </h4>
-                
-                {/* Front-end skills */}
-                {skillCategory["front-end"] && (
-                  <div className="mb-4">
-                    <h5 className="font-medium text-[var(--text-primary)] mb-2">{skillCategory["front-end"].title}</h5>
-                    <div className="flex flex-wrap gap-2">
-                      {skillCategory["front-end"].list.map((skill, skillIndex) => (
-                        <span
-                          key={skillIndex}
-                          className="px-3 py-1 bg-[var(--button-bg)] text-[var(--button-text)] rounded-full text-sm"
-                        >
-                          {skill.name} ({skill.level})
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Back-end skills */}
-                {skillCategory["back-end"] && (
-                  <div className="mb-4">
-                    <h5 className="font-medium text-[var(--text-primary)] mb-2">{skillCategory["back-end"].title}</h5>
-                    <div className="flex flex-wrap gap-2">
-                      {skillCategory["back-end"].list.map((skill, skillIndex) => (
-                        <span
-                          key={skillIndex}
-                          className="px-3 py-1 bg-[var(--button-bg)] text-[var(--button-text)] rounded-full text-sm"
-                        >
-                          {skill.name} ({skill.level})
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Mobile skills */}
-                {skillCategory.mobile && (
-                  <div className="mb-4">
-                    <h5 className="font-medium text-[var(--text-primary)] mb-2">{skillCategory.mobile.title}</h5>
-                    <div className="flex flex-wrap gap-2">
-                      {skillCategory.mobile.list.map((skill, skillIndex) => (
-                        <span
-                          key={skillIndex}
-                          className="px-3 py-1 bg-[var(--button-bg)] text-[var(--button-text)] rounded-full text-sm"
-                        >
-                          {skill.name} ({skill.level})
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Other skills */}
                 {skillCategory.list && (
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-2">
-                      {skillCategory.list.map((skill, skillIndex) => (
-                        <span
-                          key={skillIndex}
-                          className="px-3 py-1 bg-[var(--button-bg)] text-[var(--button-text)] rounded-full text-sm"
-                        >
-                          {skill.name} {skill.level && `(${skill.level})`}
-                        </span>
-                      ))}
-                    </div>
+                  <div className="space-y-2">
+                    {skillCategory.list.map((skill, skillIndex) => (
+                      <div key={skillIndex}>
+                        {renderSkill(skill)}
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
@@ -215,15 +208,21 @@ export default function UserInfo() {
       case 'hobbies':
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('hobby')}</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {["Tecnologie", "Fotografia", "Viaggi", "Cucina", "Sport"].map((hobby, index) => (
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('hobby.default')}</h3>
+            <p className="text-[var(--text-secondary)] mb-4">{userData.hobbies.description}</p>
+            <div className="grid grid-cols-1 gap-3">
+              {userData.hobbies.list.map((hobby, index) => (
                 <div
                   key={index}
-                  className="flex items-center space-x-2 p-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-color)]"
+                  className="p-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-color)]"
                 >
-                  {getIcon('heart', 16, 'text-[var(--button-bg)]')}
-                  <span className="text-[var(--text-primary)] text-sm">{hobby}</span>
+                  <div className="flex items-start space-x-2">
+                    {getIcon('heart', 16, 'text-[var(--button-bg)] mt-1')}
+                    <div>
+                      <h4 className="text-[var(--text-primary)] font-medium">{hobby.name}</h4>
+                      <p className="text-[var(--text-secondary)] text-sm mt-1">{hobby.description}</p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -233,20 +232,20 @@ export default function UserInfo() {
       case 'experience':
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('job')}</h3>
-            {userData.jobs.map((job, index) => (
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('experience.default')}</h3>
+            {userData.experiences.map((experience, index) => (
               <div key={index} className="p-4 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-color)]">
                 <div className="flex items-start space-x-3">
                   {getIcon('briefcase', 20, 'text-[var(--button-bg)] mt-1')}
                   <div className="flex-1">
-                    <h4 className="font-semibold text-[var(--text-primary)]">{job.title}</h4>
-                    <p className="text-[var(--text-secondary)]">{job.company}</p>
+                    <h4 className="font-semibold text-[var(--text-primary)]">{experience.title}</h4>
+                    <p className="text-[var(--text-secondary)]">{experience.company}</p>
                     <p className="text-sm text-[var(--text-secondary)] opacity-75 mb-2">
-                      {job.type} • {job["start-date"].month} {job["start-date"].year} - {job["end-date"].present ? t('date.present') : `${job["end-date"].month} ${job["end-date"].year}`}
+                      {experience.type} • {experience.startDate.month} {experience.startDate.year} - {experience.endDate.present ? t('date.present') : `${experience.endDate.month} ${experience.endDate.year}`}
                     </p>
-                    <p className="text-sm text-[var(--text-secondary)]">{job.description}</p>
+                    <p className="text-sm text-[var(--text-secondary)]">{experience.description}</p>
                     <p className="text-xs text-[var(--text-secondary)] opacity-75 mt-1">
-                      {job.location.city}, {job.location.country}
+                      {experience.location.city}, {experience.location.country}
                     </p>
                   </div>
                 </div>
@@ -268,7 +267,7 @@ export default function UserInfo() {
           <div className="relative">
             <Avatar className="w-24 h-24 border-4 border-[var(--button-bg)]">
               <AvatarImage 
-                src={session?.user?.image || `/images/${userData.image}`} 
+                src={session?.user?.image || `/images/${userData.profileImageUrl}`} 
                 alt={userData.fullname} 
               />
               <AvatarFallback className="bg-[var(--button-bg)] text-[var(--button-text)] text-xl">

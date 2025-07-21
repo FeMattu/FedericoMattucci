@@ -7,8 +7,8 @@ export default function ParseEducation(rawEducation: any, locale: string): Educa
     const parseStudies = (studies: any[]): Studies[] => {
         return studies.map(study => ({
             name: study.name,
-            title: cleanValue(study.title, "education"),
-            institution: study.istitution || study.institution,
+            title: cleanValue(study.title, "education.studies.title"),
+            institution: study.institution,
             description: study.description,
             location: ParseLocation(study.location, locale),
             startDate: ParseDate(study.startDate, locale),
@@ -36,7 +36,7 @@ export default function ParseEducation(rawEducation: any, locale: string): Educa
             url: cert.url,
             issueDate: ParseDate(cert.issueDate, locale),
             expirationDate: ParseDate(cert.expirationDate, locale),
-            validity: cert.validity,
+            validity: cleanValue(cert.validity, "education.certification.validity"),
             valid: cert.valid
         }));
     };
@@ -44,7 +44,7 @@ export default function ParseEducation(rawEducation: any, locale: string): Educa
     const parseDegrees = (degrees: any[]): Degree[] => {
         return degrees.map(degree => ({
             title: degree.title,
-            type: degree.type,
+            type: cleanValue(degree.type, "education.degree.type"),
             institution: degree.institution,
             description: degree.description,
             grade: degree.grade,

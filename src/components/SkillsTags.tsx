@@ -1,30 +1,11 @@
 "use client";
 
 import { useTranslation } from "@/lib/translation";
-import { useUserData } from "@/lib/utils";
-
-interface Skill {
-  name: string;
-  level?: string;
-  list?: Skill[];
-}
-
-interface SkillCategory {
-  name: string;
-  "front-end"?: {
-    title: string;
-    list: Skill[];
-  };
-  "back-end"?: {
-    title: string;
-    list: Skill[];
-  };
-  mobile?: {
-    title: string;
-    list: Skill[];
-  };
-  list?: Skill[];
-}
+import { getUserData } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import UserData from "@/lib/interfaces/UserData";
+import Skill from "@/lib/interfaces/Skill";
 
 function SkillTag({ skill }: { skill: Skill }) {
   return (
@@ -47,14 +28,14 @@ function SkillGroup({ skills, title, level = 0 }: { skills: Skill[], title?: str
       <div className="flex items-center justify-center md:justify-start flex-wrap gap-2">
         {skills.map((skill, index) => {
           if (skill.list && skill.list.length > 0) {
-            // Questo è un gruppo di skill, renderizza ricorsivamente
+            // Questo è un superskill/categoria, renderizza ricorsivamente
             return (
               <div key={index} className="w-full">
                 <SkillGroup skills={skill.list} title={skill.name} level={level + 1} />
               </div>
             );
           } else {
-            // Questo è una skill singola
+            // Questa è una skill foglia
             return <SkillTag key={index} skill={skill} />;
           }
         })}
@@ -63,16 +44,29 @@ function SkillGroup({ skills, title, level = 0 }: { skills: Skill[], title?: str
   );
 }
 
-function CategoryTitle({ category }: { category: string }) {
-  const t = useTranslation();
-  return <h3 className="text-lg font-semibold capitalize mb-2">{category}</h3>;
-}
-
 export default function SkillsTags({ className, skillType }: { className?: string; skillType?: 'programming' | 'computer' | 'all' }) {
-  const userData = useUserData();
   const t = useTranslation();
+  const params = useParams();
+  const locale = params.locale as string || "it";
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!userData) {
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getUserData(locale);
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchData();
+  }, [locale]);
+
+  if (loading || !userData) {
     return (
       <div className={`space-y-2 ${className}`}>
         <p className="text-[var(--text-secondary)]">{t('loading.user-info')}</p>
@@ -80,67 +74,38 @@ export default function SkillsTags({ className, skillType }: { className?: strin
     );
   }
 
-  // Filter skills based on skillType
-  const getFilteredSkills = (): SkillCategory[] => {
-    if (skillType === 'programming') {
-      return userData.skills.filter(skill => 
-        skill.name.includes('programming') || 
-        skill.name.includes('language') ||
-        skill["front-end"] || 
-        skill["back-end"] || 
-        skill.mobile
-      );
-    } else if (skillType === 'computer') {
-      return userData.skills.filter(skill => 
-        !skill.name.includes('programming') && 
-        !skill.name.includes('language') &&
-        !skill["front-end"] && 
-        !skill["back-end"] && 
-        !skill.mobile
-      );
-    } else {
-      return userData.skills;
+  // Filter skills based on skillType - now working with the recursive structure
+  const getFilteredSkills = (skills: Skill[]): Skill[] => {
+    if (skillType === 'all') {
+      return skills;
     }
+
+    // For filtering, we need to traverse the tree structure
+    return skills.filter(skill => {
+      if (skillType === 'programming') {
+        return skill.name.toLowerCase().includes('programming') || 
+               skill.name.toLowerCase().includes('language') ||
+               skill.name.toLowerCase().includes('frontend') ||
+               skill.name.toLowerCase().includes('backend') ||
+               skill.name.toLowerCase().includes('mobile') ||
+               skill.name.toLowerCase().includes('web');
+      } else if (skillType === 'computer') {
+        return !skill.name.toLowerCase().includes('programming') && 
+               !skill.name.toLowerCase().includes('language') &&
+               !skill.name.toLowerCase().includes('frontend') &&
+               !skill.name.toLowerCase().includes('backend') &&
+               !skill.name.toLowerCase().includes('mobile') &&
+               !skill.name.toLowerCase().includes('web');
+      }
+      return true;
+    });
   };
 
-  const filteredSkills = getFilteredSkills();
+  const filteredSkills = getFilteredSkills(userData.skills);
 
   return (
     <div className={`space-y-6 overflow-y-auto ${className}`}>
-      {filteredSkills.map((skillCategory, categoryIndex) => (
-        <div key={categoryIndex} className="space-y-3">
-          <CategoryTitle category={skillCategory.name} />
-          
-          {/* Front-end skills */}
-          {skillCategory["front-end"] && (
-            <SkillGroup 
-              skills={skillCategory["front-end"].list} 
-              title={skillCategory["front-end"].title} 
-            />
-          )}
-          
-          {/* Back-end skills */}
-          {skillCategory["back-end"] && (
-            <SkillGroup 
-              skills={skillCategory["back-end"].list} 
-              title={skillCategory["back-end"].title} 
-            />
-          )}
-          
-          {/* Mobile skills */}
-          {skillCategory.mobile && (
-            <SkillGroup 
-              skills={skillCategory.mobile.list} 
-              title={skillCategory.mobile.title} 
-            />
-          )}
-          
-          {/* Other skills (direct list) */}
-          {skillCategory.list && (
-            <SkillGroup skills={skillCategory.list} />
-          )}
-        </div>
-      ))}
+      <SkillGroup skills={filteredSkills} />
     </div>
   );
 }

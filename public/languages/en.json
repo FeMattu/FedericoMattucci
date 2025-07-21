@@ -13,6 +13,14 @@
         "ja": "Japanese",
         "fi": "Finnish"
     },
+    "level": {
+        "default": "Level",
+        "native": "Native",
+        "beginner": "Beginner",
+        "intermediate": "Intermediate",
+        "advanced": "Advanced",
+        "expert": "Expert"
+    },
     "date": {
         "default": "Date",
         "today": "Today",

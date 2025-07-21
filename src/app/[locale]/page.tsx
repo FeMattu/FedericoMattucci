@@ -3,16 +3,37 @@
 import SkillsTags from "@/components/SkillsTags";
 import { Link } from "@/i18n/navigation";
 import { useTranslation } from "@/lib/translation";
-import { useUserData } from "@/lib/utils";
+import { getUserData } from "@/lib/utils";
 import SocialButton from "@/components/SocialButton";
 import getIcon from "@/lib/IconMap";
 import S3Image from "@/components/S3image";
+import { useEffect, useState } from "react";
+import UserData from "@/lib/interfaces/UserData";
+import { useParams } from "next/navigation";
 
 export default function HomePage() {
   const t = useTranslation();
-  const userData = useUserData();
+  const params = useParams();
+  const locale = params.locale as string || "it";
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!userData) {
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getUserData(locale);
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchData();
+  }, [locale]);
+
+  if (loading || !userData) {
     return (
       <div className="min-h-screen px-6 py-10 flex items-center justify-center">
         <div className="text-center">
@@ -33,7 +54,7 @@ export default function HomePage() {
         
         <div className="flex flex-col items-center text-center md:sticky top-10 md:text-left gap-6 sm:mb-10">
           <S3Image
-            src={userData.image}
+            src={userData.profileImageUrl}
             alt={userData.fullname}
             lightbox={false}
             className="rounded-full w-[250px] h-[250px] object-cover border border-gray-300 dark:border-gray-700 overflow-hidden"
@@ -45,12 +66,15 @@ export default function HomePage() {
           </div>
 
           <div className="flex gap-2 flex-wrap justify-center">
-            <div className="flex items-center gap-2 bg-gray-200 dark:bg-black/40 border border-gray-400 dark:border-gray-700 rounded-full px-4 py-1 text-lg font-semibold">
-              <p>{userData.languages.it}</p>
-            </div>
-            <div className="flex items-center gap-2 bg-gray-200 dark:bg-black/40 border border-gray-400 dark:border-gray-700 rounded-full px-4 py-1 text-lg font-semibold">
-              <p>{userData.languages.en}</p>
-            </div>
+            {
+              userData.languages.map((lang, index) => {
+                return(
+                  <div key={index} className="flex items-center gap-2 bg-gray-200 dark:bg-black/40 border border-gray-400 dark:border-gray-700 rounded-full px-4 py-1 text-lg font-semibold">
+                    <p>{lang.language}</p>
+                  </div>
+                );
+              })
+            }
           </div>
         </div>
 
@@ -58,22 +82,28 @@ export default function HomePage() {
           <div>
             <h1 className="text-5xl md:text-7xl font-bold">{userData.fullname}</h1>
             <p className="mt-4 text-2xl text-gray-600 dark:text-gray-400">
-              {userData["job-title"]}
+              {userData.jobTitle}
             </p>
             <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-6">
-              <SocialButton href={userData.social.instagram}>
+              <SocialButton href={userData.contacts.social.find(({network}) => 
+                network === "Instagram"
+              )?.link || "#"}>
                 {getIcon("instagram", 24)}
                 <p>{t("contatti.social.instagram")}</p>
               </SocialButton>
-              <SocialButton href={userData.social.linkedin}>
+              <SocialButton href={userData.contacts.social.find(({network}) => 
+                network === "LinkedIn"
+              )?.link || "#"}>
                 {getIcon("linkedin", 24)}
                 <p>{t("contatti.social.linkedin")}</p>
               </SocialButton>
-              <SocialButton href={userData.social.github}>
+              <SocialButton href={userData.contacts.social.find(({network}) => 
+                network === "GitHub"
+              )?.link || "#"}>
                 {getIcon("github", 24)}
                 <p>{t("contatti.social.github")}</p>
               </SocialButton>
-              <SocialButton href={`mailto:${userData.contacts.email.personal}`}>
+              <SocialButton href={`mailto:${userData.contacts.email[0]?.address || ""}`}>
                 {getIcon("email", 24)}
                 <p>{t("contatti.email.personal")}</p>
               </SocialButton>
@@ -87,7 +117,7 @@ export default function HomePage() {
             <h1 className="text-4xl font-bold">{t("education")}</h1>
             {userData.education.studies.map((study, index) => (
               <div key={index} className="mt-4">
-                <h2 className="text-2xl font-semibold">{study.istitution}</h2>
+                <h2 className="text-2xl font-semibold">{study.institution}</h2>
                 <p className="text-lg">{study.description}</p>
               </div>
             ))}
@@ -98,12 +128,12 @@ export default function HomePage() {
             <div className="mt-4">
               <SkillsTags skillType="all" className="mt-3" />
             </div>
-          </div>          <div>
+          </div>          
+          <div>
             <h1 className="text-4xl font-bold">{t("hobby.default")}</h1>
-            <p className="mt-4 text-lg">{t("hobby.description")}</p>
+            <p className="mt-4 text-lg">{userData.hobbies.description}</p>
             <div className="group flex flex-col gap-4 mt-4">
-              {userData.hobbies.map((hobby, index) => {
-                const isLast = index === userData.hobbies.length - 1;
+              {userData.hobbies.list.map((hobby, index) => {
                 const hasLink = hobby.link;
                 
                 if (hasLink && hobby.link) {
