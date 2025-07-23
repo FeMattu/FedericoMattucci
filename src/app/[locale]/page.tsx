@@ -71,23 +71,23 @@ export default function HomePage() {
                 network === "Instagram"
               )?.link || "#"}>
                 {getIcon("instagram", 24)}
-                <p>{t("contatti.social.instagram")}</p>
+                <p>{t("contacts.social.instagram")}</p>
               </SocialButton>
               <SocialButton href={userData.contacts.social.find(({network}) => 
                 network === "LinkedIn"
               )?.link || "#"}>
                 {getIcon("linkedin", 24)}
-                <p>{t("contatti.social.linkedin")}</p>
+                <p>{t("contacts.social.linkedin")}</p>
               </SocialButton>
               <SocialButton href={userData.contacts.social.find(({network}) => 
                 network === "GitHub"
               )?.link || "#"}>
                 {getIcon("github", 24)}
-                <p>{t("contatti.social.github")}</p>
+                <p>{t("contacts.social.github")}</p>
               </SocialButton>
               <SocialButton href={`mailto:${userData.contacts.email[0]?.address || ""}`}>
                 {getIcon("email", 24)}
-                <p>{t("contatti.email.personal")}</p>
+                <p>{t("contacts.email.personal")}</p>
               </SocialButton>
             </div>
             <p className="mt-8 text-lg text-center md:text-left">
@@ -106,13 +106,13 @@ export default function HomePage() {
           </div>
 
           <div>
-            <h1 className="text-4xl font-bold">{t("skills.default")}</h1>
+            <h1 className="text-4xl font-bold">{t("skills")}</h1>
             <div className="mt-4">
               <SkillsTags skillType="all" className="mt-3" />
             </div>
           </div>          
           <div>
-            <h1 className="text-4xl font-bold">{t("hobby.default")}</h1>
+            <h1 className="text-4xl font-bold">{t("hobby")}</h1>
             <p className="mt-4 text-lg">{userData.hobbies.description}</p>
             <div className="group flex flex-col gap-4 mt-4">
               {userData.hobbies.list.map((hobby, index) => {

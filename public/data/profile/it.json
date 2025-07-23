@@ -1,7 +1,7 @@
 {
     "fullname": "Federico Mattucci",
     "username": "federico-mattucci",
-    "image": "profile/profile.jpg",
+    "profileImageUrl": "profile/profile.jpg",
     "jobTitle": "Studente di Informatica",
     "bio": "Sono Federico, uno studente di Scienze Informatiche all'Università di Pisa con un background da perito informatico. Appassionato di tecnologia, fotografia e cucina. Mi piace approfondire nuove sfide nel mondo dello sviluppo software e dell'ottimizzazione delle prestazioni. Ho esperienza lavorativa tramite stage e possiedo una certificazione IELTS (6.5). Il mio obiettivo è arricchire il mio percorso con un'esperienza lavorativa all'estero e prepararmi per studiare all'MIT.",
     "languages": [
@@ -179,32 +179,32 @@
                         {
                             "name": "_javascript_",
                             "level": "_advanced_"
-                            },
-                            {
-                                "name": "_java_",
-                                "level": "_advanced_"
-                            },
-                            {
-                                "name": "_c/c++_",
-                                "level": "_expert_"
-                            },
-                            {
-                                "name": "_frameworks_",
-                                "list": [
-                                    {
-                                        "name": "_nodejs_",
-                                        "level": "_advanced_"
-                                    },
-                                    {
-                                        "name": "_springBoot_",
-                                        "level": "_intermediate_"
-                                    },
-                                    {
-                                        "name": "_django_",
-                                        "level": "_intermediate_"
-                                    }
-                                ]
-                            }
+                        },
+                        {
+                            "name": "_java_",
+                            "level": "_advanced_"
+                        },
+                        {
+                            "name": "_c/c++_",
+                            "level": "_expert_"
+                        },
+                        {
+                            "name": "_frameworks_",
+                            "list": [
+                                {
+                                    "name": "_nodejs_",
+                                    "level": "_advanced_"
+                                },
+                                {
+                                    "name": "_springBoot_",
+                                    "level": "_intermediate_"
+                                },
+                                {
+                                    "name": "_django_",
+                                    "level": "_intermediate_"
+                                }
+                            ]
+                        }
                         ]
                 },
                 {
@@ -274,10 +274,6 @@
                         {
                             "name": "_figma_",
                             "level": "_intermediate_"
-                        },
-                        {
-                            "name": "_adobe_xd_",
-                            "level": "_beginner_"
                         }
                     ]
                 },

@@ -7,23 +7,26 @@ import ParseHobby from "./HobbyParser";
 import ParseLocation from "./LocationParser";
 import ParseContacts from "./ContactsParser";
 import { TFunction } from "../../hooks/useTranslation";
+import Language from "../interfaces/Language";
+import Experience from "../interfaces/Experience";
+import Skill from "../interfaces/Skill";
 
-export default function ParseUserData(rawData: any, t: TFunction): UserData {
+export default function ParseUserData(rawData: UserData, t: TFunction): UserData {
     return {
         fullname: rawData.fullname,
         username: rawData.username,
-        profileImageUrl: rawData.image,
+        profileImageUrl: rawData.profileImageUrl,
         bio: rawData.bio,
         jobTitle: rawData.jobTitle,
-        languages: rawData.languages.map((lang: any) => ParseLanguage(lang, t)),
+        languages: rawData.languages.map((lang: Language) => ParseLanguage(lang, t)),
         location: ParseLocation(rawData.location, t),
         contacts: ParseContacts(rawData.contacts, t),
-        experiences: rawData.experiences ? rawData.experiences.map((exp: any) => ParseExperience(exp, t)) : [],
+        experiences: rawData.experiences ? rawData.experiences.map((exp: Experience) => ParseExperience(exp, t)) : [],
         education: ParseEducation(rawData.education, t),
-        skills: rawData.skills.map((skill: any) => ParseSkills(skill, t, "skills")),
+        skills: rawData.skills.map((skill: Skill) => ParseSkills(skill, t, "skills")),
         hobbies: {
             description: rawData.hobbies.description || "",
-            list: rawData.hobbies ? rawData.hobbies.map((hobby: any) => ParseHobby(hobby)) : []
+            list: rawData.hobbies ? rawData.hobbies.list.map((hobby: any) => ParseHobby(hobby)) : []
         }
     };
 }

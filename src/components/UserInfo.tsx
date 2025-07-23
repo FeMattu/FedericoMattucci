@@ -167,7 +167,7 @@ export default function UserInfo() {
       case 'skills':
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('skills.default')}</h3>
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('skills')}</h3>
             {userData.skills.map((skillCategory, categoryIndex) => (
               <div key={categoryIndex} className="p-4 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-color)]">
                 <h4 className="font-semibold text-[var(--text-primary)] mb-3 flex items-center">
@@ -191,7 +191,7 @@ export default function UserInfo() {
       case 'hobbies':
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('hobby.default')}</h3>
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('hobby')}</h3>
             <p className="text-[var(--text-secondary)] mb-4">{userData.hobbies.description}</p>
             <div className="grid grid-cols-1 gap-3">
               {userData.hobbies.list.map((hobby, index) => (
@@ -215,7 +215,7 @@ export default function UserInfo() {
       case 'experience':
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('experience.default')}</h3>
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('experience')}</h3>
             {userData.experiences.map((experience, index) => (
               <div key={index} className="p-4 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-color)]">
                 <div className="flex items-start space-x-3">
@@ -264,7 +264,7 @@ export default function UserInfo() {
             <h1 className="text-2xl font-bold text-[var(--text-primary)] mb-1">
               {userData.fullname}
             </h1>
-            <p className="text-[var(--text-secondary)] mb-2">{t('profile.user-info')}</p>
+            <p className="text-[var(--text-secondary)] mb-2">{t('profile.userInfo')}</p>
             <div className="flex items-center justify-center md:justify-start space-x-2 text-sm text-[var(--text-secondary)]">
               {getIcon('location', 16, 'text-[var(--button-bg)]')}
               <span>{userData.location.city}, {userData.location.country}</span>
@@ -277,7 +277,7 @@ export default function UserInfo() {
               className="flex items-center space-x-2 bg-[var(--button-bg)] hover:bg-[var(--button-hover)] text-[var(--button-text)]"
             >
               {getIcon('sign-out', 16)}
-              <span>{t('auth.sign-out')}</span>
+              <span>{t('auth.signOut')}</span>
             </Button>
           </div>
         </div>

@@ -1,5 +1,5 @@
 export default interface Contacts {
-  websiteUrl: string
+  websiteUrl?: string
   email: Array<{
     type: string
     address: string

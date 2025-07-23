@@ -15,11 +15,11 @@ export default function AdminDashboard() {
   }, []);
 
   if (!isClient || status === 'loading') {
-    return <div className="container mx-auto p-6">Loading...</div>;
+    return <div className="container mx-auto p-6">{t('loading')}</div>;
   }
 
   if (status === 'unauthenticated') {
-    return <div className="container mx-auto p-6">Please sign in to access this page</div>;
+    return <div className="container mx-auto p-6">{t('auth.unauthenticated')}</div>;
   }
 
   return (

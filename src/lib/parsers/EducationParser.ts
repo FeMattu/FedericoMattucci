@@ -4,8 +4,8 @@ import ParseLocation from "./LocationParser";
 import { cleanValue } from "../utils";
 import { TFunction } from "../../hooks/useTranslation";
 
-export default function ParseEducation(rawEducation: any, t: TFunction): Education {
-    const parseStudies = (studies: any[]): Studies[] => {
+export default function ParseEducation(rawEducation: Education, t: TFunction): Education {
+    const parseStudies = (studies: Studies[]): Studies[] => {
         return studies.map(study => ({
             name: study.name,
             title: cleanValue(t, study.title, "education.studies.title"),
@@ -17,7 +17,7 @@ export default function ParseEducation(rawEducation: any, t: TFunction): Educati
         }));
     };
 
-    const parseCourses = (courses: any[]): Course[] => {
+    const parseCourses = (courses: Course[]): Course[] => {
         return courses.map(course => ({
             name: course.name,
             description: course.description,
@@ -28,7 +28,7 @@ export default function ParseEducation(rawEducation: any, t: TFunction): Educati
         }));
     };
 
-    const parseCertifications = (certifications: any[]): Certification[] => {
+    const parseCertifications = (certifications: Certification[]): Certification[] => {
         return certifications.map(cert => ({
             title: cert.title,
             issueBy: cert.issueBy,
@@ -42,7 +42,7 @@ export default function ParseEducation(rawEducation: any, t: TFunction): Educati
         }));
     };
 
-    const parseDegrees = (degrees: any[]): Degree[] => {
+    const parseDegrees = (degrees: Degree[]): Degree[] => {
         return degrees.map(degree => ({
             title: degree.title,
             type: cleanValue(t, degree.type, "education.degree.type"),

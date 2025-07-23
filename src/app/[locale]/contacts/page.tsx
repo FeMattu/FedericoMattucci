@@ -27,7 +27,7 @@ function ContactList() {
     if (loading || !userData) {
         return (
             <div className="flex flex-col gap-2 items-center">
-                <p className="text-[var(--text-secondary)]">{t('loading.user-info')}</p>
+                <p className="text-[var(--text-secondary)]">{t('loading.userInfo')}</p>
             </div>
         );
     }
@@ -38,7 +38,7 @@ function ContactList() {
                 <Contact
                     key={`email-${index}`}
                     href={`mailto:${email.address}`}
-                    type={`contatti.email.${email.type.toLowerCase()}`}
+                    type={email.type}
                     icon={getIcon("email", 24)}
                     contact={email.address}
                 />
@@ -47,9 +47,9 @@ function ContactList() {
                 <Contact
                     key={`phone-${index}`}
                     href={`tel:${phone.number}`}
-                    type="contatti.phone"
+                    type={phone.type}
                     icon={getIcon("phone", 24)}
-                    contact={`${phone.number} (${phone.type})`}
+                    contact={`${phone.number} (${phone.scope})`}
                 />
             ))}
         </div>
@@ -65,7 +65,7 @@ function SocialLinks() {
     if (loading || !userData) {
         return (
             <div className="flex flex-wrap gap-4 justify-center">
-                <p className="text-[var(--text-secondary)]">{t('loading.user-info')}</p>
+                <p className="text-[var(--text-secondary)]">{t('loading.userInfo')}</p>
             </div>
         );
     }
@@ -75,7 +75,7 @@ function SocialLinks() {
             {userData.contacts.social.map((social, index) => (
                 <SocialButton key={`${social.network}-${index}`} href={social.link}>
                     {getIcon(social.network.toLowerCase(), 24) || getIcon("default", 24)} 
-                    <p>{t(`contatti.social.${social.network.toLowerCase()}`)}</p>
+                    <p>{social.network}</p>
                 </SocialButton>
             ))}
         </div>
@@ -87,14 +87,11 @@ export default function Contacts() {
     return (
         <div className="min-h-screen px-6 py-10 flex flex-col sm:flex-row items-center justify-center gap-16 sm:gap-20 text-center sm:text-center">
             <div className="flex flex-col items-center gap-4 max-w-lg">
-                <h1 className="text-4xl font-bold">{t("pages.contact")}</h1>
-                <p className="text-lg text-[var(--text-secondary)] mb-4">
-                    {t('pages.contact.description')}
-                </p>
+                <h1 className="text-4xl font-bold">{t("contacts")}</h1>
                 <ContactList />
             </div>
             <div className="flex flex-col items-center gap-4 max-w-lg">
-                <h1 className="text-4xl font-bold">{t("contatti.social")}</h1>
+                <h1 className="text-4xl font-bold">{t("contacts.social")}</h1>
                 <SocialLinks />
             </div>
         </div>

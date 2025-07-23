@@ -4,7 +4,7 @@ import ParseDate from "./DateParser";
 import { cleanValue } from "../utils";
 import { TFunction } from "../../hooks/useTranslation";
 
-export default function ParseExperience(rawExperience: any, t: TFunction): Experience {
+export default function ParseExperience(rawExperience: Experience, t: TFunction): Experience {
     return {
         title: rawExperience.title,
         type: cleanValue(t, rawExperience.type, "experience.type"),

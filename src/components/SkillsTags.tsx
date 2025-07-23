@@ -8,7 +8,7 @@ import Skill from "@/lib/interfaces/Skill";
 function SkillTag({ skill }: { skill: Skill }) {
   return (
     <span className="px-3 py-1 text-sm font-medium bg-gray-200 dark:bg-black/40 text-gray-700 dark:text-white rounded-lg">
-      {skill.name} {skill.level && `(${skill.level})`}
+      {skill.name}
     </span>
   );
 }
@@ -42,7 +42,7 @@ function SkillGroup({ skills, title, level = 0 }: { skills: Skill[], title?: str
   );
 }
 
-export default function SkillsTags({ className, skillType }: { className?: string; skillType?: 'programming' | 'computer' | 'all' }) {
+export default function SkillsTags({ className, skillType = "all" }: { className?: string; skillType?: string }) {
   const t = useTranslation();
   const params = useParams();
   const locale = params.locale as string || "it";
@@ -51,7 +51,7 @@ export default function SkillsTags({ className, skillType }: { className?: strin
   if (loading || !userData) {
     return (
       <div className={`space-y-2 ${className}`}>
-        <p className="text-[var(--text-secondary)]">{t('loading.user-info')}</p>
+        <p className="text-[var(--text-secondary)]">{t('loading.userInfo')}</p>
       </div>
     );
   }
@@ -61,26 +61,7 @@ export default function SkillsTags({ className, skillType }: { className?: strin
     if (skillType === 'all') {
       return skills;
     }
-
-    // For filtering, we need to traverse the tree structure
-    return skills.filter(skill => {
-      if (skillType === 'programming') {
-        return skill.name.toLowerCase().includes('programming') || 
-               skill.name.toLowerCase().includes('language') ||
-               skill.name.toLowerCase().includes('frontend') ||
-               skill.name.toLowerCase().includes('backend') ||
-               skill.name.toLowerCase().includes('mobile') ||
-               skill.name.toLowerCase().includes('web');
-      } else if (skillType === 'computer') {
-        return !skill.name.toLowerCase().includes('programming') && 
-               !skill.name.toLowerCase().includes('language') &&
-               !skill.name.toLowerCase().includes('frontend') &&
-               !skill.name.toLowerCase().includes('backend') &&
-               !skill.name.toLowerCase().includes('mobile') &&
-               !skill.name.toLowerCase().includes('web');
-      }
-      return true;
-    });
+    return skills;
   };
 
   const filteredSkills = getFilteredSkills(userData.skills);

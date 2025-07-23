@@ -2,21 +2,21 @@ import Contacts from "../interfaces/Contacts";
 import { cleanValue } from "../utils";
 import { TFunction } from "../../hooks/useTranslation";
 
-export default function ParseContacts(rawContacts: any, t: TFunction): Contacts {
+export default function ParseContacts(rawContacts: Contacts, t: TFunction): Contacts {
     return {
         websiteUrl: rawContacts.websiteUrl || "",
-        email: rawContacts.email ? rawContacts.email.map((email: any) => ({
+        email: rawContacts.email.map((email: {type: string, address: string}) => ({
             type: cleanValue(t, email.type, "contacts.email"),
             address: email.address
-        })) : [],
-        phone: rawContacts.phone ? rawContacts.phone.map((phone: any) => ({
+        })),
+        phone: rawContacts.phone.map((phone: {type: string, scope: string, number: string}) => ({
             type: cleanValue(t, phone.type, "contacts.phone.type"),
             scope: cleanValue(t, phone.scope, "contacts.phone.scope"),
             number: phone.number
-        })) : [],
-        social: rawContacts.social ? rawContacts.social.map((social: any) => ({
-            network: cleanValue(t, social.name, "contacts.social"),
+        })),
+        social: rawContacts.social.map((social: {network: string, link: string}) => ({
+            network: cleanValue(t, social.network, "contacts.social"),
             link: social.link
-        })) : []
+        }))
     };
 }

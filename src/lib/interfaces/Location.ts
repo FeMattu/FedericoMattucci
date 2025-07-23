@@ -5,11 +5,11 @@ export default interface Location {
   }
   address?: {
     street: string
-    number: number
+    number: number | undefined
     postalCode: string
   }
   city: string
   region: string
   country: string
-  continent: string
+  continent?: string
 }

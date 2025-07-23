@@ -1,6 +1,6 @@
 {
     "welcome": "Welcome",
-    "language":{
+    "language": {
         "default": "Language",
         "it": "Italian",
         "en": "English",
@@ -15,10 +15,10 @@
     },
     "level": {
         "default": "Level",
-        "native": "Native",
         "beginner": "Beginner",
         "intermediate": "Intermediate",
         "advanced": "Advanced",
+        "native": "Native",
         "expert": "Expert"
     },
     "date": {
@@ -40,7 +40,7 @@
             "november": "November",
             "december": "December"
         },
-        "day": {
+        "weekDay": {
             "default": "Day",
             "sunday": "Sunday",
             "monday": "Monday",
@@ -53,9 +53,10 @@
         "year": "Year",
         "time": {
             "default": "Time",
-            "hours": "Hours",
-            "minutes": "Minutes",
-            "seconds": "Seconds"
+            "hour": "Hours",
+            "minute": "Minutes",
+            "second": "Seconds",
+            "millisecond": "Milliseconds"
         }
     },
     "location": {
@@ -107,7 +108,7 @@
             "molise": "Molise",
             "umbria": "Umbria",
             "basilicata": "Basilicata",
-            "aostaValley": "Aosta Valley",
+            "aosta-valley": "Aosta Valley",
             "marche": "Marche"
         },
         "country": {
@@ -129,12 +130,9 @@
             "default": "Continent",
             "europe": "Europe",
             "asia": "Asia",
-            "america": {
-                "default": "America",
-                "north": "North America",
-                "south": "South America",
-                "central": "Central America"
-            },
+            "northAmerica": "North America",
+            "southAmerica": "South America",
+            "centralAmerica": "Central America",
             "africa": "Africa",
             "oceania": "Oceania",
             "antartica": "Antarctica"
@@ -161,36 +159,39 @@
         "userInfo": "Loading user information...",
         "adminDashboard": "Loading admin dashboard...",
         "adminSettings": "Loading admin settings...",
-        "metadata":"Loading metadata..."
+        "metadata": "Loading metadata..."
     },
     "auth": {
         "default": "Authentication",
         "signIn": "Sign In",
         "signOut": "Sign Out",
-        "signUp": "Sign Up"
+        "signUp": "Sign Up",
+        "unauthenticated": "Unauthenticated",
+        "authenticated": "Authenticated"
     },
     "profile": {
         "default": "Profile",
         "userInfo": "User Information",
         "fullname": "Full Name",
         "username": "Username",
+        "profileImageUrl": "Profile Image URL",
         "bio": "Bio",
+        "jobTitle": "Job Title",
         "contactInfo": "Contact Information",
         "editProfile": "Edit Profile",
         "viewProfile": "View Profile",
-        "jobTitle": "Computer Science Student",
         "tabs": {
             "overview": "Overview",
             "social": "Social",
             "education": "Education",
             "skills": "Skills",
             "hobbies": "Hobbies",
-            "experience": "Experience",
+            "experience": "Work Experience",
             "projects": "Projects",
             "photos": "Photos"
         }
     },
-    "contatti": {
+    "contacts": {
         "default": "Contacts",
         "website": "Website",
         "email": {
@@ -218,87 +219,133 @@
         },
         "social": {
             "default": "Social",
-            "instagram":"Instagram",
-            "facebook":"Facebook",
-            "linkedin":"LinkedIn",
-            "threads":"Threads",
-            "xTwitter":"X-Twitter",
-            "whatsapp":"WhatsApp",
-            "github":"GitHub",
-            "tiktok":"TikTok",
-            "youtube":"YouTube",
-            "twitch":"Twitch",
-            "snapchat":"Snapchat",
-            "pinterest":"Pinterest"
+            "instagram": "Instagram",
+            "facebook": "Facebook",
+            "linkedin": "LinkedIn",
+            "threads": "Threads",
+            "xTwitter": "X-Twitter",
+            "whatsapp": "WhatsApp",
+            "github": "GitHub",
+            "tiktok": "TikTok",
+            "youtube": "YouTube",
+            "twitch": "Twitch",
+            "snapchat": "Snapchat",
+            "pinterest": "Pinterest"
         }
     },
-    "job": {
-        "default": "Job",
+    "experience": {
+        "default": "Experience",
         "type": {
-            "default": "Job Type",
+            "default": "Experience/Job Type",
             "fullTime": "Full Time",
-            "partTime": "Part Time",
+            "partTime": "Part-Time",
             "internship": "Internship",
             "freelance": "Freelance"
         },
         "company": "Company",
         "location": "Work Location",
-        "start-date": "Start Date",
-        "end-date": "End Date",
+        "startDate": "Start Date",
+        "endDate": "End Date",
         "description": "Job Description"
     },
     "education": {
         "default": "Education",
-        "highSchool": "High School",
-        "university": "University",
-        "master": "Master",
-        "postGraduate": "Post Graduate",
-        "degree":{
-            "default": "Degree",
-            "name": "Degree Name",
-            "description": "Degree Description",
-            "type": {
-                "default": "Degree Type",
-                "bachelor": "Bachelor's Degree",
-                "master": "Master's Degree",
-                "phd": "PhD"
-            }
+        "studies": {
+            "default": "Studies",
+            "title": {
+                "highSchool": "High School",
+                "master": "Master",
+                "postGraduate": "Post Graduate",
+                "university": "University"
+            },
+            "name": "Course Name",
+            "description": "Course Description",
+            "institution": "Institution",
+            "location": "Study Location",
+            "startDate": "Start Date",
+            "endDate": "End Date"
         },
-        "courses": {
+        "course": {
             "default": "Courses",
             "name": "Course Name",
             "description": "Course Description",
-            "credits": "Credits"
+            "institution": "Course Institution",
+            "location": "Course Location",
+            "startDate": "Start Date",
+            "endDate": "End Date"
+        },
+        "degree": {
+            "default": "Degree/Diploma",
+            "title": "Degree/Diploma Title",
+            "description": "Degree/Diploma Description",
+            "grade": "Final Grade",
+            "institution": "Degree/Diploma Institution",
+            "type": {
+                "default": "Degree/Diploma Type",
+                "diploma": "Diploma",
+                "bachelor": "Bachelor's Degree",
+                "master": "Master's Degree",
+                "phd": "PhD"
+            },
+            "date": "Degree/Diploma Date"
+        },
+        "certification": {
+            "default": "Certifications",
+            "name": "Certification Name",
+            "description": "Certification Description",
+            "issuedBy": "Certification Issuer",
+            "id": "Certification ID",
+            "url": "Certification URL",
+            "issuedDate": "Issued Date",
+            "expirationDate": "Expiration Date",
+            "validity": {
+                "default": "Validity",
+                "permanent": "Permanent",
+                "temporary": "Temporary"
+            },
+            "valid": "Valid",
+            "expired": "Expired"
         }
     },
     "skills": {
         "default": "Skills",
+        "level": {
+            "default": "Level",
+            "beginner": "Beginner",
+            "intermediate": "Intermediate",
+            "advanced": "Advanced",
+            "expert": "Expert"
+        },
         "other": "Other skills",
-        "social-media": "Social Media",
-        "programming-languages": {
-            "deafult": "Programming Languages",
-            "front-end": {
+        "socialMedia": "Social Media",
+        "programmingLanguages": {
+            "default": "Programming Languages",
+            "frontEnd": {
                 "default": "Front End",
                 "html": "HTML",
                 "css": "CSS",
                 "javascript": "JavaScript",
                 "typescript": "TypeScript",
                 "frameworks": {
+                    "default": "Front End Frameworks",
                     "angular": "Angular",
                     "react": "React",
                     "vue": "Vue.js",
                     "nextjs": "NextJs"
                 }
             },
-            "back-end": {
+            "backEnd": {
                 "default": "Back End",
                 "php": "PHP",
                 "python": "Python",
                 "c/c++": "C/C++",
                 "java": "Java",
+                "javascript": "JavaScript",
+                "typescript": "TypeScript",
                 "frameworks": {
+                    "default": "Back End Frameworks",
                     "nodejs": "NodeJs",
-                    "spring-boot": "Spring Boot",
+                    "springBoot": "Spring Boot",
                     "django": "Django",
                     "flask": "Flask"
                 }
@@ -306,13 +353,13 @@
             "mobile": {
                 "default": "Mobile",
                 "flutter": "Flutter",
-                "react-native": "React Native",
+                "reactNative": "React Native",
                 "swift": "Swift",
                 "kotlin": "Kotlin",
                 "dart": "Dart"
             },
             "other": {
-                "deafult": "Other languages",
+                "default": "Other languages",
                 "ocaml": "OCaml",
                 "assembly": "Assembly"
             }
@@ -329,14 +376,26 @@
             "dynamodb": "DynamoDB",
             "mariadb": "MariaDB"
         },
-        "tools":{
-            "deafult": "Tools",
+        "cloudServices": {
+            "default": "Cloud Services",
+            "aws": "AWS",
+            "azure": "Azure",
+            "googleCloud": "Google Cloud",
+            "heroku": "Heroku",
+            "vercel": "Vercel",
+            "netlify": "Netlify",
+            "docker": "Docker",
+            "kubernetes": "Kubernetes"
+        },
+        "tools": {
+            "default": "Tools",
             "other": "Other Tools",
             "latex": "LaTeX",
-            "developing":{
+            "developing": {
+                "default": "Developing",
                 "git": "Git",
                 "docker": "Docker",
-                "kuberneets": "Kubernetes",
+                "kubernetes": "Kubernetes",
                 "bash": "Bash"
             },
             "office": {
@@ -345,33 +404,50 @@
                 "excel": "Excel",
                 "powerpoint": "Powerpoint",
                 "outlook": "Outlook",
-                "OneDrive": "OneDrive",
+                "oneDrive": "OneDrive",
                 "teams": "Teams",
                 "visio": "Visio"
             },
+            "design": {
+                "default": "Design",
+                "figma": "Figma",
+                "canva": "Canva",
+                "adobeXd": "Adobe XD",
+                "sketch": "Sketch"
+            },
+            "projectManagement": {
+                "default": "Project Management",
+                "jira": "Jira",
+                "trello": "Trello",
+                "asana": "Asana",
+                "monday": "Monday.com"
+            },
             "google":{
-                "default": "Google Tools",
+                "default": "Strumenti Google",
                 "drive": "Google Drive",
                 "docs": "Google Docs",
                 "sheets": "Google Sheets",
                 "slides": "Google Slides",
                 "gmail": "Gmail",
                 "meet": "Google Meet",
-                "chat": "Google Chat"
+                "chat": "Google Chat",
+                "calendar": "Google Calendar",
+                "forms": "Google Forms",
+                "sites": "Google Sites"
             },
             "adobe":{
                 "default": "Adobe",
                 "photoshop": "Photoshop",
                 "lightroom": "Lightroom"
             },
-            "website-developing":{
-                "default": "Website Development",
+            "websiteDeveloping":{
+                "default": "Sviluppo Web",
                 "wordpress": "Wordpress",
                 "elementor": "Elementor"
             }
         },
         "so":{
-            "default": "Operating Systems",
+            "default": "Sistemi Operativi",
             "linux": "Linux",
             "windows": "Windows",
             "mac": "Mac"
@@ -380,19 +456,19 @@
     "hobby": {
         "default": "Hobbies",
         "description": "General description",
-        "hobby":{
+        "hobby": {
             "name": "Hobby Name",
             "description": "Hobby Description"
         }
     },
     "image":{
-        "default": "Image",
+        "default": "Photo",
         "url": "URL",
         "name": "Name",
         "title": "Title",
-        "alt": "Alternative description (ALT)",
+        "alt": "Alternative Description (ALT)",
         "metadata": {
-            "filename": "Filename",
+            "filename": "File Name",
             "dimensions":{
                 "default": "Dimensions",
                 "width": "Width",
@@ -417,7 +493,7 @@
                 },
                 "datetime": "Date and Time",
                 "exposure": {
-                    "default": "Exposure time",
+                    "default": "Exposure Time",
                     "mode": "Exposure Mode",
                     "value": "Exposure Value",
                     "shutter-speed": "Shutter Speed",
@@ -427,20 +503,20 @@
                         "stop-value": "Aperture Stop Value"
                     },
                     "iso": "ISO",
-                    "focal-length": "Focal Length",
-                    "white_balance": "White Balance",
+                    "focalLength": "Focal Length",
+                    "whiteBalance": "White Balance",
                     "flash": {
                         "default": "Flash",
                         "mode": "Flash Mode",
                         "status": {
                             "default": "Flash Status",
-                            "auto": "Auto Flash",
+                            "auto": "Automatic Flash",
                             "on": "Flash On",
                             "off": "Flash Off"
                         }
                     },
-                    "metering-mode": "Metering Mode"
-                },                
+                    "meteringMode": "Metering Mode"
+                },
                 "copyright": null
             }
         }
@@ -448,16 +524,17 @@
     "pages":{
         "home": {
             "default": "Home",
-            "description": "Hi! I am Federico Mattucci, a Computer Science student at the University of Pisa. With this site I want to tell you a little bit about myself."
+            "description": "Hello! I am Federico Mattucci, a computer science student at the University of Pisa. With this website, I would like to tell you a little bit about myself."
         },
         "experience": {
-            "default": "Experience",
-            "description": "This section is dedicated to my work experiences and internships."
+            "default": "Work Experiences",
+            "description": "This section is dedicated to my work and internship experiences."
         },
         "portfolio": {
             "default": "Portfolio",
             "description": "Here you can find some of my projects and works.",
-            "photography-description": "I got into photography in a completely unexpected way. One day, my father asked me to take pictures of watches he wanted to put up for sale. At the time, I had a phone that did not yet have a well-developed camera and no knowledge of photography. When I started taking pictures, I realized that all the pictures were full of reflections, overexposed or underexposed. Since I had no tools to take well-done photos, I began to engineer myself to be able to \"create\" them. I made \"panels\" to use as softboxes using four sheets of paper on which I had printed pages that were all black. These allowed me to remove reflections, but they also made the photos underexposed. I then also created a light with a diffuser using again white sheets of paper and a light with a spring arm, so as to better illuminate the clocks. At first I didn't like it because it was too complicated, but then as time went on, taking pictures of these objects, I began to get hooked, and from there my study of photography began."
+            "photographyDescription": "I became passionate about photography in a completely unexpected way. One day, my father asked me to take some photos of watches he wanted to sell. At the time, I had a phone that didn't have a very good camera and I knew nothing about photography. When I started taking photos, I realised that all the images were full of reflections, overexposed or underexposed. Not having the tools to take good photos, I started to figure out how to “create” them. I made “panels” to use as softboxes using four sheets of paper on which I had printed black pages. These allowed me to remove the reflections, but they also made the photos underexposed. I then created a light with a diffuser, again using white sheets of paper and a spring-loaded arm, in order to better illuminate the watches. Initially, I didn't like it because it was too complicated, but then, as time went by and I took more photos of these objects, I began to develop a passion for it, and that's how I began to study photography."
+
         },
         "contact": {
             "default": "Contact",
@@ -469,16 +546,16 @@
         },
         "admin": {
             "default": "Admin",
-            "title": "Administrator Panel",
-            "description": "This section is reserved for administrators.",
-            "dashboard": "Administrator Dashboard",
-            "subtitle": "Sign in to manage site content",
-            "logged-in-as": "You are logged in as"
+            "title": "Admin panel",
+            "loggedInAs": "Logged In as: ",
+            "description": "Section reserved for administrators.",
+            "dashboard": "Admin Dashboard",
+            "subtitle": "Log-in to manage site content"
         },
-        "not-found": {
-            "default": "Page not found",
+        "notFound": {
+            "default": "Page Not Found",
             "description": "The page you are looking for does not exist.",
-            "go-back": "Go back to Home"
+            "goBack": "Go Back to Home"
         }
     }
 }

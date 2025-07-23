@@ -1,7 +1,7 @@
 import Time from "./Time"
 
 export default interface Date {
-  time: Time
+  time?: Time
   day?: number
   weekDay?: string
   month: string
