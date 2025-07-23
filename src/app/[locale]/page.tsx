@@ -2,7 +2,7 @@
 
 import SkillsTags from "@/components/SkillsTags";
 import { Link } from "@/i18n/navigation";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/useTranslationsSafe";
 import { useUserData } from "@/hooks/useUserData";
 import SocialButton from "@/components/SocialButton";
 import getIcon from "@/lib/IconMap";

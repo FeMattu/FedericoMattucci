@@ -3,7 +3,7 @@ import { useSession, signOut } from "next-auth/react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import getIcon from '@/lib/IconMap';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useTranslation } from '@/hooks/useTranslationsSafe';
 import { useUserData } from '@/hooks/useUserData';
 import { useParams } from 'next/navigation';
 

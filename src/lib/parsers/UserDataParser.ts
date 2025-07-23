@@ -6,7 +6,7 @@ import ParseSkills from "./SkillParser";
 import ParseHobby from "./HobbyParser";
 import ParseLocation from "./LocationParser";
 import ParseContacts from "./ContactsParser";
-import { TFunction } from "../../hooks/useTranslation";
+import { TFunction } from "../../hooks/useTranslationsSafe";
 import Language from "../interfaces/Language";
 import Experience from "../interfaces/Experience";
 import Skill from "../interfaces/Skill";

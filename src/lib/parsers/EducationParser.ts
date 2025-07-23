@@ -2,7 +2,7 @@ import Education, { Studies, Course, Certification, Degree } from "../interfaces
 import ParseDate from "./DateParser";
 import ParseLocation from "./LocationParser";
 import { cleanValue } from "../utils";
-import { TFunction } from "../../hooks/useTranslation";
+import { TFunction } from "../../hooks/useTranslationsSafe";
 
 export default function ParseEducation(rawEducation: Education, t: TFunction): Education {
     const parseStudies = (studies: Studies[]): Studies[] => {

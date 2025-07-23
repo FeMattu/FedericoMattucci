@@ -1,6 +1,6 @@
 // src/hooks/useUserData.ts
 import { useEffect, useState, useRef, useCallback } from "react";
-import { useTranslation } from "./useTranslation";
+import { useTranslation } from "./useTranslationsSafe";
 import { useCache } from "@/providers/CacheProvider";
 import ParseUserData from "@/lib/parsers/UserDataParser";
 import type UserData from "@/lib/interfaces/UserData";

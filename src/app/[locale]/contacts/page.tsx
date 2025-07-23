@@ -1,7 +1,7 @@
 "use client"
 
 import { Link } from "@/i18n/navigation";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/useTranslationsSafe";
 import { useUserData } from "@/hooks/useUserData";
 import { ReactNode } from "react";
 import SocialButton from "@/components/SocialButton";

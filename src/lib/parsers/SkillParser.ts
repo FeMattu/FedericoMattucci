@@ -1,6 +1,6 @@
 import Skill from "../interfaces/Skill";
 import { cleanValue } from "../utils";
-import { TFunction } from "../../hooks/useTranslation";
+import { TFunction } from "../../hooks/useTranslationsSafe";
 
 export default function ParseSkills(rawSkill: Skill, t: TFunction, scope: string = "skills"): Skill {
     // Se il campo level non è presente ed è presente list allora è una superSkill (supercategoria)

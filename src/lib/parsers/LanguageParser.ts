@@ -1,6 +1,6 @@
 import Language from "../interfaces/Language";
 import { cleanValue } from "../utils";
-import { TFunction } from "../../hooks/useTranslation";
+import { TFunction } from "../../hooks/useTranslationsSafe";
 
 export default function ParseLanguage(rawLanguage: Language, t: TFunction): Language {
     return {

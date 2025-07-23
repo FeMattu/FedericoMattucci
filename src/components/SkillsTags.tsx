@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/useTranslationsSafe";
 import { useUserData } from "@/hooks/useUserData";
 import { useParams } from "next/navigation";
 import Skill from "@/lib/interfaces/Skill";

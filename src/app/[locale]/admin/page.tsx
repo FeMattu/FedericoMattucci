@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import UserInfo from '@/components/UserInfo';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useTranslation } from '@/hooks/useTranslationsSafe';
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();

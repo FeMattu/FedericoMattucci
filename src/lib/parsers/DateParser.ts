@@ -1,7 +1,7 @@
 import Date from "../interfaces/Date";
 import ParseTime from "./TimeParser";
 import { cleanValue } from "../utils";
-import { TFunction } from "../../hooks/useTranslation";
+import { TFunction } from "../../hooks/useTranslationsSafe";
 
 export default function ParseDate(rawDate: Date, t: TFunction): Date {
     return {
