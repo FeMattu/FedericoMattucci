@@ -37,7 +37,7 @@ export default function Gallery({ path }: GalleryProps) {
     500: 1,
   };
 
-  if (loading) return <p className="text-center">{t("fetch-images")}</p>;
+  if (loading) return <p className="text-center">{t("loading.images")}</p>;
 
   return (
     <Masonry

@@ -11,9 +11,12 @@ import {
 } from "./ui/dropdown-menu"
 import { SignIn, SignOut } from "./AuthComponent"
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 export default function UserButton() {
   const { data: session } = useSession();
+  const router = useRouter();
+  
   if (!session?.user) return <SignIn />
   return (
     <div className="flex items-center gap-2">
@@ -49,7 +52,7 @@ export default function UserButton() {
             <SignOut />
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Button className="w-full justify-center">
+            <Button onClick={() => router.push("/admin")} className="w-full justify-center">
               Admin
             </Button>
           </DropdownMenuItem>

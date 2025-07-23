@@ -18,7 +18,7 @@ export default function ParseSkills(rawSkill: any, t: TFunction, scope: string =
     // Se ha una lista, è una supercategoria che contiene altre skill
     if (rawSkill.list && Array.isArray(rawSkill.list)) {
         // Per le sottocategorie, costruisco lo scope gerarchico
-        const childScope = `${scope}.${cleanValue(t, rawSkill.name)}`;
+        const childScope = `${scope}.${rawSkill.name}`;
         result.list = rawSkill.list.map((subSkill: any) => ParseSkills(subSkill, t, childScope));
     }
 

@@ -17,7 +17,8 @@
         "default": "Livello",
         "beginner": "Principiante",
         "intermediate": "Intermedio",
-        "advanced": "Avanzato"
+        "advanced": "Avanzato",
+        "native": "Madrelingua"
     },
     "date": {
         "default": "Data",
@@ -155,7 +156,7 @@
         "default": "Caricamento in corso...",
         "images": "Caricamento immagini in corso...",
         "settings": "Caricamento impostazioni in corso...",
-        "user-info": "Caricamento informazioni utente in corso...",
+        "userInfo": "Caricamento informazioni utente in corso...",
         "adminDashboard": "Caricamento dashboard admin in corso...",
         "adminSettings": "Caricamento impostazioni admin in corso...",
         "metadata":"Caricamento metadati in corso..."
@@ -220,7 +221,7 @@
             "facebook":"Facebook",
             "linkedin":"LinkedIn",
             "threads":"Threads",
-            "x-twitter":"X-Twitter",
+            "xTwitter":"X-Twitter",
             "whatsapp":"WhatsApp",
             "github":"GitHub",
             "tiktok":"TikTok",
@@ -234,8 +235,8 @@
         "default": "Esperienza",
         "type": {
             "default": "Tipo di Esperienza/Lavoro",
-            "full-time": "Tempo Pieno",
-            "part-time": "Part-Time",
+            "fullTime": "Tempo Pieno",
+            "partTime": "Part-Time",
             "internship": "Tirocinio/Stage",
             "freelance": "Libero Professionista"
         },
@@ -250,9 +251,9 @@
         "studies": {
             "default": "Studi",
             "title": {
-                "high-school": "Scuola Superiore",
+                "highSchool": "Scuola Superiore",
                 "master": "Master",
-                "post-graduate": "Post Laurea",
+                "postGraduate": "Post Laurea",
                 "university": "Università"
             },
             "name": "Nome del Corso di Studio",
@@ -340,7 +341,7 @@
                 "frameworks": {
                     "default": "Frameworks Back End",
                     "nodejs": "NodeJs",
-                    "spring-boot": "Spring Boot",
+                    "springBoot": "Spring Boot",
                     "django": "Django",
                     "flask": "Flask"
                 }
@@ -348,7 +349,7 @@
             "mobile": {
                 "default": "mobile",
                 "flutter": "Flutter",
-                "react-native": "React Native",
+                "reactNative": "React Native",
                 "swift": "Swift",
                 "kotlin": "Kotlin",
                 "dart": "Dart"
@@ -383,13 +384,14 @@
             "kubernetes": "Kubernetes"
         },
         "tools":{
-            "deafult": "Strumenti",
+            "default": "Strumenti",
             "other": "Altri Strumenti",
             "latex": "LaTeX",
             "developing":{
+                "default": "Sviluppo",
                 "git": "Git",
                 "docker": "Docker",
-                "kuberneets": "Kuberneets",
+                "kubernetes": "Kubernetes",
                 "bash": "Bash"
             },
             "office": {
@@ -498,8 +500,8 @@
                         "stop-value": "Valore Stop Apertura"
                     },
                     "iso": "ISO",
-                    "focal-length": "Lunghezza Focale",
-                    "white_balance": "Bilanciamento del Bianco",
+                    "focalLength": "Lunghezza Focale",
+                    "whiteBalance": "Bilanciamento del Bianco",
                     "flash": {
                         "default": "Flash",
                         "mode": "Modalità Flash",
@@ -510,7 +512,7 @@
                             "off": "Flash Spento"
                         }
                     },
-                    "metering-mode": "Modalità di Misurazione"
+                    "meteringMode": "Modalità di Misurazione"
                 },                
                 "copyright": null
             }
@@ -528,7 +530,7 @@
         "portfolio": {
             "default": "Portfolio",
             "description": "Qui puoi trovare alcuni dei miei progetti e lavori.",
-            "photography-description": "Mi sono appassionato alla fotografia in modo del tutto inaspettato. Un giorno, mio padre mi chiese di fare delle foto a degli orologi che voleva mettere in vendita. All’epoca avevo un telefono che non aveva ancora una fotocamera ben sviluppata e nessuna conoscenza della fotografia. Quando iniziai a fare le foto, mi resi conto che tutte le immagini erano piene di riflessi, sovraesposte o sottoesposte. Non avendo strumenti per fare delle foto ben fatte, iniziai a ingegnarmi per poterli “creare”. Realizzai dei “pannelli” da usare come softbox usando quattro fogli di carta su cui avevo stampato delle pagine tutte nere. Questi mi permettevano di rimuovere i riflessi, ma rendevano anche le foto sottoesposte. Creai poi anche una luce con diffusore utilizzando sempre dei fogli di carta bianchi e una luce con braccio a molle, in modo da illuminare meglio gli orologi. Inizialmente non mi piaceva perché era troppo complicato, ma poi, con il passare del tempo, facendo foto a questi oggetti, cominciai ad appassionarmi e da lì iniziò il mio studio della fotografia."
+            "photographyDescription": "Mi sono appassionato alla fotografia in modo del tutto inaspettato. Un giorno, mio padre mi chiese di fare delle foto a degli orologi che voleva mettere in vendita. All’epoca avevo un telefono che non aveva ancora una fotocamera ben sviluppata e nessuna conoscenza della fotografia. Quando iniziai a fare le foto, mi resi conto che tutte le immagini erano piene di riflessi, sovraesposte o sottoesposte. Non avendo strumenti per fare delle foto ben fatte, iniziai a ingegnarmi per poterli “creare”. Realizzai dei “pannelli” da usare come softbox usando quattro fogli di carta su cui avevo stampato delle pagine tutte nere. Questi mi permettevano di rimuovere i riflessi, ma rendevano anche le foto sottoesposte. Creai poi anche una luce con diffusore utilizzando sempre dei fogli di carta bianchi e una luce con braccio a molle, in modo da illuminare meglio gli orologi. Inizialmente non mi piaceva perché era troppo complicato, ma poi, con il passare del tempo, facendo foto a questi oggetti, cominciai ad appassionarmi e da lì iniziò il mio studio della fotografia."
 
         },
         "contact": {
@@ -542,15 +544,15 @@
         "admin": {
             "default": "Admin",
             "title": "Pannello Amministratore",
+            "loggedInAs": "Sei connesso come: ",
             "description": "Questa sezione è riservata agli amministratori.",
             "dashboard": "Dashboard Amministratore",
-            "subtitle": "Accedi per gestire i contenuti del sito",
-            "logged-in-as": "Sei connesso come"
+            "subtitle": "Accedi per gestire i contenuti del sito"
         },
-        "not-found": {
+        "notFound": {
             "default": "Pagina non trovata",
             "description": "La pagina che stai cercando non esiste.",
-            "go-back": "Torna alla Home"
+            "goBack": "Torna alla Home"
         }
     }
 }

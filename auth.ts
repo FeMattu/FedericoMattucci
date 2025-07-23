@@ -49,7 +49,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (token?.accessToken) session.accessToken = token.accessToken;
       return session;
     },
-    async jwt({ token, account }: { token: any; account: any }) {
+    async jwt({ token, account }: { token: any; account?: any }) {
       if (account?.access_token) {
         token.accessToken = account.access_token;
       }

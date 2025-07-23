@@ -27,7 +27,7 @@ export default function UserInfo() {
             <div className="h-4 bg-gray-300 rounded w-3/4 mx-auto mb-2"></div>
             <div className="h-3 bg-gray-300 rounded w-1/2 mx-auto"></div>
           </div>
-          <p className="mt-4 text-[var(--text-secondary)]">{t('loading.user-info')}</p>
+          <p className="mt-4 text-[var(--text-secondary)]">{t('loading.userInfo')}</p>
         </div>
       </div>
     );

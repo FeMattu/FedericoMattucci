@@ -19,4 +19,3 @@ export function cleanValue(t: TFunction, value: string, scope?: string): string 
   }
   return value;
 }
-

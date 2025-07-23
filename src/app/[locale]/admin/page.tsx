@@ -2,13 +2,13 @@
 
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
 import UserInfo from '@/components/UserInfo';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
   const [isClient, setIsClient] = useState(false);
-  const t = useTranslations();
+  const t = useTranslation();
 
   useEffect(() => {
     setIsClient(true);
@@ -24,12 +24,12 @@ export default function AdminDashboard() {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">{t('admin.dashboard')}</h1>
+      <h1 className="text-3xl font-bold mb-6">{t('pages.admin.dashboard')}</h1>
       
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold mb-4">{t('admin.welcome')}, {session?.user?.name || 'User'}</h2>
+        <h2 className="text-xl font-semibold mb-4">{t('welcome')}, {session?.user?.name || 'User'}</h2>
         <p className="text-gray-600 dark:text-gray-400 mb-4">
-          {t('admin.logged-in-as')} {session?.user?.email}.
+          {t('pages.admin.loggedInAs')} {session?.user?.email}.
         </p>
         <UserInfo />
 

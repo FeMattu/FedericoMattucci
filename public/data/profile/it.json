@@ -133,10 +133,10 @@
     },
     "skills": [
         {
-            "name": "_programmingLanguages",
+            "name": "_programmingLanguages_",
             "list": [
                 {
-                    "name": "_backEnd_",
+                    "name": "_frontEnd_",
                     "list":[
                         {
                             "name": "_html_",
