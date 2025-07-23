@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { IntlError, NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Header from "@/components/layout/header";
@@ -10,6 +10,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CacheProvider } from "@/providers/CacheProvider";
 import { SessionProvider } from "next-auth/react";
+import IntlErrorHandlingProvider from "@/providers/IntlErrorHandlingProvider";
 
 export const metadata: Metadata = {
   title: "Federico Mattucci",
@@ -39,10 +40,12 @@ export default async function RootLayout({
         <SessionProvider>
           <ThemeProvider>
             <CacheProvider>
-              <NextIntlClientProvider locale={locale}>
-                <Header />
-                {children}
-                <Footer />
+              <NextIntlClientProvider>
+                <IntlErrorHandlingProvider locale={locale}>
+                  <Header />
+                  {children}
+                  <Footer />
+                </IntlErrorHandlingProvider>
               </NextIntlClientProvider>
             </CacheProvider>
           </ThemeProvider>

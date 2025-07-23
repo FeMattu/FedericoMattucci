@@ -13,7 +13,7 @@ function Contact({ href, type, icon, contact }: { href: string; type: string; ic
     return (
         <Link href={href} className="flex flex-row items-center gap-2 text-lg hover:text-blue-500">
             {icon}
-            <p>{t(type)}: {contact}</p>
+            <p>{type}: {contact}</p>
         </Link>
     );
 }

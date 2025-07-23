@@ -1,6 +1,7 @@
 // src/hooks/useUserData.ts
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useTranslation } from "./useTranslation";
+import { useCache } from "@/providers/CacheProvider";
 import ParseUserData from "@/lib/parsers/UserDataParser";
 import type UserData from "@/lib/interfaces/UserData";
 
@@ -9,63 +10,87 @@ export function useUserData(locale: string) {
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
   const t = useTranslation();
+  const { getCache, setCache } = useCache();
   
   // Ref per mantenere i dati raw e evitare fetch multipli
   const rawDataRef = useRef<any>(null);
   const currentLocaleRef = useRef<string | null>(null);
   const isProcessingRef = useRef<boolean>(false);
 
-  // Funzione memoizzata per processare i dati
-  const processData = useCallback((rawData: any, locale: string) => {
+  // Chiavi cache per i diversi tipi di dati
+  const getRawDataCacheKey = (locale: string) => `raw_profile_data_${locale}`;
+  const getParsedDataCacheKey = (locale: string) => `parsed_profile_data_${locale}`;
+
+  const processData = useCallback((rawData: any, locale: string, translationFn: any) => {
     if (isProcessingRef.current) return;
-    
+
     try {
       isProcessingRef.current = true;
       console.log(`Parsing data for locale: ${locale}`);
-      const parsedData = ParseUserData(rawData, t);
+      const parsedData = ParseUserData(rawData, translationFn);
       setData(parsedData);
       console.log(`Data parsed successfully for locale: ${locale}`, parsedData);
       setError(null);
+      
+      // Salva i dati parsati in cache
+      setCache(getParsedDataCacheKey(locale), parsedData);
     } catch (err) {
       console.error("Error parsing user data:", err);
       setError(err instanceof Error ? err : new Error("Parsing error"));
     } finally {
       isProcessingRef.current = false;
     }
-  }, [t]);
+  }, [setCache, getParsedDataCacheKey]);
 
   useEffect(() => {
     let isMounted = true;
-    
+
     async function fetchData() {
-      // Se abbiamo già i dati per questo locale, processali con la nuova traduzione
-      if (currentLocaleRef.current === locale && rawDataRef.current) {
-        console.log(`Using cached data for locale: ${locale}`);
-        processData(rawDataRef.current, locale);
-        setLoading(false);
-        return;
-      }
+      const translator = t; // salva localmente per evitare trigger
+      const rawCacheKey = getRawDataCacheKey(locale);
+      const parsedCacheKey = getParsedDataCacheKey(locale);
 
       try {
         setLoading(true);
         setError(null);
-        
+
+        // 1. Prima controlla se abbiamo già i dati parsati in cache per questo locale
+        const cachedParsedData = getCache<UserData>(parsedCacheKey);
+        if (cachedParsedData) {
+          console.log(`Using cached parsed data for locale: ${locale}`);
+          setData(cachedParsedData);
+          currentLocaleRef.current = locale;
+          setLoading(false);
+          return;
+        }
+
+        // 2. Se non abbiamo dati parsati, controlla se abbiamo i dati raw in cache
+        let rawData = getCache<any>(rawCacheKey);
+        if (rawData) {
+          console.log(`Using cached raw data for locale: ${locale}`);
+          rawDataRef.current = rawData;
+          currentLocaleRef.current = locale;
+          processData(rawData, locale, translator);
+          setLoading(false);
+          return;
+        }
+
+        // 3. Se non abbiamo niente in cache, fai il fetch
         console.log(`Fetching data for locale: ${locale}`);
         const response = await fetch(`/data/profile/${locale}.json`);
         if (!response.ok) {
           throw new Error(`Failed to fetch user data: ${response.status}`);
         }
-        
-        const rawData = await response.json();
+
+        rawData = await response.json();
         console.log(`Data fetched successfully for locale: ${locale}`, rawData);
-        
+
         if (isMounted) {
-          // Salva i dati raw e il locale corrente
+          // Salva i dati raw in cache
+          setCache(rawCacheKey, rawData);
           rawDataRef.current = rawData;
           currentLocaleRef.current = locale;
-          
-          // Processa i dati immediatamente
-          processData(rawData, locale);
+          processData(rawData, locale, translator);
         }
       } catch (err) {
         if (isMounted) {
@@ -84,7 +109,17 @@ export function useUserData(locale: string) {
     return () => {
       isMounted = false;
     };
-  }, [locale, processData]);
+  }, [locale, processData, getCache, setCache, getRawDataCacheKey, getParsedDataCacheKey]);
+
+  // Effetto separato per gestire i cambiamenti di traduzione
+  useEffect(() => {
+    // Se abbiamo dati raw ma le traduzioni sono cambiate, riprocessa i dati
+    if (rawDataRef.current && currentLocaleRef.current === locale) {
+      console.log(`Reprocessing data due to translation change for locale: ${locale}`);
+      processData(rawDataRef.current, locale, t);
+    }
+  }, [t, processData, locale]);
 
   return { data, error, loading };
 }
+
