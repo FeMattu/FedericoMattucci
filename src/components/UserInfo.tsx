@@ -102,7 +102,9 @@ export default function UserInfo() {
               </div>
               <div className="flex items-center space-x-3">
                 {getIcon('earth', 20, 'text-[var(--button-bg)]')}
-                <span className="text-[var(--text-secondary)]">{userData.contacts.websiteUrl}</span>
+                <a href={userData.contacts.websiteUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--text-secondary)] hover:text-[var(--button-bg)] transition-colors">
+                  {userData.contacts.websiteUrl}
+                </a>
               </div>
               <div className="flex items-center space-x-3">
                 {getIcon('email', 20, 'text-[var(--button-bg)]')}
@@ -125,15 +127,15 @@ export default function UserInfo() {
                 <div key={index} className="flex items-center justify-between p-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-color)]">
                   <div className="flex items-center space-x-3">
                     {getIcon(social.network.toLowerCase(), 20, 'text-[var(--button-bg)]')}
-                    <span className="text-[var(--text-primary)] capitalize">{t(`contatti.social.${social.network.toLowerCase()}`)}</span>
+                    <span className="text-[var(--text-primary)] capitalize">{social.network}</span>
                   </div>
                   <a 
                     href={social.link} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-[var(--text-secondary)] hover:text-[var(--button-bg)] transition-colors"
-                  >
-                    {extractUsername(social.link)}
+                    className="text-[var(--text-secondary)] hover:text-[var(--button-bg)] transition-colors max-w-[200px] truncate whitespace-nowrap overflow-hidden"
+                    >
+                    {social.link}
                   </a>
                 </div>
               ))}
@@ -200,7 +202,7 @@ export default function UserInfo() {
                   className="p-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-color)]"
                 >
                   <div className="flex items-start space-x-2">
-                    {getIcon('heart', 16, 'text-[var(--button-bg)] mt-1')}
+                    {getIcon('heart', 16, 'w-4 h-4 shrink-0 text-[var(--button-bg)] mt-1')}
                     <div>
                       <h4 className="text-[var(--text-primary)] font-medium">{hobby.name}</h4>
                       <p className="text-[var(--text-secondary)] text-sm mt-1">{hobby.description}</p>

@@ -5,9 +5,9 @@ import { ReactNode, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import getIcon from '@/lib/IconMap';
-import { useTranslations } from "next-intl";
 import { format } from 'date-fns';
 import { useCache } from '@/providers/CacheProvider';
+import { useTranslation } from '@/hooks/useTranslationsSafe';
 
 type ImageMetadataResponse = {
   url: string;
@@ -42,7 +42,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
   const [showInfo, setShowInfo] = useState(false);
   const touchStartYRef = useRef<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const t = useTranslations();
+  const t = useTranslation();
 
   // Check if mobile on mount
   useEffect(() => {
@@ -90,7 +90,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
         const cachedData = getCache<ImageMetadataResponse>(src);
         if (!cachedData) {
           const res = await fetch(`/api/image?filename=${encodeURIComponent(src)}`);
-          if (!res.ok) throw new Error('Impossibile caricare metadati');
+          if (!res.ok) throw new Error(t('metadata.impossibleToLoad'));
           const data = await res.json();
           setMetadata(data);
           setCache(src, data); // Salva i metadati nella cache
@@ -98,7 +98,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
         }
         setMetadata(cachedData);
       } catch (error) {
-        console.error('Errore nel caricamento metadati:', error);
+        console.error(t('metadata.errorLoadingMetadata'), error);
         setError(true);
       }
     };
@@ -222,7 +222,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                     </div>
                     <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
                       {getIcon("arrow-down", 24)}
-                      <span className="ml-2 text-xs">Chiudi</span>
+                      <span className="ml-2 text-xs">{t("close")}</span>
                     </div>
                   </>
                 )}
@@ -239,7 +239,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
               {(showInfo || !isMobile) && (
                 <div className="w-full md:w-1/3 flex flex-col justify-center p-6 overflow-y-auto space-y-6">
                   <div>
-                    <h2 className="text-2xl text-white font-bold mb-2">{t("dimentions")}</h2>
+                    <h2 className="text-2xl text-white font-bold mb-2">{t("image.metadata.dimensions")}</h2>
                     <div className='space-x-2 space-y-2'>
                       <InfoTag icon={getIcon("ratio", iconSize)} value={`${metadata.metadata.width}×${metadata.metadata.height}px`} />
                       {metadata.metadata.dpi && (
@@ -248,7 +248,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                     </div>
                   </div>
                   <div>
-                    <h2 className="text-2xl text-white font-bold mb-2">{t("settings")}</h2>
+                    <h2 className="text-2xl text-white font-bold mb-2">{t("image.metadata.settings")}</h2>
                     <div className='space-x-2 space-y-2'>
                       {exif.aperture && exif.aperture !== '' && (
                         <InfoTag icon={getIcon("aperture", iconSize)} value={exif.aperture} />
@@ -263,7 +263,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                   </div>
                   
                   <div>
-                    <h2 className="text-2xl text-white font-bold mb-2">{t("camera")}</h2>
+                    <h2 className="text-2xl text-white font-bold mb-2">{t("image.metadata.exif.camera")}</h2>
                     <div className="space-y-2 space-x-2">
                       {(exif.make || exif.model) && (
                         <InfoTag icon={getIcon("camera", iconSize)} value={[exif.make, exif.model].filter(Boolean).join(' - ')} />
@@ -275,7 +275,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                   </div>
 
                   <div>
-                    <h2 className="text-2xl text-white font-bold mb-2">{t("other")}</h2>
+                    <h2 className="text-2xl text-white font-bold mb-2">{t("image.metadata.other")}</h2>
                     <div className="flex flex-wrap gap-2">
                       {exif.datetime_original && exif.datetime_original !== '' && (
                         <InfoTag
@@ -283,7 +283,7 @@ export default function S3Image({ src, alt = '', width, height, className = '', 
                           value={format(parseExifDate(exif.datetime_original), 'dd/MM/yyyy HH:mm')}
                         />
                       )}
-                      {(exif.gps && exif.gps.latitude && exif.gps.longitude) && (
+                      {(exif.gps && exif.gps.latitude && exif.gps.latitude !== "" && exif.gps.longitude && exif.gps.longitude !== "") && (
                         <InfoTag
                           icon={getIcon("location", iconSize)}
                           value={`${exif.gps.latitude}, ${exif.gps.longitude}`}

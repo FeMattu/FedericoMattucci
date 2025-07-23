@@ -468,6 +468,11 @@
         "title": "Title",
         "alt": "Alternative Description (ALT)",
         "metadata": {
+            "default": "Metadata",
+            "impossibleToLoad": "Impossible to load metadata",
+            "errorLoadingMetadata": "Error loading metadata",
+            "settings": "Settings",
+            "other": "Other",
             "filename": "File Name",
             "dimensions":{
                 "default": "Dimensions",
@@ -550,7 +555,18 @@
             "loggedInAs": "Logged In as: ",
             "description": "Section reserved for administrators.",
             "dashboard": "Admin Dashboard",
-            "subtitle": "Log-in to manage site content"
+            "subtitle": "Log-in to manage site content",
+            "media": {
+                "default": "Media",
+                "management": "Media Management",
+                "description": "Upload, manage, and view site images.",
+                "uploadImages": "Upload Images",
+                "uploading": "Uploading...",
+                "noMediaFound": "No media found in this directory",
+                "uploadInstructions": "Upload some images to get started",
+                "back": "Back",
+                "backToDashboard": "Back to Dashboard"
+            }
         },
         "notFound": {
             "default": "Page Not Found",

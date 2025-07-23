@@ -470,6 +470,11 @@
         "title": "Titolo",
         "alt": "Descrizione alternativa (ALT)",
         "metadata": {
+            "default": "Metadati",
+            "impossibleToLoad": "Impossibile caricare i metadati",
+            "errorLoadingMetadata": "Errore durante il caricamento dei metadati",
+            "settings": "Impostazioni",
+            "other": "Altro",
             "filename": "Nome File",
             "dimensions":{
                 "default": "Dimensioni",
@@ -552,7 +557,18 @@
             "loggedInAs": "Sei connesso come: ",
             "description": "Questa sezione è riservata agli amministratori.",
             "dashboard": "Dashboard Amministratore",
-            "subtitle": "Accedi per gestire i contenuti del sito"
+            "subtitle": "Accedi per gestire i contenuti del sito",
+            "media": {
+                "default": "Media",
+                "management": "Gestione Media",
+                "description": "Carica, gestisci e visualizza le immagini del sito.",
+                "uploadImages": "Carica Immagini",
+                "uploading": "Caricamento in corso...",
+                "noMediaFound": "Nessun media trovato in questa directory",
+                "uploadInstructions": "Carica alcune immagini per iniziare",
+                "back": "Torna indietro",
+                "backToDashboard": "Torna alla Dashboard"
+            }
         },
         "notFound": {
             "default": "Pagina non trovata",

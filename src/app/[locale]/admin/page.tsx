@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import UserInfo from '@/components/UserInfo';
 import { useTranslation } from '@/hooks/useTranslationsSafe';
+import Link from 'next/link';
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
@@ -33,20 +34,17 @@ export default function AdminDashboard() {
         </p>
         <UserInfo />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-8">
+          <Link href="/admin/media">
+            <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+              <h3 className="font-medium text-lg mb-2">Media</h3>
+              <p className="text-gray-600 dark:text-gray-400">Upload and manage images</p>
+            </div>
+          </Link>
+
           <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg shadow-sm">
             <h3 className="font-medium text-lg mb-2">Projects</h3>
             <p className="text-gray-600 dark:text-gray-400">Manage your portfolio projects</p>
-          </div>
-          
-          <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg shadow-sm">
-            <h3 className="font-medium text-lg mb-2">Content</h3>
-            <p className="text-gray-600 dark:text-gray-400">Edit website content and translations</p>
-          </div>
-          
-          <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-lg shadow-sm">
-            <h3 className="font-medium text-lg mb-2">Media</h3>
-            <p className="text-gray-600 dark:text-gray-400">Upload and manage images</p>
           </div>
         </div>
       </div>
