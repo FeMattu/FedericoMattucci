@@ -1,7 +1,7 @@
 "use client"
 
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from '@/hooks/useTranslationsSafe';
 import { FaFolder, FaImage, FaUpload, FaArrowLeft } from 'react-icons/fa';
 import Link from 'next/link';
@@ -22,7 +22,7 @@ interface MediaItem {
 }
 
 export default function MediaPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [isClient, setIsClient] = useState(false);
   const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
   const [currentPath, setCurrentPath] = useState('');
@@ -34,31 +34,7 @@ export default function MediaPage() {
     setIsClient(true);
   }, []);
 
-  useEffect(() => {
-    if (isClient && status === 'authenticated') {
-      fetchMediaItems();
-    }
-  }, [isClient, status, currentPath]);
-
-  const fetchMediaItems = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`/api/images-list?path=${encodeURIComponent(currentPath)}&format=detailed`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch media items');
-      }
-      
-      const data = await response.json();
-      const processedItems = processS3Objects(data.objects || []);
-      setMediaItems(processedItems);
-    } catch (error) {
-      console.error('Error fetching media items:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const processS3Objects = (objects: S3Object[]): MediaItem[] => {
+  const processS3Objects = useCallback((objects: S3Object[]): MediaItem[] => {
     const items: MediaItem[] = [];
     const folders = new Set<string>();
 
@@ -105,7 +81,31 @@ export default function MediaPage() {
       }
       return a.name.localeCompare(b.name);
     });
-  };
+  }, [currentPath]);
+
+  const fetchMediaItems = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/images-list?path=${encodeURIComponent(currentPath)}&format=detailed`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch media items');
+      }
+      
+      const data = await response.json();
+      const processedItems = processS3Objects(data.objects || []);
+      setMediaItems(processedItems);
+    } catch (error) {
+      console.error('Error fetching media items:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [currentPath, processS3Objects]);
+
+  useEffect(() => {
+    if (isClient && status === 'authenticated') {
+      fetchMediaItems();
+    }
+  }, [isClient, status, fetchMediaItems]);
 
   const handleFolderClick = (folderPath: string) => {
     setCurrentPath(folderPath);

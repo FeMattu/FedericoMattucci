@@ -74,17 +74,6 @@ export default function UserInfo() {
     return null;
   };
 
-  // Helper function to extract username from social URLs
-  const extractUsername = (url: string) => {
-    if (!url) return '';
-    try {
-      const urlObj = new URL(url);
-      return urlObj.pathname.split('/')[1] || urlObj.hostname;
-    } catch {
-      return url;
-    }
-  };
-
   const renderTabContent = () => {
     switch (activeTab) {
       case 'overview':

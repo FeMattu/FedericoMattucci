@@ -9,7 +9,6 @@ import getIcon from "@/lib/IconMap";
 import { useParams } from "next/navigation";
 
 function Contact({ href, type, icon, contact }: { href: string; type: string; icon: ReactNode; contact: string }) {
-    const t = useTranslation();
     return (
         <Link href={href} className="flex flex-row items-center gap-2 text-lg hover:text-blue-500">
             {icon}

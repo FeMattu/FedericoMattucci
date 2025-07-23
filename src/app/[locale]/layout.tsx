@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IntlError, NextIntlClientProvider, hasLocale } from 'next-intl';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Header from "@/components/layout/header";
@@ -40,7 +40,7 @@ export default async function RootLayout({
         <SessionProvider>
           <ThemeProvider>
             <CacheProvider>
-              <NextIntlClientProvider>
+              <NextIntlClientProvider locale={locale}>
                 <IntlErrorHandlingProvider locale={locale}>
                   <Header />
                   {children}

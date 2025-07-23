@@ -18,8 +18,8 @@ export function useUserData(locale: string) {
   const isProcessingRef = useRef<boolean>(false);
 
   // Chiavi cache per i diversi tipi di dati
-  const getRawDataCacheKey = (locale: string) => `raw_profile_data_${locale}`;
-  const getParsedDataCacheKey = (locale: string) => `parsed_profile_data_${locale}`;
+  const getRawDataCacheKey = useCallback((locale: string) => `raw_profile_data_${locale}`, []);
+  const getParsedDataCacheKey = useCallback((locale: string) => `parsed_profile_data_${locale}`, []);
 
   const processData = useCallback((rawData: any, locale: string, translationFn: any) => {
     if (isProcessingRef.current) return;
@@ -109,7 +109,7 @@ export function useUserData(locale: string) {
     return () => {
       isMounted = false;
     };
-  }, [locale, processData, getCache, setCache, getRawDataCacheKey, getParsedDataCacheKey]);
+  }, [locale, processData, getCache, setCache, getRawDataCacheKey, getParsedDataCacheKey, t]);
 
   // Effetto separato per gestire i cambiamenti di traduzione
   useEffect(() => {
