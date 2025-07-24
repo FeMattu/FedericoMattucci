@@ -21,11 +21,6 @@ export default function IntlErrorHandlingProvider({
           console.warn('Translation error:', error.message);
         }
       }}
-      getMessageFallback={({ key }) => {
-        const fallbackKey = `${key}.default`;
-        if (key.endsWith('.default')) return key;   // evita loop
-        return fallbackKey;
-      }}
     >
       {children}
     </NextIntlClientProvider>

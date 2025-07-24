@@ -19,3 +19,9 @@ export function cleanValue(t: TFunction, value: string, scope?: string): string 
   }
   return value;
 }
+
+export function devLog(...args: any[]) {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(...args);
+  }
+};

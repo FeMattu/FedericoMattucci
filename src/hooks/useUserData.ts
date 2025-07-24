@@ -4,6 +4,7 @@ import { useTranslation } from "./useTranslationsSafe";
 import { useCache } from "@/providers/CacheProvider";
 import ParseUserData from "@/lib/parsers/UserDataParser";
 import type UserData from "@/lib/interfaces/UserData";
+import { devLog } from "@/lib/utils";
 
 export function useUserData(locale: string) {
   const [data, setData] = useState<UserData | null>(null);
@@ -26,10 +27,10 @@ export function useUserData(locale: string) {
 
     try {
       isProcessingRef.current = true;
-      console.log(`Parsing data for locale: ${locale}`);
+      devLog(`Parsing data for locale: ${locale}`);
       const parsedData = ParseUserData(rawData, translationFn);
       setData(parsedData);
-      console.log(`Data parsed successfully for locale: ${locale}`, parsedData);
+      devLog(`Data parsed successfully for locale: ${locale}`, parsedData);
       setError(null);
       
       // Salva i dati parsati in cache
@@ -57,7 +58,7 @@ export function useUserData(locale: string) {
         // 1. Prima controlla se abbiamo già i dati parsati in cache per questo locale
         const cachedParsedData = getCache<UserData>(parsedCacheKey);
         if (cachedParsedData) {
-          console.log(`Using cached parsed data for locale: ${locale}`);
+          devLog(`Using cached parsed data for locale: ${locale}`);
           setData(cachedParsedData);
           currentLocaleRef.current = locale;
           setLoading(false);
@@ -67,7 +68,7 @@ export function useUserData(locale: string) {
         // 2. Se non abbiamo dati parsati, controlla se abbiamo i dati raw in cache
         let rawData = getCache<any>(rawCacheKey);
         if (rawData) {
-          console.log(`Using cached raw data for locale: ${locale}`);
+          devLog(`Using cached raw data for locale: ${locale}`);
           rawDataRef.current = rawData;
           currentLocaleRef.current = locale;
           processData(rawData, locale, translator);
@@ -76,14 +77,14 @@ export function useUserData(locale: string) {
         }
 
         // 3. Se non abbiamo niente in cache, fai il fetch
-        console.log(`Fetching data for locale: ${locale}`);
+        devLog(`Fetching data for locale: ${locale}`);
         const response = await fetch(`/data/profile/${locale}.json`);
         if (!response.ok) {
           throw new Error(`Failed to fetch user data: ${response.status}`);
         }
 
         rawData = await response.json();
-        console.log(`Data fetched successfully for locale: ${locale}`, rawData);
+        devLog(`Data fetched successfully for locale: ${locale}`, rawData);
 
         if (isMounted) {
           // Salva i dati raw in cache
