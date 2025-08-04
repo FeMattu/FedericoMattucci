@@ -1,5 +1,5 @@
 import Contacts from "../interfaces/Contacts";
-import { cleanValue } from "../utils";
+import { cleanValue } from "../utils/utils";
 import { TFunction } from "../../hooks/useTranslationsSafe";
 
 export default function ParseContacts(rawContacts: Contacts, t: TFunction): Contacts {

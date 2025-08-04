@@ -1,7 +1,7 @@
 import Experience from "../interfaces/Experience";
 import ParseLocation from "./LocationParser";
 import ParseDate from "./DateParser";
-import { cleanValue } from "../utils";
+import { cleanValue } from "../utils/utils";
 import { TFunction } from "../../hooks/useTranslationsSafe";
 
 export default function ParseExperience(rawExperience: Experience, t: TFunction): Experience {

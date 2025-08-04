@@ -110,7 +110,7 @@ export default function UserInfo() {
       case 'social':
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('contatti.social')}</h3>
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">{t('contacts.social')}</h3>
             <div className="grid grid-cols-1 gap-3">
               {userData.contacts.social.map((social, index) => (
                 <div key={index} className="flex items-center justify-between p-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-color)]">

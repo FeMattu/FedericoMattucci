@@ -352,7 +352,7 @@
                 }
             },
             "mobile": {
-                "default": "mobile",
+                "default": "Mobile",
                 "flutter": "Flutter",
                 "reactNative": "React Native",
                 "swift": "Swift",
@@ -360,7 +360,7 @@
                 "dart": "Dart"
             },
             "other": {
-                "deafult": "Altri linguaggi",
+                "default": "Altri linguaggi",
                 "ocaml": "OCaml",
                 "assembly": "Assembly"
             }

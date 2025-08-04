@@ -1,5 +1,5 @@
 import Skill from "../interfaces/Skill";
-import { cleanValue } from "../utils";
+import { cleanValue } from "../utils/utils";
 import { TFunction } from "../../hooks/useTranslationsSafe";
 
 export default function ParseSkills(rawSkill: Skill, t: TFunction, scope: string = "skills"): Skill {

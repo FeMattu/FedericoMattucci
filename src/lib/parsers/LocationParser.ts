@@ -1,5 +1,5 @@
 import Location from "../interfaces/Location";
-import { cleanValue } from "../utils";
+import { cleanValue } from "../utils/utils";
 import { TFunction } from "../../hooks/useTranslationsSafe";
 
 export default function ParseLocation(rawLocation: Location, t: TFunction): Location {

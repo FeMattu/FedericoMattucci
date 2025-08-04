@@ -179,7 +179,7 @@ export default function MediaPage() {
     <div className="container mx-auto p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col justify-center gap-4">
           <Link 
             href="/admin" 
             className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
@@ -207,7 +207,7 @@ export default function MediaPage() {
             disabled={uploading}
           >
             <FaUpload />
-            {uploading ? t('admin.media.uploading') : t('pages.admin.media.uploadImages')}
+            {uploading ? t('pages.admin.media.uploading') : t('pages.admin.media.uploadImages')}
           </button>
         </div>
       </div>

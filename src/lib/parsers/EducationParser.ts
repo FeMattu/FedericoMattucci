@@ -1,7 +1,7 @@
 import Education, { Studies, Course, Certification, Degree } from "../interfaces/Education";
 import ParseDate from "./DateParser";
 import ParseLocation from "./LocationParser";
-import { cleanValue } from "../utils";
+import { cleanValue } from "../utils/utils";
 import { TFunction } from "../../hooks/useTranslationsSafe";
 
 export default function ParseEducation(rawEducation: Education, t: TFunction): Education {

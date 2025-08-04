@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { TFunction } from "../hooks/useTranslationsSafe";
+import { TFunction } from "../../hooks/useTranslationsSafe";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -25,3 +25,6 @@ export function devLog(...args: any[]) {
     console.log(...args);
   }
 };
+
+
+

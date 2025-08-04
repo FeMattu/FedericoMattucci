@@ -4,7 +4,7 @@ import { useTranslation } from "./useTranslationsSafe";
 import { useCache } from "@/providers/CacheProvider";
 import ParseUserData from "@/lib/parsers/UserDataParser";
 import type UserData from "@/lib/interfaces/UserData";
-import { devLog } from "@/lib/utils";
+import { devLog } from "@/lib/utils/utils";
 
 export function useUserData(locale: string) {
   const [data, setData] = useState<UserData | null>(null);
