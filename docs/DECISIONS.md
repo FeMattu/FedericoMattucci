@@ -13,3 +13,4 @@
 6. **Auth provider**: Auth.js v5 with GitHub OAuth and an `ADMIN_EMAIL` allowlist (simplest; no
    passwords to store). Adapter: Prisma.
 7. **Graphify**: installed from Graphify-Labs/graphify (`pip install --user graphifyy`, `graphify install --platform claude`); run via CLI because the skill was not registered until the next reload. Docs at `docs/graphify-before/`.
+- jsdom pinned ^29: jsdom 31 needs Node >=22.22 (machine has 22.14)

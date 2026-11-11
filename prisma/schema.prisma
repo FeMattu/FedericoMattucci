@@ -1,0 +1,251 @@
+// Personal site schema. Additive only: never drop columns/tables holding content.
+// Translatable text is a JSON map { "<locale>": "<text>" } resolved with fallback
+// to the default locale (src/lib/i18n/localized.ts).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  DRAFT
+  PUBLISHED
+}
+
+// ---------------------------------------------------------------- Auth.js
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+// ---------------------------------------------------------------- i18n
+
+model Locale {
+  code      String   @id // "it", "en", ...
+  name      String // native name, e.g. "Italiano"
+  isDefault Boolean  @default(false)
+  enabled   Boolean  @default(true)
+  position  Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+/// Free-form translatable site texts: hero.tagline, bio, footer, seo.*, ...
+model SiteText {
+  key       String   @id
+  value     Json // { "it": "...", "en": "..." }
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------- CV content
+
+model Experience {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  organization String
+  role         Json
+  location     String?
+  summary      Json
+  description  Json?
+  highlights   Json? // { "it": ["..."], "en": ["..."] }
+  startDate    DateTime @db.Date
+  endDate      DateTime? @db.Date
+  url          String?
+  tags         String[]
+  featured     Boolean  @default(true)
+  status       Status   @default(PUBLISHED)
+  position     Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([status, position])
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  institution String
+  title       Json
+  location    String?
+  summary     Json?
+  description Json?
+  highlights  Json?
+  startDate   DateTime @db.Date
+  endDate     DateTime? @db.Date
+  url         String?
+  status      Status   @default(PUBLISHED)
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status, position])
+}
+
+model Certification {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  name      Json
+  issuer    String?
+  issuedAt  DateTime? @db.Date
+  url       String?
+  status    Status    @default(PUBLISHED)
+  position  Int       @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model SkillCategory {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      Json
+  status    Status   @default(PUBLISHED)
+  position  Int      @default(0)
+  skills    Skill[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Skill {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  name        String
+  level       Int           @default(3) // 1..5, shown as dots
+  years       Int?
+  description Json?
+  categoryId  String
+  category    SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  status      Status        @default(PUBLISHED)
+  position    Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([categoryId, position])
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       Json
+  summary     Json
+  description Json?
+  coverKey    String? // S3 key
+  gallery     String[] // S3 keys
+  tags        String[]
+  liveUrl     String?
+  repoUrl     String?
+  startDate   DateTime? @db.Date
+  featured    Boolean  @default(false)
+  status      Status   @default(PUBLISHED)
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status, position])
+}
+
+model SocialLink {
+  id        String   @id @default(cuid())
+  kind      String // github, linkedin, instagram, email, phone, ...
+  label     String?
+  url       String
+  status    Status   @default(PUBLISHED)
+  position  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------- Photos
+
+model Album {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       Json
+  description Json?
+  coverPhotoId String?
+  status      Status   @default(PUBLISHED)
+  position    Int      @default(0)
+  photos      Photo[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Photo {
+  id          String    @id @default(cuid())
+  key         String    @unique // S3 key; sidecar metadata lives next to it
+  albumId     String?
+  album       Album?    @relation(fields: [albumId], references: [id], onDelete: SetNull)
+  title       Json?
+  description Json?
+  alt         Json?
+  place       String?
+  takenAt     DateTime?
+  width       Int?
+  height      Int?
+  blurDataUrl String?
+  exif        Json? // aperture, exposureTime, iso, make, model, lensModel
+  tags        String[]
+  featured    Boolean   @default(false)
+  status      Status    @default(PUBLISHED)
+  position    Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([albumId, position])
+  @@index([status, featured])
+}
+
+// ---------------------------------------------------------------- Contact
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  body      String
+  locale    String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
