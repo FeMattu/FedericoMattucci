@@ -90,3 +90,36 @@ export function albumSlugFromKey(key: string, prefix: string): string | null {
   const parts = rest.split('/')
   return parts.length > 1 ? (parts[0] ?? null) : null
 }
+
+/** 0.004 s -> "1/250", 2 s -> "2". */
+export function formatExposureSeconds(seconds: unknown): string | undefined {
+  if (typeof seconds !== 'number' || !Number.isFinite(seconds) || seconds <= 0) return undefined
+  return seconds < 1 ? `1/${Math.round(1 / seconds)}` : String(Math.round(seconds * 10) / 10)
+}
+
+/**
+ * Maps what exifr extracts from the image bytes (numeric EXIF values, run with
+ * `reviveValues: false` so the date stays a string) to the stored shape.
+ */
+export function fromExifr(raw: unknown): { takenAt?: Date; exif: PhotoExif } {
+  const data = record(raw)
+  const iso = Array.isArray(data.ISO) ? data.ISO[0] : data.ISO
+  const fNumber = typeof data.FNumber === 'number' && data.FNumber > 0 ? data.FNumber : undefined
+  const focal = typeof data.FocalLength === 'number' && data.FocalLength > 0 ? data.FocalLength : undefined
+  const latitude = typeof data.latitude === 'number' ? data.latitude : undefined
+  const longitude = typeof data.longitude === 'number' ? data.longitude : undefined
+
+  return {
+    takenAt: parseExifDate(data.DateTimeOriginal ?? data.CreateDate),
+    exif: {
+      make: text(data.Make),
+      model: text(data.Model),
+      lensModel: text(data.LensModel),
+      aperture: fNumber !== undefined ? `f/${Math.round(fNumber * 10) / 10}` : undefined,
+      exposureTime: formatExposureSeconds(data.ExposureTime),
+      iso: positiveInt(iso),
+      focalLength: focal !== undefined ? String(Math.round(focal * 10) / 10) : undefined,
+      ...(latitude !== undefined && longitude !== undefined ? { gps: { latitude, longitude } } : {}),
+    },
+  }
+}

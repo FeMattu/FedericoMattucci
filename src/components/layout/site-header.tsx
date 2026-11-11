@@ -5,6 +5,7 @@ import NextLink from 'next/link'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 import { LanguageSwitcher } from '@/components/layout/language-switcher'
+import { useIsAdmin } from '@/components/layout/use-is-admin'
 import { ThemeToggle } from '@/components/layout/theme-toggle'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
@@ -37,13 +38,14 @@ function useActiveSection(enabled: boolean): NavSection | null {
 }
 
 export function SiteHeader({
-  isAdmin = false,
+  isAdmin: isAdminProp = false,
   sections = NAV_SECTIONS,
 }: {
   isAdmin?: boolean
   sections?: readonly NavSection[]
 }) {
   const t = useTranslations('nav')
+  const isAdmin = useIsAdmin() || isAdminProp
   const pathname = usePathname()
   const isHome = pathname === '/'
   const active = useActiveSection(isHome)

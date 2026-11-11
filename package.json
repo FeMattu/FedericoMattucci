@@ -11,14 +11,15 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run --project unit",
     "test:integration": "vitest run --project integration",
-    "test:coverage": "vitest run --project unit --coverage",
+    "test:coverage": "vitest run --project unit --project integration --coverage",
     "test:e2e": "playwright test",
     "format": "prettier --write .",
     "db:migrate": "prisma migrate deploy && prisma generate",
     "db:migration": "prisma migrate dev --create-only --name",
     "db:seed": "prisma db seed",
     "postinstall": "prisma generate",
-    "photos:import": "tsx --env-file=.env.local scripts/import-photos.ts"
+    "photos:import": "tsx --env-file=.env.local scripts/import-photos.ts",
+    "test:all": "vitest run --project unit --project integration"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.3",

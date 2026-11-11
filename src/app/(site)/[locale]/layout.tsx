@@ -5,6 +5,7 @@ import { GeistSans } from 'geist/font/sans'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
+import { AdminToolbar } from '@/components/layout/admin-toolbar'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { SiteHeader } from '@/components/layout/site-header'
 import { ThemeProvider } from '@/components/providers/theme-provider'
@@ -59,6 +60,7 @@ export default async function LocaleLayout({ children, params }: Props) {
               <SiteHeader sections={sections} />
               <main id="main">{children}</main>
               <SiteFooter />
+              <AdminToolbar />
               <Toaster />
             </TooltipProvider>
           </NextIntlClientProvider>

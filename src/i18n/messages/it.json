@@ -115,6 +115,7 @@
     "dashboard": "Dashboard",
     "signOut": "Esci",
     "editMode": "Modalità modifica",
-    "viewSite": "Vedi il sito"
+    "viewSite": "Vedi il sito",
+    "editThis": "Modifica questa pagina"
   }
 }
