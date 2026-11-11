@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "siteName": "Federico Mattucci",
+    "defaultDescription": "Sito personale di Federico Mattucci: laureato in Informatica, studente di Laurea Magistrale in AI, sviluppatore full-stack e fotografo."
+  },
+  "nav": {
+    "home": "Home", "experience": "Esperienze", "education": "Formazione", "skills": "Competenze",
+    "projects": "Progetti", "photos": "Foto", "contact": "Contatti", "admin": "Admin",
+    "menu": "Apri il menu", "closeMenu": "Chiudi il menu", "skipToContent": "Vai al contenuto",
+    "language": "Lingua", "theme": "Tema", "light": "Chiaro", "dark": "Scuro", "system": "Sistema",
+    "primary": "Navigazione principale"
+  },
+  "hero": { "greeting": "Ciao, sono", "contactMe": "Contattami", "downloadCv": "Scarica il CV", "viewPortfolio": "Vedi il portfolio" },
+  "sections": {
+    "experience": "Esperienze", "education": "Formazione", "skills": "Competenze",
+    "projects": "Progetti in evidenza", "photos": "Fotografia", "contact": "Contatti",
+    "certifications": "Certificazioni", "about": "Chi sono"
+  },
+  "common": {
+    "present": "Presente", "viewAll": "Vedi tutto", "viewDetails": "Vedi dettagli", "back": "Indietro",
+    "live": "Sito online", "repo": "Codice sorgente", "technologies": "Tecnologie",
+    "responsibilities": "Responsabilità", "period": "Periodo", "location": "Luogo", "links": "Link",
+    "all": "Tutti", "empty": "Ancora niente qui.", "notFoundTitle": "Pagina non trovata",
+    "notFoundText": "La pagina che cerchi non esiste.", "errorTitle": "Qualcosa è andato storto",
+    "errorText": "Riprova.", "retry": "Riprova", "goHome": "Torna alla home", "loading": "Caricamento"
+  },
+  "skills": { "level": "Livello {level} su 5", "years": "{years} anni", "usedIn": "Usata in" },
+  "projects": { "filterByTag": "Filtra per tecnologia", "gallery": "Galleria", "goals": "Sul progetto" },
+  "photos": {
+    "albums": "Album", "allPhotos": "Tutte le foto", "filterByAlbum": "Album", "filterByTag": "Tag",
+    "open": "Apri la foto", "close": "Chiudi", "previous": "Foto precedente", "next": "Foto successiva",
+    "details": "Dettagli", "camera": "Fotocamera", "lens": "Obiettivo", "settings": "Impostazioni",
+    "date": "Data", "place": "Luogo", "dimensions": "Dimensioni", "counter": "{current} di {total}"
+  },
+  "contact": {
+    "intro": "Hai un progetto in mente o vuoi solo salutare? Scrivimi.",
+    "name": "Nome", "email": "Email", "subject": "Oggetto", "message": "Messaggio",
+    "send": "Invia messaggio", "sending": "Invio in corso…", "success": "Messaggio inviato. Grazie!",
+    "error": "Impossibile inviare il messaggio. Riprova.",
+    "rateLimited": "Troppi messaggi. Riprova più tardi.",
+    "invalidName": "Inserisci il tuo nome", "invalidEmail": "Inserisci un'email valida",
+    "invalidMessage": "Il messaggio deve contenere almeno 10 caratteri"
+  },
+  "footer": { "rights": "Tutti i diritti riservati.", "builtWith": "Realizzato con Next.js" },
+  "admin": { "title": "Admin", "dashboard": "Dashboard", "signOut": "Esci", "editMode": "Modalità modifica", "viewSite": "Vedi il sito" }
+}
