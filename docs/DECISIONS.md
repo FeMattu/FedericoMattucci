@@ -12,4 +12,4 @@
 5. **Versions**: exact versions from the brief are tried first; anything unresolvable is listed here.
 6. **Auth provider**: Auth.js v5 with GitHub OAuth and an `ADMIN_EMAIL` allowlist (simplest; no
    passwords to store). Adapter: Prisma.
-7. **Graphify**: repo not indexed; architecture docs written by hand.
+7. **Graphify**: installed from Graphify-Labs/graphify (`pip install --user graphifyy`, `graphify install --platform claude`); run via CLI because the skill was not registered until the next reload. Docs at `docs/graphify-before/`.
