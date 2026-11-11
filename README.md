@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Federico Mattucci: personal website
 
-## Getting Started
+A minimal, bilingual (Italian / English) personal site: CV-style home, projects, skills, a photo portfolio, a
+contact form, and an in-site admin to edit everything.
 
-First, run the development server:
+**Stack:** Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · shadcn/ui · Prisma + PostgreSQL ·
+Auth.js v5 · next-intl · zod · S3 + CloudFront for images.
+
+## Quick start
 
 ```bash
+npm install
+cp .env.example .env.local      # fill in the values
+npx prisma migrate deploy
+npm run db:seed                 # CV content, idempotent
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A local Postgres, GitHub OAuth app, S3/CloudFront and Vercel setup are explained in
+[`docs/DEPLOY.md`](docs/DEPLOY.md).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How it works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Public site** (`src/app/(site)/[locale]`): statically generated from the database, refreshed on every admin save
+  and at most every 5 minutes. Top navigation only; no sidebar.
+- **Admin** (`src/app/(admin)`, `/admin`): the only place with a sidebar. Sign-in with GitHub, restricted to
+  `ADMIN_EMAIL`; every page and server action re-checks the session.
+- **Content** is stored per language (`{ "it": "...", "en": "..." }`) and falls back to the default language.
+- **Images** live in S3 and are served through CloudFront with short-lived signed URLs generated server-side.
+- **Layers:** pages and server actions -> services -> repositories (the only Prisma users) -> pure domain code in
+  `src/lib`.
 
-## Learn More
+```
+src/
+  app/(site)/[locale]/   public pages          app/(admin)/   login + admin
+  actions/               server actions        components/    UI (ui/ = shadcn, never hand-edited)
+  lib/                   domain code, repositories, content, uploads, auth
+  i18n/                  routing + messages (it, en)
+prisma/                  schema, additive migrations, idempotent seed
+tests/                   unit, integration (test DB), e2e (Playwright)
+docs/                    architecture, decisions, deploy, changelog
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Command                    | Does                                                        |
+| -------------------------- | ----------------------------------------------------------- |
+| `npm run dev`              | development server                                          |
+| `npm run build`            | `prisma generate` + `next build`                            |
+| `npm run lint` / `typecheck` | ESLint / `tsc --noEmit`                                   |
+| `npm test`                 | unit and component tests                                    |
+| `npm run test:integration` | actions and services on the `site_test` database            |
+| `npm run test:coverage`    | everything with coverage (threshold 80%)                    |
+| `npm run test:e2e`         | Playwright flows on a production build                      |
+| `npm run db:seed`          | idempotent seed from the CV                                 |
+| `npm run photos:import`    | import the S3 photo library (`-- --dry` to preview)         |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Documentation
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [`docs/CHANGELOG-REDESIGN.md`](docs/CHANGELOG-REDESIGN.md): what changed and how to test it
+- [`docs/DEPLOY.md`](docs/DEPLOY.md): environment variables, Vercel, S3 CORS, local setup, rollback
+- [`docs/CONTENT_MAPPING.md`](docs/CONTENT_MAPPING.md): where each piece of content comes from
+- [`docs/DECISIONS.md`](docs/DECISIONS.md): choices made where the brief was ambiguous
+- [`docs/issues-found.md`](docs/issues-found.md): problems of the old site and their status
+- `docs/architecture-before.md` / `architecture-after.md`: Graphify maps of the code
+- [`CLAUDE.md`](CLAUDE.md): conventions for working on this repository with Claude Code
