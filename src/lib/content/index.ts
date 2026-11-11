@@ -2,6 +2,7 @@ import 'server-only'
 import { getTranslations } from 'next-intl/server'
 import { cache } from 'react'
 import { contentRepository as repo } from '@/lib/db/repositories/content'
+import { photosRepository } from '@/lib/db/repositories/photos'
 import { localize } from '@/lib/i18n/localized'
 import { NAV_SECTIONS, type NavSection } from '@/lib/navigation'
 import {
@@ -71,8 +72,10 @@ export const getProject = cache(async (locale: string, slug: string) => {
 
 /** Top-bar sections that actually have published content (projects/photos hide when empty). */
 export const getNavSections = cache(async (): Promise<NavSection[]> => {
-  const projects = await repo.projects()
-  return NAV_SECTIONS.filter((id) => id !== 'projects' || projects.length > 0)
+  const [projects, photos] = await Promise.all([repo.projects(), photosRepository.photos()])
+  return NAV_SECTIONS.filter(
+    (id) => (id !== 'projects' || projects.length > 0) && (id !== 'photos' || photos.length > 0),
+  )
 })
 
 export async function listSlugs() {

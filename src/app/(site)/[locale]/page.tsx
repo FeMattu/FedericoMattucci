@@ -7,7 +7,9 @@ import { Section } from '@/components/home/section'
 import { SkillsSection } from '@/components/home/skills-section'
 import { TimelineCard } from '@/components/home/timeline-card'
 import { Badge } from '@/components/ui/badge'
+import { PhotosPreview } from '@/components/home/photos-preview'
 import { getHomeContent } from '@/lib/content'
+import { getPhotosContent } from '@/lib/content/photos'
 import { cdnUrls } from '@/lib/storage/cdn'
 
 type Props = { params: Promise<{ locale: string }> }
@@ -25,7 +27,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function HomePage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
-  const [t, content] = await Promise.all([getTranslations('sections'), getHomeContent(locale)])
+  const [t, content, { photos }] = await Promise.all([
+    getTranslations('sections'),
+    getHomeContent(locale),
+    getPhotosContent(locale),
+  ])
   const { texts } = content
   const coverUrls = cdnUrls(content.projects.map((p) => p.coverKey))
 
@@ -100,6 +106,12 @@ export default async function HomePage({ params }: Props) {
       {content.projects.length > 0 && (
         <Section id="projects" title={t('projects')}>
           <ProjectsSection projects={content.projects} tags={content.projectTags} coverUrls={coverUrls} />
+        </Section>
+      )}
+
+      {photos.length > 0 && (
+        <Section id="photos" title={t('photos')}>
+          <PhotosPreview photos={photos} />
         </Section>
       )}
 

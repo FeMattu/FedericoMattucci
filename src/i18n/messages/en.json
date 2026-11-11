@@ -4,43 +4,117 @@
     "defaultDescription": "Personal website of Federico Mattucci: CS graduate, MSc AI student, full-stack developer and photographer."
   },
   "nav": {
-    "home": "Home", "experience": "Experience", "education": "Education", "skills": "Skills",
-    "projects": "Projects", "photos": "Photos", "contact": "Contact", "admin": "Admin",
-    "menu": "Open menu", "closeMenu": "Close menu", "skipToContent": "Skip to content",
-    "language": "Language", "theme": "Theme", "light": "Light", "dark": "Dark", "system": "System",
+    "home": "Home",
+    "experience": "Experience",
+    "education": "Education",
+    "skills": "Skills",
+    "projects": "Projects",
+    "photos": "Photos",
+    "contact": "Contact",
+    "admin": "Admin",
+    "menu": "Open menu",
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to content",
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
     "primary": "Main navigation"
   },
-  "hero": { "greeting": "Hi, I'm", "contactMe": "Contact me", "downloadCv": "Download CV", "viewPortfolio": "View portfolio" },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "contactMe": "Contact me",
+    "downloadCv": "Download CV",
+    "viewPortfolio": "View portfolio"
+  },
   "sections": {
-    "experience": "Experience", "education": "Education", "skills": "Skills",
-    "projects": "Featured projects", "photos": "Photography", "contact": "Contact",
-    "certifications": "Certifications", "about": "About"
+    "experience": "Experience",
+    "education": "Education",
+    "skills": "Skills",
+    "projects": "Featured projects",
+    "photos": "Photography",
+    "contact": "Contact",
+    "certifications": "Certifications",
+    "about": "About"
   },
   "common": {
-    "present": "Present", "viewAll": "View all", "viewDetails": "View details", "back": "Back",
-    "live": "Live site", "repo": "Source code", "technologies": "Technologies",
-    "responsibilities": "Responsibilities", "period": "Period", "location": "Location", "links": "Links",
-    "all": "All", "empty": "Nothing here yet.", "notFoundTitle": "Page not found",
-    "notFoundText": "The page you are looking for does not exist.", "errorTitle": "Something went wrong",
-    "errorText": "Please try again.", "retry": "Try again", "goHome": "Back to home", "loading": "Loading"
+    "present": "Present",
+    "viewAll": "View all",
+    "viewDetails": "View details",
+    "back": "Back",
+    "live": "Live site",
+    "repo": "Source code",
+    "technologies": "Technologies",
+    "responsibilities": "Responsibilities",
+    "period": "Period",
+    "location": "Location",
+    "links": "Links",
+    "all": "All",
+    "empty": "Nothing here yet.",
+    "notFoundTitle": "Page not found",
+    "notFoundText": "The page you are looking for does not exist.",
+    "errorTitle": "Something went wrong",
+    "errorText": "Please try again.",
+    "retry": "Try again",
+    "goHome": "Back to home",
+    "loading": "Loading"
   },
-  "skills": { "level": "Level {level} of 5", "years": "{years} years", "usedIn": "Used in" },
-  "projects": { "filterByTag": "Filter by technology", "gallery": "Gallery", "goals": "About the project" },
+  "skills": {
+    "level": "Level {level} of 5",
+    "years": "{years} years",
+    "usedIn": "Used in"
+  },
+  "projects": {
+    "filterByTag": "Filter by technology",
+    "gallery": "Gallery",
+    "goals": "About the project"
+  },
   "photos": {
-    "albums": "Albums", "allPhotos": "All photos", "filterByAlbum": "Album", "filterByTag": "Tag",
-    "open": "Open photo", "close": "Close", "previous": "Previous photo", "next": "Next photo",
-    "details": "Details", "camera": "Camera", "lens": "Lens", "settings": "Settings", "date": "Date",
-    "place": "Place", "dimensions": "Dimensions", "counter": "{current} of {total}"
+    "albums": "Albums",
+    "allPhotos": "All photos",
+    "filterByAlbum": "Album",
+    "filterByTag": "Tag",
+    "open": "Open photo",
+    "close": "Close",
+    "previous": "Previous photo",
+    "next": "Next photo",
+    "details": "Details",
+    "camera": "Camera",
+    "lens": "Lens",
+    "settings": "Settings",
+    "date": "Date",
+    "place": "Place",
+    "dimensions": "Dimensions",
+    "counter": "{current} of {total}",
+    "photoAlt": "Photograph",
+    "info": "Photo details",
+    "empty": "No photos yet."
   },
   "contact": {
     "intro": "Have a project in mind or just want to say hi? Write to me.",
-    "name": "Name", "email": "Email", "subject": "Subject", "message": "Message",
-    "send": "Send message", "sending": "Sending…", "success": "Message sent. Thank you!",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send message",
+    "sending": "Sending…",
+    "success": "Message sent. Thank you!",
     "error": "Could not send the message. Please try again.",
     "rateLimited": "Too many messages. Please try again later.",
-    "invalidName": "Please enter your name", "invalidEmail": "Please enter a valid email",
+    "invalidName": "Please enter your name",
+    "invalidEmail": "Please enter a valid email",
     "invalidMessage": "The message must be at least 10 characters"
   },
-  "footer": { "rights": "All rights reserved.", "builtWith": "Built with Next.js" },
-  "admin": { "title": "Admin", "dashboard": "Dashboard", "signOut": "Sign out", "editMode": "Edit mode", "viewSite": "View site" }
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Next.js"
+  },
+  "admin": {
+    "title": "Admin",
+    "dashboard": "Dashboard",
+    "signOut": "Sign out",
+    "editMode": "Edit mode",
+    "viewSite": "View site"
+  }
 }

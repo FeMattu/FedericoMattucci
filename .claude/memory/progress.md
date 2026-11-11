@@ -21,4 +21,8 @@ Avoid apostrophes inside bash heredocs; use Write tool for JSON/text with quotes
 - [x] Migrations: init + skill_level_optional applied. Seed (prisma/seed.ts + seed-data.ts) idempotent, verified, preserves edits.
 - [x] Content layer: repositories/content.ts, lib/content (view mappers + getHomeContent etc.), lib/storage (signing + cdn)
 - [x] Public pages: home (hero, experience, education+certs, skills tabs, projects filter, contact links), detail routes experience/education/projects, 404/error, catch-all, sitemap, robots. 45 unit tests, build 26 static pages.
-- [ ] NEXT: photos (S3 import script -> Photo rows, masonry grid, lightbox, albums/tags), contact form (zod, honeypot, rate limit, Resend, DB), delete insecure /api/image + /api/images-list, JSON-LD; then Auth.js + /admin; integration tests (DATABASE_URL_TEST); e2e; docs
+- [x] Photos done: import script (npm run photos:import, 15 photos imported), photo view/format libs, gallery+lightbox, /photos, home strip, old /api/image + /api/images-list REMOVED, env() now per-group (env("storage")).
+- [ ] NEXT: contact form -> Auth.js + /admin -> tests/e2e/coverage -> docs
+- USER ORDER (2026-11-11): autopilot, NO stopping between phases; full permission (push feat/site-redesign ok). Finish all: photos -> contact -> auth+admin(CRUD, dnd-kit, S3 upload, languages) -> tests/e2e/coverage -> docs (CHANGELOG-REDESIGN, DEPLOY, CONTENT_MAPPING, PR.md, architecture-after via `python -m graphify update src`).
+- Photos plan: lib/photos/metadata.ts (parse sidecar), repositories/photos.ts, lib/content/photos.ts, components/photos (gallery+lightbox), /[locale]/photos, home featured section, scripts/import-photos.ts (tsx --env-file=.env.local), then git rm src/app/api/image/route.ts + images-list.
+- Kill test servers with PowerShell Get-NetTCPConnection (pkill does not work on Windows).

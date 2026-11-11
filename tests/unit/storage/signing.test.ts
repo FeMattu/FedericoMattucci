@@ -29,6 +29,12 @@ describe('resourceUrl', () => {
   it('joins without duplicate slashes', () => {
     expect(resourceUrl('https://cdn.example.com/', '/portfolio/a.jpg')).toBe('https://cdn.example.com/portfolio/a.jpg')
   })
+
+  it('percent-encodes each segment so names with spaces and brackets are valid URLs', () => {
+    expect(resourceUrl('https://cdn.example.com', 'portfolio/portrait/DSC 02454 (1).jpg')).toBe(
+      'https://cdn.example.com/portfolio/portrait/DSC%2002454%20(1).jpg',
+    )
+  })
 })
 
 describe('isSafeKey', () => {

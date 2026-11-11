@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseEnv } from '@/env'
+import { parseEnv, parseEnvGroup } from '@/env'
 
 const valid = {
   DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
@@ -32,5 +32,25 @@ describe('parseEnv', () => {
     } catch (error) {
       expect(String(error)).not.toContain('short')
     }
+  })
+})
+
+describe('parseEnvGroup', () => {
+  const storageOnly = {
+    AWS_REGION: 'eu-west-1',
+    AWS_ACCESS_KEY_ID: 'key',
+    AWS_SECRET_ACCESS_KEY: 'secret',
+    AWS_S3_BUCKET: 'bucket',
+    CLOUDFRONT_URL: 'https://cdn.example.com',
+    CLOUDFRONT_KEY_PAIR_ID: 'kp',
+    CLOUDFRONT_PRIVATE_KEY: 'pem',
+  }
+
+  it('validates a group without needing the other groups (build-time photo signing)', () => {
+    expect(parseEnvGroup('storage', storageOnly).AWS_S3_BUCKET).toBe('bucket')
+  })
+
+  it('names the group and the missing variables', () => {
+    expect(() => parseEnvGroup('auth', {})).toThrow(/\(auth\).*AUTH_SECRET.*ADMIN_EMAIL/)
   })
 })

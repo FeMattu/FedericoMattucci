@@ -10,7 +10,7 @@ import { isSafeKey, normalizePrivateKey, resourceUrl, signedUrlExpiry } from './
  */
 export function cdnUrl(key: string, now: Date = new Date()): string {
   if (!isSafeKey(key)) throw new Error('Unsafe storage key')
-  const e = env()
+  const e = env('storage')
   return getSignedUrl({
     url: resourceUrl(e.CLOUDFRONT_URL, key),
     keyPairId: e.CLOUDFRONT_KEY_PAIR_ID,

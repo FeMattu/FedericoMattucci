@@ -24,7 +24,12 @@ export function normalizePrivateKey(raw: string): string {
 
 /** Joins the CDN base URL and an object key without double slashes. */
 export function resourceUrl(base: string, key: string): string {
-  return `${base.replace(/\/+$/, '')}/${key.replace(/^\/+/, '')}`
+  const path = key
+    .replace(/^\/+/, '')
+    .split('/')
+    .map(encodeURIComponent)
+    .join('/')
+  return `${base.replace(/\/+$/, '')}/${path}`
 }
 
 /** Object keys accepted from the database: no traversal, no scheme, no empty segments. */
