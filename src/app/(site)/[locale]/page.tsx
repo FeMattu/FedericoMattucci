@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { ContactForm } from '@/components/home/contact-form'
 import { ContactSection } from '@/components/home/contact-section'
 import { Hero } from '@/components/home/hero'
 import { ProjectsSection } from '@/components/home/projects-section'
@@ -116,7 +117,9 @@ export default async function HomePage({ params }: Props) {
       )}
 
       <Section id="contact" title={t('contact')}>
-        <ContactSection socials={content.socials} />
+        <ContactSection socials={content.socials}>
+          <ContactForm />
+        </ContactSection>
       </Section>
     </>
   )

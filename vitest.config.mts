@@ -2,7 +2,12 @@ import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import path from 'node:path'
 
-const alias = { '@': path.resolve('src'), '@tests': path.resolve('tests') }
+const alias = {
+  '@': path.resolve('src'),
+  '@tests': path.resolve('tests'),
+  // `server-only` throws outside the Next bundler; tests import server modules directly.
+  'server-only': path.resolve('tests/stubs/server-only.ts'),
+}
 
 export default defineConfig({
   plugins: [react()],

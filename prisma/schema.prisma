@@ -246,6 +246,11 @@ model Message {
   subject   String?
   body      String
   locale    String?
+  /// sha256 of the sender IP (+ server secret): rate limiting without storing raw IPs.
+  ipHash    String?
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
+
+  @@index([ipHash, createdAt])
+  @@index([createdAt])
 }

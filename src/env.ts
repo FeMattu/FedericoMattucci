@@ -26,6 +26,8 @@ const groups = {
   mail: z.object({
     RESEND_API_KEY: z.string().optional(),
     CONTACT_TO_EMAIL: z.string().email().optional(),
+    /** Verified Resend sender; defaults to Resend's onboarding address. */
+    CONTACT_FROM_EMAIL: z.string().optional(),
   }),
   site: z.object({ NEXT_PUBLIC_SITE_URL: z.string().url().default('http://localhost:3000') }),
 }
