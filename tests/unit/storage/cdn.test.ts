@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { cdnUrl, cdnUrls } from '@/lib/storage/cdn'
 import { signedUrlExpiry } from '@/lib/storage/signing'
 
@@ -23,6 +23,24 @@ describe('cdnUrl', () => {
 
   it.each(['../secret', '/abs.jpg', 'https://evil.com/x', 'a//b', ''])('refuses the unsafe key %j', (key) => {
     expect(() => cdnUrl(key, now)).toThrow('Unsafe storage key')
+  })
+})
+
+describe('cdnUrls when signing is broken', () => {
+  it('skips the key and logs, instead of throwing', async () => {
+    const original = process.env.CLOUDFRONT_PRIVATE_KEY
+    process.env.CLOUDFRONT_PRIVATE_KEY = 'not-a-real-key'
+    vi.resetModules()
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {})
+    try {
+      const { cdnUrls: broken } = await import('@/lib/storage/cdn')
+      expect(broken(['portfolio/a.jpg'])).toEqual({})
+      expect(error).toHaveBeenCalled()
+    } finally {
+      process.env.CLOUDFRONT_PRIVATE_KEY = original
+      error.mockRestore()
+      vi.resetModules()
+    }
   })
 })
 

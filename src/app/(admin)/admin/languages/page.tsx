@@ -1,7 +1,7 @@
 import { LanguagesManager } from '@/components/admin/languages-manager'
 import { locales as uiLocales } from '@/i18n/config'
 import { RESOURCES, RESOURCE_KEYS } from '@/lib/admin/resources'
-import { SITE_TEXT_FIELDS } from '@/lib/admin/site-texts'
+import { SITE_IMAGE_KEYS, SITE_TEXT_FIELDS } from '@/lib/admin/site-texts'
 import { missingTranslations, sumCounts } from '@/lib/admin/translation-status'
 import { requireAdmin } from '@/lib/auth/session'
 import { adminRepository as repo } from '@/lib/db/repositories/admin'
@@ -20,7 +20,7 @@ export default async function LanguagesPage() {
   // Site texts are keyed rows holding one translatable value each.
   const siteMissing = missingTranslations(
     { ...RESOURCES.experience, fields: [{ name: 'value', label: 'value', type: 'localized' }] },
-    siteTexts.filter((t) => SITE_TEXT_FIELDS.some((f) => f.key === t.key)),
+    siteTexts.filter((t) => SITE_TEXT_FIELDS.some((f) => f.key === t.key) && !SITE_IMAGE_KEYS.includes(t.key)),
     codes,
     defaultLocale,
   )

@@ -4,6 +4,8 @@ import createNextIntlPlugin from 'next-intl/plugin'
 const cloudfront = process.env.CLOUDFRONT_URL ? new URL(process.env.CLOUDFRONT_URL).hostname : undefined
 
 const nextConfig: NextConfig = {
+  // The E2E suite builds into its own folder (scripts/e2e-server.mjs).
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   poweredByHeader: false,
   images: {
     formats: ['image/avif', 'image/webp'],

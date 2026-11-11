@@ -12,11 +12,12 @@ import { PhotosPreview } from '@/components/home/photos-preview'
 import { getHomeContent } from '@/lib/content'
 import { getPhotosContent } from '@/lib/content/photos'
 import { cdnUrls } from '@/lib/storage/cdn'
+import { isProfileKey } from '@/lib/uploads/validate'
 
 type Props = { params: Promise<{ locale: string }> }
 
-/** Static page, refreshed daily (signed image URLs) and on every admin save. */
-export const revalidate = 86400
+/** Static page, refreshed every 5 minutes and on every admin save (signed image URLs stay valid for 8 days). */
+export const revalidate = 300
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
@@ -34,7 +35,8 @@ export default async function HomePage({ params }: Props) {
     getPhotosContent(locale),
   ])
   const { texts } = content
-  const coverUrls = cdnUrls(content.projects.map((p) => p.coverKey))
+  const avatarKey = isProfileKey(texts['hero.avatar']) ? texts['hero.avatar'] : undefined
+  const coverUrls = cdnUrls([...content.projects.map((p) => p.coverKey), avatarKey])
 
   return (
     <>
@@ -44,6 +46,7 @@ export default async function HomePage({ params }: Props) {
         bio={texts['about.bio'] ?? ''}
         cvUrl={texts['cv.url'] ?? ''}
         hasProjects={content.projects.length > 0}
+        avatarUrl={avatarKey ? coverUrls[avatarKey] : undefined}
       />
 
       {content.experiences.length > 0 && (

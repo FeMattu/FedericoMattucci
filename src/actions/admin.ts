@@ -1,11 +1,11 @@
 'use server'
 
 import { Prisma } from '@prisma/client'
-import { revalidatePath } from 'next/cache'
 import { RESOURCES, isResourceKey, type ResourceKey } from '@/lib/admin/resources'
 import { buildSchema, toPrismaData } from '@/lib/admin/schema'
 import { UnauthorizedError, assertAdmin } from '@/lib/auth/session'
 import { adminRepository as repo } from '@/lib/db/repositories/admin'
+import { revalidateSite } from '@/lib/revalidate'
 
 export type ActionError = 'unauthorized' | 'notFound' | 'validation' | 'conflict' | 'failed'
 export type ActionResult<T = undefined> =
@@ -27,11 +27,6 @@ async function authorize(): Promise<ActionResult<never> | null> {
 
 function resolve(resource: string): ResourceKey | null {
   return isResourceKey(resource) ? resource : null
-}
-
-/** Public pages are static: refresh all of them after any content change. */
-function revalidateSite() {
-  revalidatePath('/', 'layout')
 }
 
 function mapError(error: unknown): ActionError {

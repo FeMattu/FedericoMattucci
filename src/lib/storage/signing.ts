@@ -4,7 +4,7 @@
  * Signed URLs end up inside statically generated pages, so they must (a) stay
  * valid until the page is revalidated and (b) stay identical between renders
  * so the Next image cache keeps hitting. Hence: the expiry is rounded to a UTC
- * day boundary and valid for `days` days (pages revalidate daily).
+ * day boundary and valid for `days` days (pages revalidate every few minutes).
  */
 export const SIGNED_URL_DAYS = 8
 

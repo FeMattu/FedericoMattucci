@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
 import type { FieldDef } from '@/lib/admin/resources'
 import { fieldErrorText } from '@/lib/admin/messages'
+import type { UploadPurpose } from '@/lib/uploads/validate'
 
 export type LocaleOption = { code: string; name: string; isDefault: boolean }
 
@@ -179,6 +180,7 @@ export function ImageField({
   field,
   value,
   previewUrl,
+  purpose = 'project',
   onChange,
   error,
 }: {
@@ -187,6 +189,8 @@ export function ImageField({
   value: string
   /** Signed URL of the stored image (computed on the server). */
   previewUrl?: string
+  /** Where uploads go in the bucket. */
+  purpose?: UploadPurpose
   onChange: (key: string) => void
   error?: string
 }) {
@@ -198,7 +202,7 @@ export function ImageField({
   const onFile = async (file: File | undefined) => {
     if (!file) return
     setBusy(true)
-    const result = await uploadToStorage(file, 'project')
+    const result = await uploadToStorage(file, purpose)
     setBusy(false)
     if (!result.ok) return void toast.error(result.error)
     setLocalPreview(URL.createObjectURL(file))

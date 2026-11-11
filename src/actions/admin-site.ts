@@ -1,11 +1,12 @@
 'use server'
 
 import { Prisma } from '@prisma/client'
-import { revalidatePath } from 'next/cache'
-import { isSiteTextKey, isValidLocaleCode } from '@/lib/admin/site-texts'
+import { SITE_IMAGE_KEYS, isSiteTextKey, isValidLocaleCode } from '@/lib/admin/site-texts'
+import { isProfileKey } from '@/lib/uploads/validate'
 import { cleanLocalized } from '@/lib/admin/schema'
 import { UnauthorizedError, assertAdmin } from '@/lib/auth/session'
 import { prisma } from '@/lib/db/prisma'
+import { revalidateSite } from '@/lib/revalidate'
 import type { ActionResult } from './admin'
 
 async function authorize(): Promise<ActionResult<never> | null> {
@@ -18,7 +19,7 @@ async function authorize(): Promise<ActionResult<never> | null> {
   }
 }
 
-const refresh = () => revalidatePath('/', 'layout')
+const refresh = revalidateSite
 
 /** Save one site text for all languages. An all-empty value deletes the row. */
 export async function saveSiteText(key: string, value: unknown): Promise<ActionResult> {
@@ -28,6 +29,10 @@ export async function saveSiteText(key: string, value: unknown): Promise<ActionR
   if (typeof value !== 'object' || value === null || Array.isArray(value)) return { ok: false, error: 'validation' }
 
   const cleaned = cleanLocalized(value as Record<string, string>)
+  // Image keys must be real profile keys: a text field must never become a way to sign other objects.
+  if (SITE_IMAGE_KEYS.includes(key) && !Object.values(cleaned).every((k) => isProfileKey(k))) {
+    return { ok: false, error: 'validation' }
+  }
   try {
     if (Object.keys(cleaned).length === 0) await prisma.siteText.deleteMany({ where: { key } })
     else await prisma.siteText.upsert({ where: { key }, update: { value: cleaned }, create: { key, value: cleaned } })

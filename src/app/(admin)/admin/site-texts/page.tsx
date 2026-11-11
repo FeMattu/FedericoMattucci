@@ -1,6 +1,7 @@
 import { SiteTextsForm } from '@/components/admin/site-texts-form'
 import { getLocaleOptions } from '@/lib/admin/queries'
-import { SITE_TEXT_FIELDS } from '@/lib/admin/site-texts'
+import { SITE_IMAGE_KEYS, SITE_TEXT_FIELDS } from '@/lib/admin/site-texts'
+import { cdnUrls } from '@/lib/storage/cdn'
 import { requireAdmin } from '@/lib/auth/session'
 import { prisma } from '@/lib/db/prisma'
 
@@ -16,13 +17,19 @@ export default async function SiteTextsPage() {
   const [rows, locales] = await Promise.all([prisma.siteText.findMany(), getLocaleOptions()])
   const byKey = new Map(rows.map((r) => [r.key, asTextMap(r.value)]))
 
-  const items = SITE_TEXT_FIELDS.map((f) => ({
-    key: f.key,
-    label: f.label,
-    multiline: f.multiline,
-    help: 'help' in f ? f.help : undefined,
-    value: byKey.get(f.key) ?? {},
-  }))
+  const items = SITE_TEXT_FIELDS.map((f) => {
+    const value = byKey.get(f.key) ?? {}
+    const storedKey = SITE_IMAGE_KEYS.includes(f.key) ? Object.values(value)[0] : undefined
+    return {
+      key: f.key,
+      label: f.label,
+      multiline: f.multiline,
+      help: 'help' in f ? f.help : undefined,
+      value,
+      image: 'image' in f,
+      previewUrl: storedKey ? cdnUrls([storedKey])[storedKey] : undefined,
+    }
+  })
 
   return (
     <div className="max-w-2xl space-y-6">

@@ -43,3 +43,8 @@ next-env.d.ts
 # graphify
 graphify-out/
 !.env.example
+
+# e2e
+.next-e2e/
+playwright-report/
+test-results/

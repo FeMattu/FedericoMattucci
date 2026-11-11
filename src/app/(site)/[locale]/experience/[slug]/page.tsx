@@ -7,7 +7,7 @@ import { getExperience, listSlugs } from '@/lib/content'
 
 type Props = { params: Promise<{ locale: string; slug: string }> }
 
-export const revalidate = 86400
+export const revalidate = 300
 
 export async function generateStaticParams() {
   const { experiences } = await listSlugs()

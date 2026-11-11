@@ -9,7 +9,7 @@ describe('signedUrlExpiry', () => {
     expect(signedUrlExpiry(evening).getTime()).toBe(signedUrlExpiry(morning).getTime())
   })
 
-  it('outlives the daily page revalidation window', () => {
+  it('outlives the page revalidation window', () => {
     const now = new Date('2026-11-11T23:59:59Z')
     expect(signedUrlExpiry(now).getTime() - now.getTime()).toBeGreaterThan(7 * 24 * 60 * 60 * 1000)
   })

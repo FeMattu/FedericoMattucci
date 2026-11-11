@@ -107,7 +107,7 @@ export function AdminSidebar({ email, signOutAction }: Props) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="View site">
-              <Link href="/">
+              <Link href="/" prefetch={false}>
                 <Share2 aria-hidden />
                 <span>View site</span>
               </Link>

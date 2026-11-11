@@ -10,12 +10,12 @@ export const ALLOWED_TYPES = {
 } as const
 
 export type AllowedType = keyof typeof ALLOWED_TYPES
-export type UploadPurpose = 'photo' | 'project'
+export type UploadPurpose = 'photo' | 'project' | 'profile'
 
 export const MAX_UPLOAD_BYTES = 25 * 1024 * 1024
 /** Longest side kept for photos; larger originals are downscaled after upload. */
 export const MAX_DIMENSION = 3200
-export const KEY_PREFIX: Record<UploadPurpose, string> = { photo: 'portfolio', project: 'projects' }
+export const KEY_PREFIX: Record<UploadPurpose, string> = { photo: 'portfolio', project: 'projects', profile: 'profile' }
 
 export type UploadRequest = { purpose: UploadPurpose; filename: string; contentType: AllowedType; size: number }
 export type UploadRequestError = 'purpose' | 'type' | 'size' | 'filename'
@@ -28,7 +28,9 @@ export function validateUploadRequest(
   input: unknown,
 ): { ok: true; data: UploadRequest } | { ok: false; error: UploadRequestError } {
   const raw = typeof input === 'object' && input !== null ? (input as Record<string, unknown>) : {}
-  if (raw.purpose !== 'photo' && raw.purpose !== 'project') return { ok: false, error: 'purpose' }
+  if (raw.purpose !== 'photo' && raw.purpose !== 'project' && raw.purpose !== 'profile') {
+    return { ok: false, error: 'purpose' }
+  }
   if (!isAllowedType(raw.contentType)) return { ok: false, error: 'type' }
   if (typeof raw.size !== 'number' || !Number.isFinite(raw.size) || raw.size <= 0 || raw.size > MAX_UPLOAD_BYTES) {
     return { ok: false, error: 'size' }
@@ -58,6 +60,10 @@ export function buildObjectKey(request: UploadRequest, now: Date, random: string
 /** A key we may register as a photo: under the photo prefix and structurally safe. */
 export function isPhotoKey(key: unknown): key is string {
   return typeof key === 'string' && key.startsWith(`${KEY_PREFIX.photo}/`) && isSafeKey(key)
+}
+
+export function isProfileKey(key: unknown): key is string {
+  return typeof key === 'string' && key.startsWith(`${KEY_PREFIX.profile}/`) && isSafeKey(key)
 }
 
 export function isProjectKey(key: unknown): key is string {

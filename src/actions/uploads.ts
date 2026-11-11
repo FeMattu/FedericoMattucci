@@ -4,10 +4,10 @@ import { randomUUID } from 'node:crypto'
 import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { Prisma } from '@prisma/client'
-import { revalidatePath } from 'next/cache'
 import { env } from '@/env'
 import { UnauthorizedError, assertAdmin } from '@/lib/auth/session'
 import { prisma } from '@/lib/db/prisma'
+import { revalidateSite } from '@/lib/revalidate'
 import { processImage } from '@/lib/uploads/process'
 import { MAX_UPLOAD_BYTES, buildObjectKey, isPhotoKey, validateUploadRequest } from '@/lib/uploads/validate'
 import type { ActionResult } from './admin'
@@ -105,7 +105,7 @@ export async function registerPhoto(key: unknown, albumId?: unknown): Promise<Ac
         status: 'PUBLISHED',
       },
     })
-    revalidatePath('/', 'layout')
+    revalidateSite()
     return { ok: true, data: { id: photo.id } }
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {

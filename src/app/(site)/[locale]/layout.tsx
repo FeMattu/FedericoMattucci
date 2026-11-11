@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: Pick<Props, 'params'>): Promi
       canonical: `/${locale}`,
       languages: Object.fromEntries(locales.map((code) => [code, `/${code}`])),
     },
+    icons: { icon: '/images/logo/Logo-black-big.jpg' },
     openGraph: { type: 'website', siteName: t('siteName'), locale, description: t('defaultDescription') },
   }
 }

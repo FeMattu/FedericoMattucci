@@ -1,5 +1,5 @@
 /**
- * Seed content. Source: LaTeX CV (CV-LaTex/CV.tex) and public/data/contacts.json.
+ * Seed content. Source: LaTeX CV (CV-LaTex/CV.tex) and the previous site's contacts.json (removed; see git history).
  * See docs/CONTENT_MAPPING.md. Nothing here is invented: unknown data is left
  * empty/null so it can be filled in from the admin.
  */
@@ -16,6 +16,8 @@ export const locales = [
 ]
 
 export const siteTexts: Record<string, L> = {
+  // The profile photo of the previous site (S3 key); the same file for every language.
+  'hero.avatar': { it: 'profile/profile.jpg', en: 'profile/profile.jpg' },
   'hero.role': {
     it: 'Sviluppatore full-stack · Studente di Laurea Magistrale in AI',
     en: 'Full-stack developer · MSc student in Artificial Intelligence',

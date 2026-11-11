@@ -8,7 +8,7 @@ import { cdnUrls } from '@/lib/storage/cdn'
 
 type Props = { params: Promise<{ locale: string; slug: string }> }
 
-export const revalidate = 86400
+export const revalidate = 300
 
 export async function generateStaticParams() {
   const { projects } = await listSlugs()
