@@ -36,7 +36,13 @@ function useActiveSection(enabled: boolean): NavSection | null {
   return enabled ? active : null
 }
 
-export function SiteHeader({ isAdmin = false }: { isAdmin?: boolean }) {
+export function SiteHeader({
+  isAdmin = false,
+  sections = NAV_SECTIONS,
+}: {
+  isAdmin?: boolean
+  sections?: readonly NavSection[]
+}) {
   const t = useTranslations('nav')
   const pathname = usePathname()
   const isHome = pathname === '/'
@@ -57,7 +63,7 @@ export function SiteHeader({ isAdmin = false }: { isAdmin?: boolean }) {
         </Link>
 
         <nav aria-label={t('primary')} className="hidden items-center gap-1 md:flex">
-          {NAV_SECTIONS.map((id) => (
+          {sections.map((id) => (
             <Link
               key={id}
               href={`/#${id}`}
@@ -88,7 +94,7 @@ export function SiteHeader({ isAdmin = false }: { isAdmin?: boolean }) {
               <SheetTitle className="sr-only">{t('menu')}</SheetTitle>
               <SheetDescription className="sr-only">{t('primary')}</SheetDescription>
               <nav aria-label={t('primary')} className="flex flex-col gap-1 p-4 pt-12">
-                {NAV_SECTIONS.map((id) => (
+                {sections.map((id) => (
                   <Link
                     key={id}
                     href={`/#${id}`}

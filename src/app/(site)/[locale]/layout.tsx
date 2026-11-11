@@ -11,6 +11,7 @@ import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { locales } from '@/i18n/config'
+import { getNavSections } from '@/lib/content'
 import { routing } from '@/i18n/routing'
 import '../../globals.css'
 
@@ -41,6 +42,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'nav' })
+  const sections = await getNavSections()
 
   return (
     <html lang={locale} suppressHydrationWarning className={GeistSans.variable}>
@@ -54,7 +56,7 @@ export default async function LocaleLayout({ children, params }: Props) {
               >
                 {t('skipToContent')}
               </a>
-              <SiteHeader />
+              <SiteHeader sections={sections} />
               <main id="main">{children}</main>
               <SiteFooter />
               <Toaster />

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Skill" ALTER COLUMN "level" DROP NOT NULL,
+ALTER COLUMN "level" DROP DEFAULT;

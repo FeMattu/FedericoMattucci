@@ -14,3 +14,5 @@
    passwords to store). Adapter: Prisma.
 7. **Graphify**: installed from Graphify-Labs/graphify (`pip install --user graphifyy`, `graphify install --platform claude`); run via CLI because the skill was not registered until the next reload. Docs at `docs/graphify-before/`.
 - jsdom pinned ^29: jsdom 31 needs Node >=22.22 (machine has 22.14)
+- No loading.tsx under (site)/[locale]: it puts pages in Suspense so notFound() streamed HTTP 200 (soft 404). Pages are static/ISR, so a skeleton adds nothing.
+- Signed CDN URLs: expiry rounded to UTC midnight +8 days, pages revalidate daily, so cached HTML never holds dead image links and the image cache stays stable.

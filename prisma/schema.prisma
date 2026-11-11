@@ -152,7 +152,7 @@ model Skill {
   id          String        @id @default(cuid())
   slug        String        @unique
   name        String
-  level       Int           @default(3) // 1..5, shown as dots
+  level       Int?          // 1..5 shown as dots; null = not rated (never invented)
   years       Int?
   description Json?
   categoryId  String

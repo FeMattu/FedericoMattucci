@@ -17,3 +17,8 @@ Avoid apostrophes inside bash heredocs; use Write tool for JSON/text with quotes
 - Public nav = top bar only. Admin: src/app/(admin)/admin, login /login (outside locale).
 - Old public/data + public/languages kept only as seed source; delete after seed written.
 - Blockers: no Postgres (Docker Desktop daemon was down; start it for migrations/integration tests).
+- [x] Postgres dev: docker container fedmattucci-site-pg on 127.0.0.1:54330 (db site, site_test); .env/.env.local (ignored) hold DATABASE_URL(+_TEST). Do NOT touch container docker-db-1 (other project).
+- [x] Migrations: init + skill_level_optional applied. Seed (prisma/seed.ts + seed-data.ts) idempotent, verified, preserves edits.
+- [x] Content layer: repositories/content.ts, lib/content (view mappers + getHomeContent etc.), lib/storage (signing + cdn)
+- [x] Public pages: home (hero, experience, education+certs, skills tabs, projects filter, contact links), detail routes experience/education/projects, 404/error, catch-all, sitemap, robots. 45 unit tests, build 26 static pages.
+- [ ] NEXT: photos (S3 import script -> Photo rows, masonry grid, lightbox, albums/tags), contact form (zod, honeypot, rate limit, Resend, DB), delete insecure /api/image + /api/images-list, JSON-LD; then Auth.js + /admin; integration tests (DATABASE_URL_TEST); e2e; docs
